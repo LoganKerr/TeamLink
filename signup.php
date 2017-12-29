@@ -116,7 +116,6 @@ if (isset($_POST['signup']))
         }
         elseif ($role == "faculty")
         {
-            echo "department: ".$department;
             $query = "INSERT INTO `faculty` (`department`) VALUES ('".$department."')";
             if (!mysqli_query($link, $query))
             {
