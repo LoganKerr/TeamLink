@@ -59,7 +59,7 @@
         }
     }
     
-    $query = "SELECT major, interests, department FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=$user_id";
+    $query = "SELECT `student_id`, `faculty_id`, `major`, `interests`, `department` FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=$user_id";
     
     if (!mysqli_query($link, $query))
     {
@@ -103,10 +103,10 @@
             <div class="panel-body">
                 <form method="post" action="/profile.php">
                     <input type="hidden" name="profile" value="profile" />
-                    <?php if ($row['department']) { ?>
+                    <?php if ($row['faculty_id']) { ?>
                         <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php echo $row['department'] ?>'/></p>
                     <?php } ?>
-                    <?php if ($row['major']) { ?>
+                    <?php if ($row['student_id']) { ?>
                     <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php echo $row['major'] ?>'/></p>
                     <p><label>Interests:</label><textarea name="interests" rows="4" cols="50" ><?php echo $row['interests'] ?></textarea></p>
                     <?php } ?>
