@@ -1,0 +1,67 @@
+body
+{
+    background-image: url("/resources/images/city.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.textbox
+{
+    margin-left: 10px;
+}
+
+#home-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 30%;
+}
+
+#login-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 30%;
+}
+
+#signup-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+#menu-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+#join-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+.submit-button
+{
+    width: 25%;
+}
+
+.logo
+{
+    height: 25%;
+    width: 25%;
+}
