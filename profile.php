@@ -17,35 +17,15 @@
     {
         $error = array();
         // validate data -----------------------
-        // check empty fields
-        $required = array("email", "firstName", "lastName");
-        foreach ($required as $key => $value)
-        {
-            if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
-            {
-                $error[$value] = "<strong>This field is required.</strong>";
-            }
-        }
         // escape data
-        $email = mysqli_real_escape_string($link, $_POST['email']);
-        $firstName = mysqli_real_escape_string($link, $_POST['firstName']);
-        $lastName = mysqli_real_escape_string($link, $_POST['lastName']);
+        $department = mysqli_real_escape_string($link, $_POST['department']);
         $major = mysqli_real_escape_string($link, $_POST['major']);
         $interests = mysqli_real_escape_string($link, $_POST['interests']);
         
-        if (!empty($email))
-        {
-            // TODO: validate email (same as signup)
-        }
         
-        if (!empty($firstName))
+        if (!empty($department))
         {
-            // TODO: validate first name (same as signup)
-        }
-        
-        if (!empty($lastName))
-        {
-            // TODO: validate last name (same as signup)
+            // TODO: validate department (same as signup)
         }
         
         if (!empty($major))
@@ -60,16 +40,31 @@
         
         if (count($error) == 0)
         {
-            $query = "UPDATE `users` SET `email`='".$email."', `firstName`='".$firstName."', `lastName`='".$lastName."', `major`='".$major."', `interests`='".$interests."' WHERE `id`=$user_id";
+            $query = "UPDATE `students` SET `major`='".$major."', `interests`='".$interests."' WHERE `id`=(SELECT `student_id` FROM `users` WHERE `id`=$user_id);";
+            $query2 = "UPDATE `faculty` SET `department`='".$department."' WHERE `id`=(SELECT `faculty_id` FROM `users` WHERE `id`=$user_id);";
+            
             if (mysqli_query($link, $query))
             {
-                echo "<p><strong>Changes have been saved.</strong></p>";
+                if (mysqli_query($link, $query2))
+                {
+                    echo "<p><strong>Changes have been saved.</strong></p>";
+                }
+                else
+                {
+                    echo "<strong>Changes could not be saved: ".mysqli_error($link)."</strong>";
+                }
             } else {
                 echo "<strong>Changes could not be saved: ".mysqli_error($link)."</strong>";
             }
         }
     }
-    $query = "SELECT email, firstName, lastName, major, interests FROM `users` WHERE `id`=$user_id";
+    
+    $query = "SELECT major, interests, department FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=$user_id";
+    
+    if (!mysqli_query($link, $query))
+    {
+        echo "erro: ".mysqli_error($link)."<br>";
+    }
     $res = mysqli_query($link, $query);
     if (mysqli_num_rows($res) == 0)
     {
@@ -108,11 +103,13 @@
             <div class="panel-body">
                 <form method="post" action="/profile.php">
                     <input type="hidden" name="profile" value="profile" />
-                    <p><label>Email:</label><input class="textbox" name="email" type="text" value='<?php echo $row['email']; ?>'/></p>
-                    <p><label>First Name:</label><input class="textbox" name="firstName" type="text" value='<?php echo $row['firstName']; ?>'/></p>
-                    <p><label>Last Name:</label><input class="textbox" name="lastName" type="text" value='<?php echo $row['lastName']; ?>'/></p>
+                    <?php if ($row['department']) { ?>
+                        <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php echo $row['department'] ?>'/></p>
+                    <?php } ?>
+                    <?php if ($row['major']) { ?>
                     <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php echo $row['major'] ?>'/></p>
                     <p><label>Interests:</label><textarea name="interests" rows="4" cols="50" ><?php echo $row['interests'] ?></textarea></p>
+                    <?php } ?>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>
             </div>
