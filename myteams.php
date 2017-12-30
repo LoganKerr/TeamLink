@@ -42,7 +42,7 @@
     <?php
         $user_id = $_SESSION['user_id'];
         // get teams
-        $query = "SELECT `role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` WHERE `user_id`='".$user_id."'";
+        $query = "SELECT `teams`.`id`, `role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` WHERE `user_id`='".$user_id."'";
         $res = mysqli_query($link, $query);
         
         if (mysqli_num_rows($res) == 0)
@@ -54,13 +54,17 @@
         ?>
             <table class="table-striped table-bordered">
 		        <tr>
-			        <th>Team Title</th><th>Description</th><th>Public?</th>
+			        <th>Team Title</th><th>Description</th><th>Role</th><th>Public?</th><th></th>
 		        </tr>
                 <?php
                     while ($row = $res->fetch_assoc()) {
                 ?>
 		                <tr>
-                            <td><?php echo $row['title']; ?></td><td><?php echo $row['description']; ?></td><td><?php echo (($row['public'])? "Yes" : "No"); ?></td>
+                            <td><?php echo $row['title']; ?></td>
+                            <td><?php echo $row['description']; ?></td>
+                            <td><?php echo $row['role']; ?></td>
+                            <td><?php echo (($row['public'])? "Yes" : "No"); ?></td>
+                            <td><a href='<?php echo "/editteam.php?id=".$row['id'].""; ?>'>Edit</a></td>
 		                </tr>
                     <?php
                     } // closes while row loop

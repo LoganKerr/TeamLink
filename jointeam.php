@@ -60,7 +60,10 @@
                     {
                 ?>
                         <tr>
-                            <td><?php echo $row['firstName']." ".$row['lastName']; ?></td><td><?php echo $row['title']; ?></td><td><?php echo $row['description']; ?></td><td><button type="button" class="btn btn-primary disabled">Join</button></td>
+                            <td><?php echo $row['firstName']." ".$row['lastName']; ?></td>
+                            <td><?php echo $row['title']; ?></td>
+                            <td><?php echo $row['description']; ?></td>
+                            <td><button type="button" class="btn btn-primary disabled">Join</button></td>
                         </tr>
                     <?php
                     } // closes while row loop

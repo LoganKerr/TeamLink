@@ -96,7 +96,7 @@
                     <form method="post" action="/createteam.php">
                         <input type='hidden' name='createteam' value='createteam' />
                         <p><label>Title:</label><input class="textbox" name="title" type="text" /></p>
-                        <p><label>Description:</label><input class="textbox" name="description" type="text" /></p>
+                        <p><label>Description:</label><textarea name="description"></textarea></p>
                         <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
                     </form>
                 </div>

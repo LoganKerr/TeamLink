@@ -61,14 +61,10 @@
     
     $query = "SELECT `student_id`, `faculty_id`, `major`, `interests`, `department` FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=$user_id";
     
-    if (!mysqli_query($link, $query))
-    {
-        echo "erro: ".mysqli_error($link)."<br>";
-    }
     $res = mysqli_query($link, $query);
     if (mysqli_num_rows($res) == 0)
     {
-        die("User not found");
+        die("User not found.");
     }
     $row = mysqli_fetch_assoc($res);
 ?>
