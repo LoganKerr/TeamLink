@@ -9,6 +9,12 @@
     {
         header("Location: index.php");
     }
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        $search = $_POST['search'];
+    }
+    
 ?>
 
 <?php include "resources/templates/header.php"; ?>
@@ -18,8 +24,9 @@
     <div class="panel-body">
     <?php
         $user_id = $_SESSION['user_id'];
-        // get teams
-        $query = "SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public`";
+        // get teams that are similar to searched value
+        $query = "SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public` AND (`title` LIKE '%$search%' OR `description` LIKE '%$search%' OR CONCAT(`firstName`, ' ', `lastName`) LIKE '%$search%')";
+        
         $res = mysqli_query($conn, $query);
         
         if (mysqli_num_rows($res) == 0)
@@ -29,6 +36,9 @@
         else
         {
         ?>
+            <form method="post" action="jointeam.php">
+            <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
+            <br><br>
             <table class="table-striped table-bordered">
                 <tr>
                     <th>Name</th><th>Team Title</th><th>Description</th><th></th>
@@ -47,6 +57,7 @@
                     } // closes while row loop
                     ?>
             </table>
+            </form>
         <?php
         } // closes else statement to no rows
         ?>

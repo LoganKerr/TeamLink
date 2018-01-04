@@ -65,7 +65,7 @@
             <div class="panel-heading text-center">Enter your email address and password</div>
                 <div class="panel-body">
                     <div class="container">
-                        <form method="post" action="/login.php">
+                    <form method="post" action="/login.php" class="aligned-fields-login">
                             <?php echo(isset($error['email']))?$error['email']:""; ?>
                             <p><label>Email:</label><input class="textbox" name="email" type="text" /></p>
                             <p><label>Password:</label><input class="textbox" name="pass" type="password" /></p>
