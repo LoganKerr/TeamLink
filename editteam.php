@@ -85,8 +85,8 @@
                 <div class="panel-body">
                     <div class="container">
                         <form method="post" action='<?php echo "/editteam.php?id=".mysqli_real_escape_string($conn, $_GET[id]); ?>'>
-                            <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo $row['title'] ?>' /></p>
-                            <p><label>Description:</label><textarea name="description"><?php echo $row['description']; ?></textarea></p>
+                            <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo htmlentities($row['title'], ENT_QUOTES); ?>' /></p>
+                            <p><label>Description:</label><textarea name="description"><?php echo htmlentities($row['description'], ENT_QUOTES); ?></textarea></p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                     </form>
                 </div>

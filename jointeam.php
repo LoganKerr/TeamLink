@@ -38,9 +38,9 @@
                     {
                 ?>
                         <tr>
-                            <td><?php echo $row['firstName']." ".$row['lastName']; ?></td>
-                            <td><?php echo $row['title']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td><?php echo htmlentities($row['firstName'], ENT_QUOTES)." ".htmlentities($row['lastName'], ENT_QUOTES); ?></td>
+                            <td><?php echo htmlentities($row['title'], ENT_QUOTES); ?></td>
+                            <td><?php echo htmlentities($row['description'], ENT_QUOTES); ?></td>
                             <td><button type="button" class="btn btn-primary disabled">Join</button></td>
                         </tr>
                     <?php

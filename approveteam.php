@@ -71,8 +71,8 @@
                         while ($row = $res->fetch_assoc()) {
                         ?>
                             <tr>
-                                <td><?php echo $row['title']; ?></td>
-                                <td><?php echo $row['description']; ?></td>
+                                <td><?php echo htmlentities($row['title'], ENT_QUOTES); ?></td>
+                                <td><?php echo htmlentities($row['description'], ENT_QUOTES; ?></td>
                                 <form method="post" action="/approveteam.php" />
                                 <input type="hidden" id="action" name="action" value="approve" />
                                 <input type="hidden" name="id" value='<?php echo $row['id'] ?>'/>

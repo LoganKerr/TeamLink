@@ -37,9 +37,9 @@
                     while ($row = $res->fetch_assoc()) {
                 ?>
 		                <tr>
-                            <td><?php echo $row['title']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
-                            <td><?php echo $row['role']; ?></td>
+                            <td><?php echo htmlentities($row['title'], ENT_QUOTES); ?></td>
+                            <td><?php echo htmlentities($row['description'], ENT_QUOTES); ?></td>
+                            <td><?php echo htmlentities($row['role'], ENT_QUOTES); ?></td>
                             <td><?php echo (($row['public'])? "Yes" : "No"); ?></td>
                             <td><a href='<?php echo "/editteam.php?id=".$row['id'].""; ?>'>Edit</a></td>
 		                </tr>

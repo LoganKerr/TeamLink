@@ -1,6 +1,7 @@
 <?php
     session_start();
     ob_start();
+    header('Content-Type: text/html; charset=utf-8');
     
     require_once("config/config.php");
     
@@ -77,11 +78,11 @@
             <div class="panel-body">
                 <form method="post" action="/profile.php">
                     <?php if ($row['faculty_id']) { ?>
-                        <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php echo $row['department'] ?>'/></p>
+                    <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php echo htmlentities($row['department'], ENT_QUOTES); ?>'/></p>
                     <?php } ?>
                     <?php if ($row['student_id']) { ?>
-                    <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php echo $row['major'] ?>'/></p>
-                    <p><label>Interests:</label><textarea name="interests" rows="4" cols="50" ><?php echo $row['interests'] ?></textarea></p>
+                    <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php echo htmlentities($row['major'], ENT_QUOTES); ?>'/></p>
+                    <p><label>Interests:</label><textarea name="interests" rows="4" cols="50" ><?php echo htmlentities($row['interests'], ENT_QUOTES); ?></textarea></p>
                     <?php } ?>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>
