@@ -2,7 +2,7 @@
     session_start();
     ob_start();
     
-    include "config/config.php";
+    require_once("config/config.php");
     
     // if user signed in
     if ($_SERVER['REQUEST_METHOD'] == 'POST')

@@ -2,7 +2,7 @@
     session_start();
     ob_start();
     
-    include "config/config.php";
+    require_once("config/config.php");
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
