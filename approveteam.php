@@ -21,9 +21,20 @@
         header("Location: menu.php");
     }
     
-    if (isset($_POST['approveteam']))
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        var_dump($_POST);
+        $action = $_POST['action'];
+        $team_id = $_POST['id'];
+        // project was approved and must be set public
+        if ($action == "approve")
+        {
+            $query = "UPDATE `teams` SET `public`=1 WHERE `id`=$team_id";
+        }
+        else if ($action == "delete")
+        {
+            $query = "DELETE FROM `teams` WHERE `id`=$team_id";
+        }
+        mysqli_query($link, $query);
     }
     
 ?>
@@ -75,9 +86,6 @@
                         document.getElementById("action").value = "delete";
                     }
                 </script>
-                <form method="post" action="/approveteam.php" />
-                    <input type="hidden" name="approveteam" value="approveteam" />
-                    <input type="hidden" id="action" name="action" value="approve" />
                     <table class="table-striped table-bordered">
                         <tr>
                             <th>Team Title</th><th>Description</th><th>Approve</th><th>Delete</th>
@@ -88,6 +96,9 @@
                             <tr>
                                 <td><?php echo $row['title']; ?></td>
                                 <td><?php echo $row['description']; ?></td>
+                                <form method="post" action="/approveteam.php" />
+                                <input type="hidden" id="action" name="action" value="approve" />
+                                <input type="hidden" name="id" value='<?php echo $row['id'] ?>'/>
                                 <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Approve" /></div></td>
                                 <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Delete" onclick="setDelete()"/></div></td>
                             </tr>
