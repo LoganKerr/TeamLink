@@ -32,6 +32,10 @@
         if (!empty($major))
         {
             // TODO: validate majors (same as signup)
+            if ($major == "test")
+            {
+                $error['major'] = "<strong>TEST</strong>";
+            }
         }
         
         if (!empty($interests))
@@ -78,11 +82,14 @@
             <div class="panel-body">
                 <form method="post" action="/profile.php">
                     <?php if ($row['faculty_id']) { ?>
-                    <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php echo htmlentities($row['department'], ENT_QUOTES); ?>'/></p>
+                    <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php if (isset($department)) { echo htmlentities($department, ENT_QUOTES); } else { echo htmlentities($row['department'], ENT_QUOTES); } ?>'/>
+                    <?php echo(isset($error['department']))?$error['department']:""; ?></p>
                     <?php } ?>
                     <?php if ($row['student_id']) { ?>
-                    <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php echo htmlentities($row['major'], ENT_QUOTES); ?>'/></p>
-                    <p><label>Interests:</label><textarea name="interests" rows="4" cols="50" ><?php echo htmlentities($row['interests'], ENT_QUOTES); ?></textarea></p>
+                    <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php if (isset($major)) { echo htmlentities($major, ENT_QUOTES); } else { echo htmlentities($row['major'], ENT_QUOTES); } ?>'/>
+                    <?php echo(isset($error['major']))?$error['major']:""; ?></p>
+                    <p><label>Interests:</label><textarea name="interests" rows="4" cols="50" ><?php if (isset($interests)) { echo htmlentities($interests, ENT_QUOTES); } else { echo htmlentities($row['interests'], ENT_QUOTES); } ?></textarea>
+                    <?php echo(isset($error['interests']))?$error['interests']:""; ?></p>
                     <?php } ?>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>
