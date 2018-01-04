@@ -18,9 +18,9 @@
         $error = array();
         // validate data -----------------------
         // escape data
-        $department = mysqli_real_escape_string($link, $_POST['department']);
-        $major = mysqli_real_escape_string($link, $_POST['major']);
-        $interests = mysqli_real_escape_string($link, $_POST['interests']);
+        $department = mysqli_real_escape_string($conn, $_POST['department']);
+        $major = mysqli_real_escape_string($conn, $_POST['major']);
+        $interests = mysqli_real_escape_string($conn, $_POST['interests']);
         
         
         if (!empty($department))
@@ -43,25 +43,25 @@
             $query = "UPDATE `students` SET `major`='".$major."', `interests`='".$interests."' WHERE `id`=(SELECT `student_id` FROM `users` WHERE `id`=$user_id);";
             $query2 = "UPDATE `faculty` SET `department`='".$department."' WHERE `id`=(SELECT `faculty_id` FROM `users` WHERE `id`=$user_id);";
             
-            if (mysqli_query($link, $query))
+            if (mysqli_query($conn, $query))
             {
-                if (mysqli_query($link, $query2))
+                if (mysqli_query($conn, $query2))
                 {
                     echo "<p><strong>Changes have been saved.</strong></p>";
                 }
                 else
                 {
-                    echo "<strong>Changes could not be saved: ".mysqli_error($link)."</strong>";
+                    echo "<strong>Changes could not be saved: ".mysqli_error($conn)."</strong>";
                 }
             } else {
-                echo "<strong>Changes could not be saved: ".mysqli_error($link)."</strong>";
+                echo "<strong>Changes could not be saved: ".mysqli_error($conn)."</strong>";
             }
         }
     }
     
     $query = "SELECT `student_id`, `faculty_id`, `major`, `interests`, `department` FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=$user_id";
     
-    $res = mysqli_query($link, $query);
+    $res = mysqli_query($conn, $query);
     if (mysqli_num_rows($res) == 0)
     {
         die("User not found.");

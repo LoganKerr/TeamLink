@@ -10,9 +10,9 @@
     }
     
     $user_id = $_SESSION['user_id'];
-    $id = mysqli_real_escape_string($link, $_GET['id']);
+    $id = mysqli_real_escape_string($conn, $_GET['id']);
     $query = "SELECT `user_id` FROM `role_assoc` WHERE `user_id`=$user_id AND `team_id`=$id";
-    $res = mysqli_query($link, $query);
+    $res = mysqli_query($conn, $query);
     // if user is not associated with team
     if (mysqli_num_rows($res) == 0)
     {
@@ -36,9 +36,9 @@
             }
          }
         // escape data
-        $id = mysqli_real_escape_string($link, $_GET['id']);
-        $title = mysqli_real_escape_string($link, $_POST['title']);
-        $description = mysqli_real_escape_string($link, $_POST['description']);
+        $id = mysqli_real_escape_string($conn, $_GET['id']);
+        $title = mysqli_real_escape_string($conn, $_POST['title']);
+        $description = mysqli_real_escape_string($conn, $_POST['description']);
         
         if (!empty($title))
         {
@@ -54,20 +54,20 @@
         if (count($error) == 0)
         {
             $query = "UPDATE `teams` SET `title`='".$title."', `description`='".$description."' WHERE `id`=$id";
-            if (mysqli_query($link, $query))
+            if (mysqli_query($conn, $query))
             {
                 echo "Changes saved.";
             }
             else
             {
-                echo "Error: ".mysqli_error($link);
+                echo "Error: ".mysqli_error($conn);
             }
         }
     }
     
     $query = "SELECT `title`, `description` FROM `teams` WHERE `id`=$id";
     
-    $res = mysqli_query($link, $query);
+    $res = mysqli_query($conn, $query);
     
     if (mysqli_num_rows($res) == 0)
     {
@@ -106,7 +106,7 @@
             <div class="panel-heading text-center">Enter the information for a new team</div>
                 <div class="panel-body">
                     <div class="container">
-                        <form method="post" action='<?php echo "/editteam.php?id=".mysqli_real_escape_string($link, $_GET[id]); ?>'>
+                        <form method="post" action='<?php echo "/editteam.php?id=".mysqli_real_escape_string($conn, $_GET[id]); ?>'>
                             <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo $row['title'] ?>' /></p>
                             <p><label>Description:</label><textarea name="description"><?php echo $row['description']; ?></textarea></p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>

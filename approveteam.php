@@ -13,7 +13,7 @@
     
     $user_id = $_SESSION['user_id'];
     $query = "SELECT `admin` FROM `users` WHERE `id`=$user_id";
-    $res = mysqli_query($link, $query);
+    $res = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($res);
     // if user is not admin (can't approve teams)
     if (!$row['admin'])
@@ -34,7 +34,7 @@
         {
             $query = "DELETE FROM `teams` WHERE `id`=$team_id";
         }
-        mysqli_query($link, $query);
+        mysqli_query($conn, $query);
     }
     
 ?>
@@ -71,7 +71,7 @@
             $user_id = $_SESSION['user_id'];
             // get teams
             $query = "SELECT `id`, `title`, `description` FROM `teams` WHERE NOT `public`";
-            $res = mysqli_query($link, $query);
+            $res = mysqli_query($conn, $query);
     
             if (mysqli_num_rows($res) == 0)
             {

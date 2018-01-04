@@ -27,8 +27,8 @@
             }
         }
         // escape data
-        $title = mysqli_real_escape_string($link, $_POST['title']);
-        $description = mysqli_real_escape_string($link, $_POST['description']);
+        $title = mysqli_real_escape_string($conn, $_POST['title']);
+        $description = mysqli_real_escape_string($conn, $_POST['description']);
         
         if (!empty($title))
         {
@@ -43,22 +43,22 @@
         if (count($error) == 0)
         {
             $query = "INSERT INTO `teams` (`owner`, `title`, `description`) VALUES ('".$user_id."', '".$title."', '".$description."')";
-            if (mysqli_query($link, $query))
+            if (mysqli_query($conn, $query))
             {
-                $team_id = $link->insert_id;
+                $team_id = $conn->insert_id;
                 $query = "INSERT INTO `role_assoc` (`user_id`, `team_id`, `role`) VALUES ('".$user_id."', '".$team_id."', 'Owner')";
-                if (mysqli_query($link, $query))
+                if (mysqli_query($conn, $query))
                 {
                     echo "<p><strong>Team created.</strong></p>";
                 }
                 else
                 {
-                echo "<p><strong>Error: ".mysqli_error($link)."</strong></p>";
+                echo "<p><strong>Error: ".mysqli_error($conn)."</strong></p>";
                 }
             }
             else
             {
-                echo "<p><strong>Error: ".mysqli_error($link)."</strong></p>";
+                echo "<p><strong>Error: ".mysqli_error($conn)."</strong></p>";
             }
         }
     }

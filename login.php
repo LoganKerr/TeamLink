@@ -23,13 +23,13 @@
                 $error[$value] = "<strong>This field is required.</strong>";
             }
         }
-        $email = mysqli_real_escape_string($link, $_POST['email']);
-        $pass = mysqli_real_escape_string($link, $_POST['pass']);
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $pass = mysqli_real_escape_string($conn, $_POST['pass']);
         
         if (!empty($email) && !empty($password))
         {
             $query = "SELECT `id`, `passHash` FROM `users` WHERE `email`='".$email."'";
-            $res = mysqli_query($link, $query);
+            $res = mysqli_query($conn, $query);
             
             if (mysqli_num_rows($res) == 0) {
                 $error['email'] = "Invalid email or password";

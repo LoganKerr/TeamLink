@@ -42,7 +42,7 @@
         $user_id = $_SESSION['user_id'];
         // get teams
         $query = "SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public`";
-        $res = mysqli_query($link, $query);
+        $res = mysqli_query($conn, $query);
         
         if (mysqli_num_rows($res) == 0)
         {
