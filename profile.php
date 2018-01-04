@@ -32,10 +32,6 @@
         if (!empty($major))
         {
             // TODO: validate majors (same as signup)
-            if ($major == "test")
-            {
-                $error['major'] = "<strong>TEST</strong>";
-            }
         }
         
         if (!empty($interests))
