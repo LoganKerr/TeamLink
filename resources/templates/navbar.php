@@ -35,6 +35,21 @@
                 { echo "class='active'"; }
                 ?>
             ><a href="/jointeam.php">Join a Team</a></li>
+            <?php
+            $user_id = $_SESSION['user_id'];
+            $query = "SELECT `admin` FROM `users` WHERE `id`=$user_id";
+            $res = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($res);
+            // if user is not admin (can't approve teams)
+            if ($row['admin'])
+            {
+            ?><li
+                <?php
+                if ($_SERVER['PHP_SELF'] == "/approveteam.php")
+                { echo "class='active'"; }
+                ?>
+            ><a href="/approveteam.php">Approve teams</a></li>
+            <?php } ?>
         </ul>
     </div>
 </nav>
