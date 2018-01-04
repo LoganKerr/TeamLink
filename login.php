@@ -54,31 +54,22 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="utf-8" />
-<title>Venture</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="resources/css/site.css">
-</head>
+<?php include "resources/templates/header.php"; ?>
 <body>
-<div id="login-panel" class="container">
-<div class="panel panel-primary">
-<div class="panel-heading text-center">Enter your email address and password</div>
-<div class="panel-body">
-<div class="container">
-<form method="post" action="/login.php">
-<?php echo(isset($error['email']))?$error['email']:""; ?>
-<p><label>Email:</label><input class="textbox" name="email" type="text" /></p>
-<p><label>Password:</label><input class="textbox" name="pass" type="password" /></p>
-<div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
-</form>
-</div>
-</div>
-</div>
-</div>
-</body>
+    <div id="login-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">Enter your email address and password</div>
+                <div class="panel-body">
+                    <div class="container">
+                        <form method="post" action="/login.php">
+                            <?php echo(isset($error['email']))?$error['email']:""; ?>
+                            <p><label>Email:</label><input class="textbox" name="email" type="text" /></p>
+                            <p><label>Password:</label><input class="textbox" name="pass" type="password" /></p>
+                            <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

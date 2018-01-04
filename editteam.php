@@ -76,31 +76,9 @@
     $row = mysqli_fetch_assoc($res);
 ?>
 
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Venture</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="resources/css/site.css">
-</head>
+<?php include "resources/templates/header.php"; ?>
+<?php include "resources/templates/navbar.php"; ?>
 <body>
-    <nav class="navbar navbar-inverse bg-primary">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Venture</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="menu.php">Main Menu</a></li>
-                <li><a href="/profile.php">Profile</a></li>
-                <li class="active"><a href="/myteams.php">My Teams</a></li>
-                <li><a href="/createteam.php">Create a Team</a></li>
-                <li><a href="/jointeam.php">Join a Team</a></li>
-            </ul>
-        </div>
-    </nav>
     <div id="login-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">Enter the information for a new team</div>
