@@ -21,7 +21,7 @@
     }
     
     // edit form submitted
-    if (isset($_POST['editteam']))
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $error = array();
         $warning = array();
@@ -107,7 +107,6 @@
                 <div class="panel-body">
                     <div class="container">
                         <form method="post" action='<?php echo "/editteam.php?id=".mysqli_real_escape_string($link, $_GET[id]); ?>'>
-                            <input type="hidden" name="editteam" value="editteam" />
                             <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo $row['title'] ?>' /></p>
                             <p><label>Description:</label><textarea name="description"><?php echo $row['description']; ?></textarea></p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>

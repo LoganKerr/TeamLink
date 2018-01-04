@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id']))
 }
 
 // signup form submitted
-if (isset($_POST['signup']))
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$error = array();
 	$warning = array();
@@ -157,7 +157,6 @@ if (isset($_POST['signup']))
             <div class="panel-heading">Enter your information</div>   
             <div class="panel-body">
                 <form method="post" action="/signup.php">
-                    <input type="hidden" name="signup" value="signup" />
                     <p><label>Email:</label><input class="textbox" name="email" type="text" />
 					<?php echo(isset($error['email']))?$error['email']:""; ?></p>
                     <p><label>University:</label><input class="textbox" name="university" type="text" />

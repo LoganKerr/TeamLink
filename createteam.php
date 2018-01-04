@@ -13,7 +13,7 @@
     $user_id = $_SESSION['user_id'];
     
     // create team form is submitted
-    if (isset($_POST['createteam']))
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $error = array();
         // validate data -------------------------------------
@@ -94,7 +94,6 @@
             <div class="panel-body">
                 <div class="container">
                     <form method="post" action="/createteam.php">
-                        <input type='hidden' name='createteam' value='createteam' />
                         <p><label>Title:</label><input class="textbox" name="title" type="text" /></p>
                         <p><label>Description:</label><textarea name="description"></textarea></p>
                         <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>

@@ -13,7 +13,7 @@
     $user_id = $_SESSION['user_id'];
     
     // profile form submitted
-    if (isset($_POST['profile']))
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $error = array();
         // validate data -----------------------
@@ -98,7 +98,6 @@
             <div class="panel-heading">Change your information</div>   
             <div class="panel-body">
                 <form method="post" action="/profile.php">
-                    <input type="hidden" name="profile" value="profile" />
                     <?php if ($row['faculty_id']) { ?>
                         <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php echo $row['department'] ?>'/></p>
                     <?php } ?>

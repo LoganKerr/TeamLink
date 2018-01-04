@@ -5,7 +5,7 @@
     include "config/config.php";
     
     // if user signed in
-    if (isset($_SESSION['user_id']))
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         header("Location: menu.php");
         exit();
@@ -71,7 +71,6 @@
 <div class="panel-body">
 <div class="container">
 <form method="post" action="/login.php">
-<input type='hidden' name='login' value='login'/>
 <?php echo(isset($error['email']))?$error['email']:""; ?>
 <p><label>Email:</label><input class="textbox" name="email" type="text" /></p>
 <p><label>Password:</label><input class="textbox" name="pass" type="password" /></p>
