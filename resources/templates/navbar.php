@@ -37,11 +37,11 @@
             ><a href="/jointeam.php">Join a Team</a></li>
             <?php
             $user_id = $_SESSION['user_id'];
-            $query = "SELECT `admin` FROM `users` WHERE `id`=$user_id";
-            $res = mysqli_query($conn, $query);
-            $row = mysqli_fetch_assoc($res);
+            $navquery = "SELECT `admin` FROM `users` WHERE `id`=$user_id";
+            $navres = mysqli_query($conn, $navquery);
+            $navrow = mysqli_fetch_assoc($navres);
             // if user is not admin (can't approve teams)
-            if ($row['admin'])
+            if ($navrow['admin'])
             {
             ?><li
                 <?php
