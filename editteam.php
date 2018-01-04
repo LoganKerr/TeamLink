@@ -43,13 +43,13 @@
         if (!empty($title))
         {
             // TODO: validate title (same as createam)
+            if ($title == "test") { $error['title'] = "<strong>TEST</strong>"; }
         }
         
         if (!empty($description))
         {
             // TODO: validate description (same as createteam)
         }
-        
         
         if (count($error) == 0)
         {
@@ -85,8 +85,10 @@
                 <div class="panel-body">
                     <div class="container">
                         <form method="post" action='<?php echo "/editteam.php?id=".mysqli_real_escape_string($conn, $_GET[id]); ?>'>
-                            <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo htmlentities($row['title'], ENT_QUOTES); ?>' /></p>
-                            <p><label>Description:</label><textarea name="description"><?php echo htmlentities($row['description'], ENT_QUOTES); ?></textarea></p>
+                            <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo(isset($title))?htmlentities($title, ENT_QUOTES):htmlentities($row['title'], ENT_QUOTES); ?>' />
+                            <?php echo(isset($error['title']))?$error['title']:""; ?></p>
+                            <p><label>Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } else { echo htmlentities($row['description'], ENT_QUOTES); } ?></textarea>
+                            <?php echo(isset($error['description']))?$error['description']:""; ?></p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                     </form>
                 </div>
