@@ -7,6 +7,9 @@ if (isset($_SESSION['user_id']))
     header("Location: menu.php");
 }
 
+// possible signup roles
+$roles = array("Student", "Faculty");
+
 // signup form submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -36,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	if (!empty($email))
 	{
-		// TODO: validate email
-		// TODO: validate email is not already in use
+		// TODO: validate email with regex
+		// validate email is not already in use
 		$query = "SELECT `email` FROM `users` WHERE `email`='".$email."'";
         $res = mysqli_query($conn, $query);
         if (mysqli_num_rows($res) >= 1) {
@@ -147,25 +150,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <div class="panel-heading">Enter your information</div>   
             <div class="panel-body">
                 <form method="post" action="/signup.php">
-                    <p><label>Email:</label><input class="textbox" name="email" type="text" />
+                    <p><label>Email:</label><input class="textbox" name="email" type="text" value='<?php if (isset($email)) { echo htmlentities($email, ENT_QUOTES); } ?>'/>
 					<?php echo(isset($error['email']))?$error['email']:""; ?></p>
-                    <p><label>University:</label><input class="textbox" name="university" type="text" />
+                    <p><label>University:</label><input class="textbox" name="university" type="text" value='<?php if (isset($university)) { echo htmlentities($university, ENT_QUOTES); } ?>'/>
                     <?php echo(isset($error['university']))?$error['university']:""; ?></p>
-                    <p><label>Role:</label><input class="textbox" name="role" type="text" />
+                    <p><label>Role:</label><select name="role">
+                        <?php
+                        foreach ($roles as $key => $value)
+                        {
+                            echo "<option ".((isset($role) && $value==$role)? "selected" : "").">$value</option>";
+                        }
+                    ?>
+                    </select></p>
                     <?php echo(isset($error['role']))?$error['role']:""; ?></p>
-                    <p><label>First Name:</label><input class="textbox" name="firstName" type="text" />
+                    <p><label>First Name:</label><input class="textbox" name="firstName" type="text" value='<?php if (isset($firstName)) { echo htmlentities($firstName, ENT_QUOTES); } ?>'/>
 					<?php echo(isset($error['firstName']))?$error['firstName']:""; ?></p>
-					<p><label>Last Name:</label><input class="textbox" name="lastName" type="text" />
+					<p><label>Last Name:</label><input class="textbox" name="lastName" type="text" value='<?php if (isset($lastName)) { echo htmlentities($lastName, ENT_QUOTES); } ?>'/>
 					<?php echo(isset($error['lastName']))?$error['lastName']:""; ?></p>
                     <p><label>Password:</label><input class="textbox" name="pass1" type="password" />
 					<?php echo(isset($error['pass2']))?$error['pass1']:""; ?></p>
                     <p><label>Confirm password:</label><input class="textbox" name="pass2" type="password" />
 					<?php echo(isset($error['pass2']))?$error['pass2']:""; ?></p>
-                    <p><label>Department:</label><input class="textbox" name="department" type="text" />
+                    <p><label>Department:</label><input class="textbox" name="department" type="text" value='<?php if (isset($department)) { echo htmlentities($department, ENT_QUOTES); } ?>'/>
                     <?php echo(isset($error['department']))?$error['department']:""; ?></p>
-                    <p><label>Major:</label><input class="textbox" name="major" type="text" />
+                    <p><label>Major:</label><input class="textbox" name="major" type="text" value='<?php if (isset($major)) { echo htmlentities($major, ENT_QUOTES); } ?>'/>
 					<?php echo(isset($error['major']))?$error['major']:""; ?></p>
-                    <p><label>Interests:</label><textarea name="interests" rows="4" cols="50"></textarea>
+                    <p><label>Interests:</label><textarea name="interests" rows="4" cols="50"><?php if ($interests) { echo htmlentities($interests, ENT_QUOTES); } ?></textarea>
 					<?php echo(isset($error['interests']))?$error['interests']:""; ?></p>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>
