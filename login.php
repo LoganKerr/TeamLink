@@ -5,14 +5,14 @@
     require_once("config/config.php");
     
     // if user signed in
-    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    if (isset($_SESSION['user_id']))
     {
         header("Location: menu.php");
         exit();
     }
     
     // signup form submitted
-    if (isset($_POST['login']))
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $error = array();
         $required = array("email", "pass");
@@ -26,10 +26,12 @@
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $pass = mysqli_real_escape_string($conn, $_POST['pass']);
         
-        if (!empty($email) && !empty($password))
+        if (!empty($email) && !empty($pass))
         {
             $query = "SELECT `id`, `passHash` FROM `users` WHERE `email`='".$email."'";
             $res = mysqli_query($conn, $query);
+            
+            echo mysqli_num_rows($res) == 0;
             
             if (mysqli_num_rows($res) == 0) {
                 $error['email'] = "Invalid email or password";
@@ -37,6 +39,7 @@
             else
             {
                 $row = mysqli_fetch_assoc($res);
+                var_dump($row);
                 $passHash = $row['passHash'];
                 if (!password_verify($pass, $passHash))
                 {
@@ -47,6 +50,7 @@
         
         if (count($error) == 0)
         {
+            var_dump($row['id']);
             $_SESSION['user_id'] = $row['id'];
             header('Location: menu.php');
             exit();

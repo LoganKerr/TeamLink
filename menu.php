@@ -8,6 +8,7 @@
     if (!isset($_SESSION['user_id']))
     {
         header("Location: index.php");
+        exit();
     }
 ?>
 <?php include "resources/templates/header.php"; ?>
