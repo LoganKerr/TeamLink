@@ -13,7 +13,7 @@
     
     $user_id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT `admin` FROM `users` WHERE `id`=?");
-    $stmt->bind("i", $user_id);
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $res = $stmt->get_result();
     $row = $res->fetch_assoc();
