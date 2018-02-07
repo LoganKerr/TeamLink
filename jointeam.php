@@ -43,7 +43,7 @@
         ?>
             <form method="post" action="jointeam.php">
             <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
-            <br><?php if(isset($search)) { echo "Showing results for \"".htmlentities($search)."\""; } ?><br>
+            <br><?php if(isset($search) && $search != "") { echo "Showing results for \"".htmlentities($search)."\""; } ?><br>
             <table class="table-striped table-bordered">
                 <tr>
                     <th>Name</th><th>Team Title</th><th>Description</th><th></th>
