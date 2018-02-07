@@ -26,24 +26,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 	}
 	// escape data
-	$email = mysqli_real_escape_string($conn, $_POST['email']);
-    $university = mysqli_real_escape_string($conn, $_POST['university']);
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
-	$firstName = mysqli_real_escape_string($conn, $_POST['firstName']);
-	$lastName = mysqli_real_escape_string($conn, $_POST['lastName']);
-	$pass1 = mysqli_real_escape_string($conn, $_POST['pass1']);
-	$pass2 = mysqli_real_escape_string($conn, $_POST['pass2']);
-    $department = mysqli_real_escape_string($conn, $_POST['department']);
-	$major = mysqli_real_escape_string($conn, $_POST['major']);
-	$interests = mysqli_real_escape_string($conn, $_POST['interests']);
+	$email = $_POST['email'];
+    $university = $_POST['university'];
+    $role = $_POST['role'];
+	$firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $pass1 = $_POST['pass1'];
+    $pass2 = $_POST['pass2'];
+    $department = $_POST['department'];
+    $major = $_POST['major'];
+    $interests = $_POST['interests'];
 	
 	if (!empty($email))
 	{
 		// TODO: validate email with regex
 		// validate email is not already in use
-		$query = "SELECT `email` FROM `users` WHERE `email`='".$email."'";
-        $res = mysqli_query($conn, $query);
-        if (mysqli_num_rows($res) >= 1) {
+		$stmt = $conn->prepare("SELECT `email` FROM `users` WHERE `email`=?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        
+        if ($res->num_rows == 0) {
             $error['email'] = " <strong>Email is already in use.</strong>";
         }
 	}
@@ -96,47 +99,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         
         if ($role == "student")
         {
-            $query = "INSERT INTO `students` (`major`, `interests`) VALUES ('".$major."', '".$interests."')";
-            if (!mysqli_query($conn, $query))
+            $stmt = $conn->prepare("INSERT INTO `students` (`major`, `interests`) VALUES (?, ?)");
+            $stmt->bind_param("ss", $major, $interests);
+            if (!$stmt->execute())
             {
-                echo "<p><strong>Registration error: ".mysqli_error($conn)."</strong></p>";
+                echo "<p><strong>Registration error: ".$stmt->error."</strong></p>";
             }
             else
             {
-                $student_id = $conn->insert_id;
-                $query = "INSERT INTO `users` (`email`, `university_id`, `firstName`, `lastName`, `passHash`, `student_id`) VALUES ('".$email."', (SELECT `id` FROM `universities` WHERE `title`='".$university."'), '".$firstName."', '".$lastName."', '".$hash."', '".$student_id."' )";
+                $student_id = $stmt->insert_id;
+                $stmt = $conn->prepare("INSERT INTO `users` (`email`, `university_id`, `firstName`, `lastName`, `passHash`, `student_id`) VALUES (?, (SELECT `id` FROM `universities` WHERE `title`=?), ?, ?, ?, ?)");
+                $stmt->bind_param("ssssi", $email, $firstName, $lastName, $hash, $student_id);
                 
-                if (mysqli_query($conn, $query))
+                if ($stmt->execute())
                 {
                     header("Location: index.php");
                     exit();
                 }
                 else
                 {
-                    echo "<strong>Registration error: ".mysqli_error($conn)."</strong>";
+                    echo "<strong>Registration error: ".$stmt->error."</strong>";
                 }
             }
         }
         elseif ($role == "faculty")
         {
-            $query = "INSERT INTO `faculty` (`department`) VALUES ('".$department."')";
-            if (!mysqli_query($conn, $query))
+            $stmt = $conn->prepare("INSERT INTO `faculty` (`department`) VALUES (?)");
+            $stmt->bind_param("s", $department);
+            if (!$stmt->execute())
             {
-                echo "<p><strong>Registration error: ".mysqli_error($conn)."</strong></p>";
+                echo "<p><strong>Registration error: ".$stmt->error."</strong></p>";
             }
             else
             {
                 $faculty_id = $conn->insert_id;
-                $query = "INSERT INTO `users` (`email`, `university_id`, `firstName`, `lastName`, `passHash`, `faculty_id`) VALUES ('".$email."', (SELECT `id` FROM `universities` WHERE `title`='".$university."'), '".$firstName."', '".$lastName."', '".$hash."', '".$faculty_id."' )";
+                $stmt = $conn->prepare("INSERT INTO `users` (`email`, `university_id`, `firstName`, `lastName`, `passHash`, `faculty_id`) VALUES (?, (SELECT `id` FROM `universities` WHERE `title`=?), ?, ?, ?, ?)");
+                $stmt->bind_param("sssssi", $email, $firstName, $lastName, $hash, $faculty_id);
                 
-                if (mysqli_query($conn, $query))
+                if ($stmt->execute())
                 {
                     header("Location: index.php");
                     exit();
                 }
                 else
                 {
-                    echo "<strong>Registration error: ".mysqli_error($conn)."</strong>";
+                    echo "<strong>Registration error: ".$stmt->error."</strong>";
                 }
             }
         }

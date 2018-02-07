@@ -4,6 +4,9 @@
     
     require_once("config/config.php");
     
+    // sets search to default value
+    $search = "";
+    
     // if user not signed in
     if (!isset($_SESSION['user_id']))
     {
@@ -24,12 +27,14 @@
     <div class="panel-body">
     <?php
         $user_id = $_SESSION['user_id'];
+        $search_wildcard = "%".$search."%";
         // get teams that are similar to searched value
-        $query = "SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public` AND (`title` LIKE '%$search%' OR `description` LIKE '%$search%' OR CONCAT(`firstName`, ' ', `lastName`) LIKE '%$search%')";
+        $stmt = $conn->prepare("SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public` AND (`title` LIKE ? OR `description` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+        $stmt->bind_param("sss", $search_wildcard, $search_wildcard, $search_wildcard);
+        $stmt->execute();
+        $res = $stmt->get_result();
         
-        $res = mysqli_query($conn, $query);
-        
-        if (mysqli_num_rows($res) == 0)
+        if ($res->num_rows == 0)
         {
             echo "There are no teams :(";
         }

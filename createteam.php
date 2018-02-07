@@ -27,8 +27,8 @@
             }
         }
         // escape data
-        $title = mysqli_real_escape_string($conn, $_POST['title']);
-        $description = mysqli_real_escape_string($conn, $_POST['description']);
+        $title = $_POST['title'];
+        $description = $_POST['description'];
         
         if (!empty($title))
         {
@@ -42,23 +42,25 @@
         
         if (count($error) == 0)
         {
-            $query = "INSERT INTO `teams` (`owner`, `title`, `description`) VALUES ('".$user_id."', '".$title."', '".$description."')";
-            if (mysqli_query($conn, $query))
+            $stmt = $conn->prepare("INSERT INTO `teams` (`owner`, `title`, `description`) VALUES (?,?,?)");
+            $stmt->bind_param("iss", $user_id, $title, $description);
+            if ($stmt->execute())
             {
-                $team_id = $conn->insert_id;
-                $query = "INSERT INTO `role_assoc` (`user_id`, `team_id`, `role`) VALUES ('".$user_id."', '".$team_id."', 'Owner')";
-                if (mysqli_query($conn, $query))
+                $team_id = $stmt->insert_id;
+                $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role`) VALUES (?,?, 'Owner')");
+                $stmt->bind_param("ii", $user_id, $team_id);
+                if ($stmt->execute())
                 {
                     echo "<p><strong>Team created.</strong></p>";
                 }
                 else
                 {
-                echo "<p><strong>Error: ".mysqli_error($conn)."</strong></p>";
+                echo "<p><strong>Error: ".$stmt->error."</strong></p>";
                 }
             }
             else
             {
-                echo "<p><strong>Error: ".mysqli_error($conn)."</strong></p>";
+                echo "<p><strong>Error: ".$stmt->error."</strong></p>";
             }
         }
     }

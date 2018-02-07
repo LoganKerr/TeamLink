@@ -19,10 +19,12 @@
     <?php
         $user_id = $_SESSION['user_id'];
         // get teams
-        $query = "SELECT `teams`.`id`, `role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` WHERE `user_id`='".$user_id."'";
-        $res = mysqli_query($conn, $query);
+        $stmt = $conn->prepare("SELECT `teams`.`id`, `role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` WHERE `user_id`=?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
         
-        if (mysqli_num_rows($res) == 0)
+        if ($res->num_rows == 0)
         {
             echo "You have no teams :(";
         }

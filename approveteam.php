@@ -12,9 +12,11 @@
     }
     
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT `admin` FROM `users` WHERE `id`=$user_id";
-    $res = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($res);
+    $stmt = $conn->prepare("SELECT `admin` FROM `users` WHERE `id`=?");
+    $stmt->bind("i", $user_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
     // if user is not admin (can't approve teams)
     if (!$row['admin'])
     {
@@ -28,13 +30,15 @@
         // project was approved and must be set public
         if ($action == "approve")
         {
-            $query = "UPDATE `teams` SET `public`=1 WHERE `id`=$team_id";
+            $stmt = $conn->prepare("UPDATE `teams` SET `public`=1 WHERE `id`=?");
+            $stmt->bind_param("i", $team_id);
         }
         else if ($action == "delete")
         {
-            $query = "DELETE FROM `teams` WHERE `id`=$team_id";
+            $stmt = $conn->prepare("DELETE FROM `teams` WHERE `id`=?");
+            $stmt->bind_param("i", $team_id);
         }
-        mysqli_query($conn, $query);
+        $stmt->execute();
     }
     
 ?>
@@ -47,10 +51,11 @@
             <?php
             $user_id = $_SESSION['user_id'];
             // get teams
-            $query = "SELECT `id`, `title`, `description` FROM `teams` WHERE NOT `public`";
-            $res = mysqli_query($conn, $query);
+            $stmt = $conn->prepare("SELECT `id`, `title`, `description` FROM `teams` WHERE NOT `public`");
+            $stmt->execute();
+            $res = $stmt->get_result();
     
-            if (mysqli_num_rows($res) == 0)
+            if ($res->num_rows == 0)
             {
                 echo "No teams need approval";
             }

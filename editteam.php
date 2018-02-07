@@ -10,11 +10,13 @@
     }
     
     $user_id = $_SESSION['user_id'];
-    $id = mysqli_real_escape_string($conn, $_GET['id']);
-    $query = "SELECT `user_id` FROM `role_assoc` WHERE `user_id`=$user_id AND `team_id`=$id";
-    $res = mysqli_query($conn, $query);
+    $id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT `user_id` FROM `role_assoc` WHERE `user_id`=? AND `team_id`=?");
+    $stmt->bind_param("ii", $user_id, $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
     // if user is not associated with team
-    if (mysqli_num_rows($res) == 0)
+    if ($res->num_rows == 0)
     {
         header("Location: myteams.php");
         exit();
@@ -36,14 +38,13 @@
             }
          }
         // escape data
-        $id = mysqli_real_escape_string($conn, $_GET['id']);
-        $title = mysqli_real_escape_string($conn, $_POST['title']);
-        $description = mysqli_real_escape_string($conn, $_POST['description']);
+        $id = $_GET['id'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
         
         if (!empty($title))
         {
             // TODO: validate title (same as createam)
-            if ($title == "test") { $error['title'] = "<strong>TEST</strong>"; }
         }
         
         if (!empty($description))
@@ -53,27 +54,29 @@
         
         if (count($error) == 0)
         {
-            $query = "UPDATE `teams` SET `title`='".$title."', `description`='".$description."' WHERE `id`=$id";
-            if (mysqli_query($conn, $query))
+            $stmt = $conn->prepare("UPDATE `teams` SET `title`=?, `description`=? WHERE `id`=?");
+            $stmt->bind_param("ssi", $title, $description, $id);
+            if ($stmt->execute())
             {
                 echo "Changes saved.";
             }
             else
             {
-                echo "Error: ".mysqli_error($conn);
+                echo "Error: ".$stmt->error;
             }
         }
     }
     
-    $query = "SELECT `title`, `description` FROM `teams` WHERE `id`=$id";
+    $stmt = $conn->prepare("SELECT `title`, `description` FROM `teams` WHERE `id`=?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
     
-    $res = mysqli_query($conn, $query);
-    
-    if (mysqli_num_rows($res) == 0)
+    if ($res->num_rows == 0)
     {
         die("Team not found.");
     }
-    $row = mysqli_fetch_assoc($res);
+    $row = $res->fetch_assoc();
 ?>
 
 <?php include "resources/templates/header.php"; ?>
@@ -84,7 +87,7 @@
             <div class="panel-heading text-center">Enter the information for a new team</div>
                 <div class="panel-body">
                     <div class="container">
-                        <form method="post" action='<?php echo "/editteam.php?id=".mysqli_real_escape_string($conn, $_GET[id]); ?>'>
+<form method="post" action='<?php echo "/editteam.php?id=$_GET[id]"; ?>'>
                             <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php echo(isset($title))?htmlentities($title, ENT_QUOTES):htmlentities($row['title'], ENT_QUOTES); ?>' />
                             <?php echo(isset($error['title']))?$error['title']:""; ?></p>
                             <p><label>Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } else { echo htmlentities($row['description'], ENT_QUOTES); } ?></textarea>

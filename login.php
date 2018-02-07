@@ -23,23 +23,22 @@
                 $error[$value] = "<strong>This field is required.</strong>";
             }
         }
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $pass = mysqli_real_escape_string($conn, $_POST['pass']);
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
         
         if (!empty($email) && !empty($pass))
         {
-            $query = "SELECT `id`, `passHash` FROM `users` WHERE `email`='".$email."'";
-            $res = mysqli_query($conn, $query);
+            $stmt = $conn->prepare("SELECT `id`, `passHash` FROM `users` WHERE `email`=?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $res = $stmt->get_result();
             
-            echo mysqli_num_rows($res) == 0;
-            
-            if (mysqli_num_rows($res) == 0) {
+            if ($res->num_rows == 0) {
                 $error['email'] = "Invalid email or password";
             }
             else
             {
-                $row = mysqli_fetch_assoc($res);
-                var_dump($row);
+                $row = $res->fetch_assoc();
                 $passHash = $row['passHash'];
                 if (!password_verify($pass, $passHash))
                 {
@@ -50,7 +49,6 @@
         
         if (count($error) == 0)
         {
-            var_dump($row['id']);
             $_SESSION['user_id'] = $row['id'];
             header('Location: menu.php');
             exit();
@@ -67,7 +65,7 @@
                     <div class="container">
                     <form method="post" action="/login.php">
                             <?php echo(isset($error['email']))?$error['email']:""; ?>
-                            <p><label>Email:</label><input class="textbox" name="email" type="text" /></p>
+                            <p><label>Email:</label><input class="textbox" name="email" type="text" value='<?php if (isset($email)) { echo htmlentities($email, ENT_QUOTES); } ?>'/></p>
                             <p><label>Password:</label><input class="textbox" name="pass" type="password" /></p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
                         </form>
