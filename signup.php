@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $stmt->execute();
         $res = $stmt->get_result();
         
-        if ($res->num_rows == 0) {
+        if ($res->num_rows != 0) {
             $error['email'] = " <strong>Email is already in use.</strong>";
         }
 	}
@@ -91,13 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		// TODO: validate interests
 	}
-		
+    
 	if (count($error) == 0)
 	{
 		$hash = password_hash($pass1, PASSWORD_DEFAULT);
 		// insert row into database
         
-        if ($role == "student")
+        if ($role == "Student")
         {
             $stmt = $conn->prepare("INSERT INTO `students` (`major`, `interests`) VALUES (?, ?)");
             $stmt->bind_param("ss", $major, $interests);
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             {
                 $student_id = $stmt->insert_id;
                 $stmt = $conn->prepare("INSERT INTO `users` (`email`, `university_id`, `firstName`, `lastName`, `passHash`, `student_id`) VALUES (?, (SELECT `id` FROM `universities` WHERE `title`=?), ?, ?, ?, ?)");
-                $stmt->bind_param("ssssi", $email, $firstName, $lastName, $hash, $student_id);
+                $stmt->bind_param("sssssi", $email, $university, $firstName, $lastName, $hash, $student_id);
                 
                 if ($stmt->execute())
                 {
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 }
             }
         }
-        elseif ($role == "faculty")
+        elseif ($role == "Faculty")
         {
             $stmt = $conn->prepare("INSERT INTO `faculty` (`department`) VALUES (?)");
             $stmt->bind_param("s", $department);
