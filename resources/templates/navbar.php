@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse bg-primary">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Venture</a>
+            <a class="navbar-brand" href="/">TeamLink</a>
         </div>
         <ul class="nav navbar-nav">
             <li
