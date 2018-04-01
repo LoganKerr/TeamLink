@@ -60,7 +60,10 @@
 <body>
     <div id="login-panel" class="container">
         <div class="panel panel-primary">
-            <div class="panel-heading text-center">Enter your email address and password</div>
+            <div class="panel-heading">
+                <a href="/index.php" class="btn btn-default btn-sm"><</a>
+                Enter your email address and password
+            </div>
                 <div class="panel-body">
                     <div class="container">
                     <form method="post" action="/login.php">

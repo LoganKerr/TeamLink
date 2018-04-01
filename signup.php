@@ -154,7 +154,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body>
     <div id="signup-panel" class="container">
         <div class="panel panel-primary">
-            <div class="panel-heading">Enter your information</div>   
+            <div class="panel-heading">
+                <a href="/index.php" class="btn btn-default btn-sm"><</a>
+                Enter your information</div>
             <div class="panel-body">
                 <form method="post" action="/signup.php">
                     <p><label>Email:</label><input class="textbox" name="email" type="text" value='<?php if (isset($email)) { echo htmlentities($email, ENT_QUOTES); } ?>'/>
