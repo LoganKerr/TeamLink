@@ -20,7 +20,14 @@ Merge requests must be made through [GitLab](https://gitlab.com/TeamLinkProject/
 
 ## Updating your branch
 
-If you find your branch is behind master and want to update it, run ``` git merge master ``` when on your branch.
+If you find your branch is behind master and want to update it, run
+
+```
+git merge master
+git push
+```
+
+when on your branch.
 
 Note: Make sure you commit and push all changes before merging, or you will face merge conflicts.
 
