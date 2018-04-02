@@ -68,6 +68,7 @@
     }
     
     $stmt = $conn->prepare("SELECT `title`, `description` FROM `teams` WHERE `id`=?");
+    // SELECT teams.`title`, teams.`description`, role_assoc.`role`, users.`firstName`, users.`lastName` FROM `teams` INNER JOIN `role_assoc` ON teams.`id`=role_assoc.`team_id`  LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` where teams.`id`=13
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $res = $stmt->get_result();
@@ -76,7 +77,14 @@
     {
         die("Team not found.");
     }
+    
+    $stmt2 = $conn->prepare("SELECT role_assoc.`role`, users.`firstName`, users.`lastName` FROM `role_assoc` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` WHERE role_assoc.`role`!='Owner' && role_assoc.`team_id`=?");
+    $stmt2->bind_param("i", $id);
+    $stmt2->execute();
+    $res2 = $stmt2->get_result();
+    
     $row = $res->fetch_assoc();
+    $row2 = $res2->fetch_assoc();
 ?>
 
 <?php include "resources/templates/header.php"; ?>
@@ -91,6 +99,19 @@
                             <?php echo(isset($error['title']))?$error['title']:""; ?></p>
                             <p><label class="form-label">Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } else { echo htmlentities($row['description'], ENT_QUOTES); } ?></textarea>
                             <?php echo(isset($error['description']))?$error['description']:""; ?></p>
+                            <p><label class="form-label">Roles:</label>
+                                <?php
+                                    do
+                                    {
+                                     ?>
+                                        <br>
+                                        <label class="form-label">'<?php echo htmlentities($row2['role'], ENT_QUOTES);?>':</label>
+                                        <input class="textbox" name="role" type="text" value='<?php echo htmlentities($row2['firstName'], ENT_QUOTES); ?>'
+                                        <br>
+                                <?php
+                                    } while ($row2 = $res2->fetch_assoc())
+                                ?>
+                            </p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                     </form>
             </div>
