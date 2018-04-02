@@ -14,4 +14,15 @@ When you find issues or think of ideas, create an issue for them on the gitlab s
 
 When you are unsure of what to work on, pick up a gitlab issue and assign it to yourself so no one else begins working on it.
 
-Please add more to me ;(
+## Creating merge requests
+
+Merge requests must be made through [GitLab](https://gitlab.com/TeamLinkProject/TeamLink/merge_requests).
+
+## Updating your branch
+
+If you find your branch is behind master and want to update it, run ``` git merge master ``` when on your branch.
+
+Note: Make sure you commit and push all changes before merging, or you will face merge conflicts.
+
+######  Please add more to me ;(
+
