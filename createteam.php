@@ -74,9 +74,9 @@
             <div class="panel-body">
                 <div class="container">
                     <form method="post" action="/createteam.php">
-                        <p><label>Title:</label><input class="textbox" name="title" type="text" value='<?php if (isset($title)) { echo htmlentities($title, ENT_QUOTES); } ?>'/>
+                        <p><label class="form-label">Title:</label><input class="textbox" name="title" type="text" value='<?php if (isset($title)) { echo htmlentities($title, ENT_QUOTES); } ?>'/>
                         <?php echo(isset($error['title']))?$error['title']:""; ?></p>
-                        <p><label>Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } ?></textarea>
+                        <p><label class="form-label">Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } ?></textarea>
                         <?php echo(isset($error['description']))?$error['description']:""; ?></p>
                         <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
                     </form>

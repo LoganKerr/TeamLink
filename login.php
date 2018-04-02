@@ -67,8 +67,8 @@
                 <div class="panel-body">
                     <form method="post" action="/login.php">
                             <?php echo(isset($error['email']))?$error['email']:""; ?>
-                            <p><label>Email:</label><input class="textbox" name="email" type="text" value='<?php if (isset($email)) { echo htmlentities($email, ENT_QUOTES); } ?>'/></p>
-                            <p><label>Password:</label><input class="textbox" name="pass" type="password" /></p>
+                            <p><label class="form-label">Email:</label><input class="textbox" name="email" type="text" value='<?php if (isset($email)) { echo htmlentities($email, ENT_QUOTES); } ?>'/></p>
+                            <p><label class="form-label">Password:</label><input class="textbox" name="pass" type="password" /></p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
                         </form>
                 </div>

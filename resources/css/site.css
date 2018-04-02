@@ -5,9 +5,10 @@ body
     background-size: cover;
 }
 
-.textbox
+.form-label
 {
-    margin-left: 10px;
+    width: 5em;
+    margin-right: 1em;
 }
 
 #home-panel
