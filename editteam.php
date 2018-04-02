@@ -84,7 +84,7 @@
 <body>
     <div id="login-panel" class="container">
         <div class="panel panel-primary">
-            <div class="panel-heading text-center">Enter the information for a new team</div>
+            <div class="panel-heading text-center">Update the information for your team</div>
                 <div class="panel-body">
 <form method="post" action='<?php echo "/editteam.php?id=$_GET[id]"; ?>'>
                             <p><label class="form-label">Title:</label><input class="textbox" name="title" type="text" value='<?php echo(isset($title))?htmlentities($title, ENT_QUOTES):htmlentities($row['title'], ENT_QUOTES); ?>' />
