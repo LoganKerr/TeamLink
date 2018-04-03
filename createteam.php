@@ -47,7 +47,7 @@
             if ($stmt->execute())
             {
                 $team_id = $stmt->insert_id;
-                $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role`) VALUES (?,?, 'Owner')");
+                $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role_id`, `selected`) VALUES (?,?, 0, 1)");
                 $stmt->bind_param("ii", $user_id, $team_id);
                 if ($stmt->execute())
                 {

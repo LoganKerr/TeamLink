@@ -52,6 +52,23 @@
             // TODO: validate description (same as createteam)
         }
         
+        // TODO: validate team and user adding
+        
+        foreach ($_POST as $key => $value)
+        {
+            if (substr($key, 0, 4) == "role")
+            {
+                $role_id = filter_var(substr($key, 4), FILTER_SANITIZE_NUMBER_INT);
+                $user_id = (int)$value;
+                $stmt = $conn->prepare("UPDATE `role_assoc` SET `selected`=0 WHERE `team_id`=? AND `role_id`=?");
+                $stmt->bind_param("ii", $id, $role_id);
+                $stmt->execute();
+                $stmt = $conn->prepare("UPDATE `role_assoc` SET `selected`=1 WHERE `team_id`=? AND `role_id`=? AND `user_id`=?");
+                $stmt->bind_param("iii", $id, $role_id, $user_id);
+                $stmt->execute();
+            }
+        }
+        
         if (count($error) == 0)
         {
             $stmt = $conn->prepare("UPDATE `teams` SET `title`=?, `description`=? WHERE `id`=?");
@@ -78,13 +95,12 @@
         die("Team not found.");
     }
     
-    $stmt2 = $conn->prepare("SELECT role_assoc.`role`, users.`firstName`, users.`lastName` FROM `role_assoc` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` WHERE role_assoc.`role`!='Owner' && role_assoc.`team_id`=?");
+    $stmt2 = $conn->prepare("SELECT `role_assoc`.`role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`, roles.`role`, users.`firstName`, users.`lastName` FROM `role_assoc` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE roles.`role`!='Owner' && role_assoc.`team_id`=? ORDER BY `role_assoc`.`role_id`");
     $stmt2->bind_param("i", $id);
     $stmt2->execute();
     $res2 = $stmt2->get_result();
     
     $row = $res->fetch_assoc();
-    $row2 = $res2->fetch_assoc();
 ?>
 
 <?php include "resources/templates/header.php"; ?>
@@ -101,16 +117,38 @@
                             <?php echo(isset($error['description']))?$error['description']:""; ?></p>
                             <p><label class="form-label">Roles:</label>
                                 <?php
-                                    do
+                                    $sel_open = false;
+                                    $role_ids = array ();
+                                    while ($row2 = $res2->fetch_assoc())
                                     {
+                                        if (in_array($row2['role_id'], $role_ids))
+                                        {
+                                            if ($row2['user_id'])
+                                            {
+                                            ?>
+                                                <option <?php echo (($row2['selected'])? "selected" : "");?> value='<?php echo htmlentities($row2['user_id'], ENT_QUOTES); ?>'><?php echo htmlentities($row2['firstName'], ENT_QUOTES); ?></option>
+                                            <?php
+                                            }
+                                        }
+                                        else
+                                        {
+                                            array_push($role_ids, $row2['role_id']);
+                                            if ($sel_open) { ?></select><?php $sel_open = false; } ?>
+                                            <br>
+                                            <label class="form-label">'<?php echo htmlentities($row2['role'], ENT_QUOTES);?>':</label>
+                                            <select name=role'<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>'>
+                                            <option>None</option>
+                                            <?php
+                                            if ($row2['user_id'])
+                                            {
+                                            ?>
+                                                <option <?php echo (($row2['selected'])? "selected" : "");?> value='<?php echo htmlentities($row2['user_id'], ENT_QUOTES); ?>'><?php echo htmlentities($row2['firstName'], ENT_QUOTES); ?></option>
+                                            <?php
+                                            }
+                                            $sel_open = true;
+                                        }
+                                    }
                                      ?>
-                                        <br>
-                                        <label class="form-label">'<?php echo htmlentities($row2['role'], ENT_QUOTES);?>':</label>
-                                        <input class="textbox" name="role" type="text" value='<?php echo htmlentities($row2['firstName'], ENT_QUOTES); ?>'
-                                        <br>
-                                <?php
-                                    } while ($row2 = $res2->fetch_assoc())
-                                ?>
                             </p>
                             <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                     </form>
