@@ -53,12 +53,14 @@
         }
         
         // TODO: validate team and user adding
-        
+        //var_dump($_POST);
+        // for each role field
         foreach ($_POST as $key => $value)
         {
-            if (substr($key, 0, 4) == "role")
+            // updates user assigned to role
+            if (substr($key, 0, 9) == "role_user")
             {
-                $role_id = filter_var(substr($key, 4), FILTER_SANITIZE_NUMBER_INT);
+                $role_id = filter_var(substr($key, 9), FILTER_SANITIZE_NUMBER_INT);
                 $user_id = (int)$value;
                 $stmt = $conn->prepare("UPDATE `role_assoc` SET `selected`=0 WHERE `team_id`=? AND `role_id`=?");
                 $stmt->bind_param("ii", $id, $role_id);
@@ -66,6 +68,15 @@
                 $stmt = $conn->prepare("UPDATE `role_assoc` SET `selected`=1 WHERE `team_id`=? AND `role_id`=? AND `user_id`=?");
                 $stmt->bind_param("iii", $id, $role_id, $user_id);
                 $stmt->execute();
+            }
+            // updates role name if changed
+            else if (substr($key, 0, 9) == "role_name")
+            {
+                $role_id = filter_var(substr($key, 9), FILTER_SANITIZE_NUMBER_INT);
+                $stmt = $conn->prepare("UPDATE `roles` SET `role`=? WHERE `id`=?");
+                $stmt->bind_param("si", $value, $role_id);
+                $stmt->execute();
+                
             }
         }
         
@@ -135,8 +146,9 @@
                                             array_push($role_ids, $row2['role_id']);
                                             if ($sel_open) { ?></select><?php $sel_open = false; } ?>
                                             <br>
-                                            <label class="form-label">'<?php echo htmlentities($row2['role'], ENT_QUOTES);?>':</label>
-                                            <select name=role'<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>'>
+                                            <input type="text" name='role_name<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>' value='<?php echo htmlentities($row2['role'], ENT_QUOTES);?>'></input>
+                                            <input type="hidden" name='role_id<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>' value='<?php echo htmlentities($row2['role_id'], ENT_QUOTES);?>'/>
+                                            <select name='role_user<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>'>
                                             <option>None</option>
                                             <?php
                                             if ($row2['user_id'])
