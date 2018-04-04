@@ -1,0 +1,31 @@
+{% include 'templates/header.html' %}
+{% include 'templates/navbar.html' with nav %}
+<body>
+    <div id="join-panel" class="panel panel-primary">
+        <div class="panel-body">
+            <script>
+                function setDelete() { document.getElementById("action").value = "delete"; }
+            </script>
+            {% if length == 0 %}
+                No teams need approval.
+            {% else %}
+            <table class="table-striped table-bordered">
+                    <tr><th>Team Title</th><th>Description</th><th>Approve</th><th>Delete</th></tr>
+                    {% for row in rows %}
+                        <tr>
+                            <td>{{ row['title'] }}</td>
+                            <td>{{ row['description'] }}</td>
+                                <form method="post" action="/approveteam.php" />
+                                <input type="hidden" id="action" name="action" value="approve" />
+                                    <input type="hidden" name="id" value='{{ row['id'] }}'/>
+                                    <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Approve" /></div></td>
+                                    <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Delete" onclick="setDelete()"/></div></td>
+                                 </form>
+                        </tr>
+                        {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

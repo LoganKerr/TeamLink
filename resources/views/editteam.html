@@ -1,0 +1,56 @@
+{% include 'templates/header.html' %}
+{% include 'templates/navbar.html' with nav %}
+<body>
+    <div id="login-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">Update the information for your team</div>
+            <div class="panel-body">
+                <form method="post" action='/editteam.php?id={{ user_id }}'>
+                    <p>
+                        <label class="form-label">Title:</label>
+                        <input class="textbox" name="title" type="text" value='{{ title }}' />
+                        {% if error['title'] %}
+                        {{ error['title'] | raw }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label class="form-label">Description:</label>
+                        <textarea name="description">{{ description }}</textarea>
+                        {% if error['description'] %}
+                        {{ error['description'] | raw }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label class="form-label">Roles:</label>
+                            {% set sel_open = false %}
+                            {% set curr_role_id = -1 %}
+                            {% for row2 in rows2 %}
+                                {% if row2['role_id'] == curr_role_id %}
+                                    {% if row2['user_id'] %}
+                                        <option {{ ((row2['selected'])? "selected" : "") }} value='{{ row2['user_id'] }}'>{{ row2['firstName'] }}</option>
+                                    {% endif %}
+                                {% else %}
+                                    {% set curr_role_id = row2['role_id'] %}
+                                    {% if sel_open %}
+                                        </select>
+                                        {% set sel_open = false %}
+                                    {% endif %}
+                                    <br>
+                                    <input type="text" name='role_name{{ row2['role_id'] }}' value='{{ row2['role'] }}'></input>
+                                    <input type="hidden" name='role_id{{ row2['role_id'] }}' value='{{ row2['role_id'] }}'/>
+                                    <select name='role_user{{ row2['role_id'] }}'>
+                                        <option>None</option>
+                                        {% if row2['user_id'] %}
+                                            <option {{ ((row2['selected'])? "selected" : "") }} value='{{ row2['user_id'] }}'>{{ row2['firstName'] }}</option>
+                                        {% endif %}
+                                        {% set sel_open = true %}
+                                {% endif%}
+                            {% endfor %}
+                        </p>
+                    <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

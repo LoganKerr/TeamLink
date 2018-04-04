@@ -1,0 +1,40 @@
+{% include 'templates/header.html' %}
+{% include 'templates/navbar.html' with nav %}
+<body>
+    <div id="signup-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Change your information</div>
+            <div class="panel-body">
+                <form method="post" action="/profile.php">
+                    {% if faculty_id %}
+                        <p>
+                            <label class="form-label">Department:</label>
+                            <input class="textbox" name="department" type="text" value='{{ department }}'/>
+                            {% if error['department'] %}
+                            {{ error['department'] | raw }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                    {% if student_id %}
+                        <p>
+                            <label class="form-label">Major:</label>
+                            <input class="textbox" name="major" type="text" value='{{ major }}'/>
+                            {% if error['major'] %}
+                            {{ error['major'] | raw }}
+                            {% endif %}
+                        </p>
+                        <p>
+                            <label class="form-label">Interests:</label>
+                            <textarea name="interests" rows="4" cols="50" >{{ interests }}</textarea>
+                            {% if error['interests'] %}
+                            {{ error['interests'] | raw }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                    <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

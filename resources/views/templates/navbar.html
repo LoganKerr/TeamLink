@@ -1,0 +1,53 @@
+<nav class="navbar navbar-inverse bg-primary">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">TeamLink</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li
+                {% if page == "/menu.php" %}
+                class='active'
+                {% endif %}
+            >
+                <a href="menu.php">Main Menu</a>
+            </li>
+            <li
+                {% if page == "/profile.php" %}
+                class='active'
+                {% endif %}
+            >
+                <a href="/profile.php">Profile</a>
+            </li>
+            <li
+                {% if (page == "/myteams.php" or page == "/editteam.php") %}
+                class='active'
+                {% endif %}
+            >
+                <a href="/myteams.php">My Teams</a>
+            </li>
+            <li
+                {% if page == "/createteam.php" %}
+                class='active'
+                {% endif %}
+            >
+                <a href="/createteam.php">Create a Team</a>
+            </li>
+            <li
+                {% if page == "/jointeam.php" %}
+                class='active'
+                {% endif %}
+            >
+                <a href="/jointeam.php">Join a Team</a>
+            </li>
+            {% if admin %}
+                <li
+                    {% if page == "/approveteam.php" %}
+                    class='active'
+                    {% endif %}
+                >
+                    <a href="/approveteam.php">Approve teams</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
