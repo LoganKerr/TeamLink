@@ -10,25 +10,19 @@
                         <p>
                             <label class="form-label">Department:</label>
                             <input class="textbox" name="department" type="text" value='{{ department }}'/>
-                            {% if error['department'] %}
-                            {{ error['department'] | raw }}
-                            {% endif %}
+                            {{ error['department']? error['department'] | raw }}
                         </p>
                     {% endif %}
                     {% if student_id %}
                         <p>
                             <label class="form-label">Major:</label>
                             <input class="textbox" name="major" type="text" value='{{ major }}'/>
-                            {% if error['major'] %}
-                            {{ error['major'] | raw }}
-                            {% endif %}
+                            {{ error['major']? error['major'] | raw }}
                         </p>
                         <p>
                             <label class="form-label">Interests:</label>
                             <textarea name="interests" rows="4" cols="50" >{{ interests }}</textarea>
-                            {% if error['interests'] %}
-                            {{ error['interests'] | raw }}
-                            {% endif %}
+                            {{ error['interests']? error['interests'] | raw }}
                         </p>
                     {% endif %}
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>

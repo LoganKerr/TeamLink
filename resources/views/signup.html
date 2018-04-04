@@ -10,15 +10,11 @@
                 <form method="post" action="/signup.php">
                     <p>
                         <label class="form-label">Email:</label><input class="textbox" name="email" type="text" value='{{ email }}'/>
-                        {% if error['email'] %}
-                        {{ error['email'] | raw }}
-                        {% endif %}
+                        {{ error['email']? error['email'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">University:</label><input class="textbox" name="university" type="text" value='{{ university }}'/>
-                        {% if error['university'] %}
-                        {{ error['university'] | raw }}
-                        {% endif %}
+                        {{ error['university']? error['university'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Role:</label>
@@ -27,58 +23,42 @@
                             <option>{{ role }}</option>
                             {% endfor %}
                         </select>
-                        {% if error['role'] %}
-                        {{ error['role'] | raw }}
-                        {% endif %}
+                        {{ error['role']? error['role'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">First Name:</label>
                         <input class="textbox" name="firstName" type="text" value='{{ firstName }}'/>
-                        {% if error['firstName'] %}
-                        {{ error['firstName'] | raw }}
-                        {% endif %}
+                        {{ error['firstName']? error['firstName'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Last Name:</label>
                         <input class="textbox" name="lastName" type="text" value='{{ lastName }}'/>
-                        {% if error['lastName'] %}
-                        {{ error['lastName'] | raw }}
-                        {% endif %}
+                        {{ error['lastName']? error['lastName'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Password:</label>
                         <input class="textbox" name="pass1" type="password" />
-                        {% if error['pass1'] %}
-                        {{ error['pass1'] | raw }}
-                        {% endif %}
+                        {{ error['pass1']? error['pass1'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Confirm password:</label>
                         <input class="textbox" name="pass2" type="password" />
-                        {% if error['pass2'] %}
-                        {{ error['pass2'] | raw }}
-                        {% endif %}
+                        {{ error['pass2']? error['pass2'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Department:</label>
                         <input class="textbox" name="department" type="text" value='{{ department }}'/>
-                        {% if error['department'] %}
-                        {{ error['department'] | raw }}
-                        {% endif %}
+                        {{ error['department']? error['department'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Major:</label>
                         <input class="textbox" name="major" type="text" value='{{ major }}'/>
-                        {% if error['major'] %}
-                        {{ error['major'] | raw }}
-                        {% endif %}
+                        {{ error['major']? error['major'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Interests:</label>
                         <textarea name="interests" rows="4" cols="50">{{ interests }}</textarea>
-                        {% if error['interests'] %}
-                        {{ error['interests'] | raw }}
-                        {% endif %}
+                        {{ error['interests']? error['interests'] | raw }}
                     </p>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>

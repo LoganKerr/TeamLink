@@ -11,15 +11,11 @@
                     <p>
                         <label class="form-label">Email:</label>
                         <input class="textbox" name="email" type="text" value='{{ email }}'/>
-                        {% if error['email'] %}
-                        {{ error['email'] | raw }}
-                        {% endif %}
+                        {{ error['email']? error['email'] | raw }}
                     </p>
                     <p>
                         <label class="form-label">Password:</label><input class="textbox" name="pass" type="password" />
-                        {% if error['password'] %}
-                        {{ error['password'] | raw }}
-                        {% endif %}
+                        {{ error['password']? error['password'] | raw }}
                     </p>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
                 </form>

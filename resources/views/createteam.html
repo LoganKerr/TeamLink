@@ -10,16 +10,12 @@
                         <p>
                             <label class="form-label">Title:</label>
                             <input class="textbox" name="title" type="text" value='{{ title }}'/>
-                            {% if error['title'] %}
-                            {{ error['title'] | raw }}
-                            {% endif %}
+                            {{ error['title']? error['title'] | raw }}
                         </p>
                         <p>
                             <label class="form-label">Description:</label>
                             <textarea name="description">{{ description }}</textarea>
-                            {% if error['description'] %}
-                            {{ error['description'] | raw }}
-                            {% endif %}
+                            {{ error['description']? error['description'] | raw }}
                         </p>
                         <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
                     </form>
