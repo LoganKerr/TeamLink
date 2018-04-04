@@ -3,56 +3,38 @@
     ob_start();
     
     require_once("config/config.php");
+    require_once("functions.php");
+    require_once("vendor/autoload.php");
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
     {
         header("Location: index.php");
     }
+    
+    $user_id = $_SESSION['user_id'];
+    // get teams
+    $stmt = $conn->prepare("SELECT `teams`.`id`, roles.`role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE `user_id`=? AND role_assoc.`selected`");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $i = 0;
+    while ($row = $res->fetch_assoc())
+    {
+        $rows[$i] = $row;
+        $i++;
+    }
+    $length = count($rows);
+    
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    $admin = check_if_user_is_admin($_SESSION['user_id']);
+    
+    echo $twig->render('myteams.html', array(
+                                             'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                             'error' => $error,
+                                             'rows' => $rows,
+                                             'length' => $length
+                                             ));
 ?>
-
-<?php include "resources/templates/header.php"; ?>
-<?php include "resources/templates/navbar.php"; ?>
-<body>
-    <div id="join-panel" class="panel panel-primary">
-    <div class="panel-body">
-    <?php
-        $user_id = $_SESSION['user_id'];
-        // get teams
-        $stmt = $conn->prepare("SELECT `teams`.`id`, roles.`role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE `user_id`=? AND role_assoc.`selected`");
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        
-        if ($res->num_rows == 0)
-        {
-            echo "You have no teams :(";
-        }
-        else
-        {
-        ?>
-            <table class="table-striped table-bordered">
-		        <tr>
-			        <th>Team Title</th><th>Description</th><th>Role</th><th>Public?</th><th></th>
-		        </tr>
-                <?php
-                    while ($row = $res->fetch_assoc()) {
-                ?>
-		                <tr>
-                            <td><?php echo htmlentities($row['title'], ENT_QUOTES); ?></td>
-                            <td><?php echo htmlentities($row['description'], ENT_QUOTES); ?></td>
-                            <td><?php echo htmlentities($row['role'], ENT_QUOTES); ?></td>
-                            <td><?php echo (($row['public'])? "Yes" : "No"); ?></td>
-                            <td><a href='<?php echo "/editteam.php?id=".$row['id'].""; ?>'>Edit</a></td>
-		                </tr>
-                    <?php
-                    } // closes while row loop
-                    ?>
-	        </table>
-        <?php
-        } // closes else statment to no rows
-        ?>
-    </div>
-    </div>
-</body>
-</html>

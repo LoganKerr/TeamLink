@@ -3,6 +3,7 @@
     ob_start();
     
     require_once("config/config.php");
+    require_once("vendor/autoload.php");
     
     // if user signed in
     if (isset($_SESSION['user_id']))
@@ -54,25 +55,13 @@
             exit();
         }
     }
+    
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    echo $twig->render('login.html', array(
+                                           'error' => $error['email'],
+                                           'email' => $email
+                       ));
+    
 ?>
-
-<?php include "resources/templates/header.php"; ?>
-<body>
-    <div id="login-panel" class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <a href="/index.php" class="btn btn-default btn-sm"><</a>
-                Enter your email address and password
-            </div>
-                <div class="panel-body">
-                    <form method="post" action="/login.php">
-                            <?php echo(isset($error['email']))?$error['email']:""; ?>
-                            <p><label class="form-label">Email:</label><input class="textbox" name="email" type="text" value='<?php if (isset($email)) { echo htmlentities($email, ENT_QUOTES); } ?>'/></p>
-                            <p><label class="form-label">Password:</label><input class="textbox" name="pass" type="password" /></p>
-                            <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
-                        </form>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>

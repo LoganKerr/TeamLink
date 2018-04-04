@@ -3,6 +3,8 @@
     ob_start();
     
     require_once("config/config.php");
+    require_once("functions.php");
+    require_once("vendor/autoload.php");
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
@@ -10,21 +12,14 @@
         header("Location: index.php");
         exit();
     }
+    
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    $admin = check_if_user_is_admin($_SESSION['user_id']);
+    
+    echo $twig->render('menu.html', array(
+                                        'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin)
+                       ));
+    
 ?>
-<?php include "resources/templates/header.php"; ?>
-<?php include "resources/templates/navbar.php"; ?>
-<body>
-    <div id="menu-panel" class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading text-center">Choose one of the following options</div>
-            <div class="panel-body">
-                <a href="/profile.php" class="btn btn-primary btn-block">Profile</a><br />
-                <a href="/myteams.php" class="btn btn-primary btn-block">My Teams</a><br />
-                <a href="/createteam.php" class="btn btn-primary btn-block">Create Team</a><br />
-                <a href="/jointeam.php" class="btn btn-primary btn-block">Join Team</a><br />
-                <a href="/signout.php" class="btn btn-primary btn-block">Sign out</a><br />
-            </div>
-        </div>
-    </div>
-</body>
-</html>

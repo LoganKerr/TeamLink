@@ -2,6 +2,8 @@
     
     session_start();
     require_once("config/config.php");
+    require_once("functions.php");
+    require_once("vendor/autoload.php");
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
@@ -112,61 +114,33 @@
     $res2 = $stmt2->get_result();
     
     $row = $res->fetch_assoc();
+    
+    
+    
+    
+    $role_ids = array();
+    $i = 0;
+    while ($row2 = $res2->fetch_assoc())
+    {
+        $rows2[$i] = $row2;
+        $i++;
+    }
+    $length = count($rows2);
+    
+    
+    
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    $admin = check_if_user_is_admin($_SESSION['user_id']);
+    
+    echo $twig->render('editteam.html', array(
+                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                              'error' => $error,
+                                              'user_id' => $_GET['id'],
+                                              'title' => ((isset($title))? $title : $row['title']),
+                                              'description' => ((isset($description))? $description : $row['description']),
+                                              'rows2' => $rows2,
+                                              'length' => $length
+                                             ));
 ?>
-
-<?php include "resources/templates/header.php"; ?>
-<?php include "resources/templates/navbar.php"; ?>
-<body>
-    <div id="login-panel" class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading text-center">Update the information for your team</div>
-                <div class="panel-body">
-<form method="post" action='<?php echo "/editteam.php?id=$_GET[id]"; ?>'>
-                            <p><label class="form-label">Title:</label><input class="textbox" name="title" type="text" value='<?php echo(isset($title))?htmlentities($title, ENT_QUOTES):htmlentities($row['title'], ENT_QUOTES); ?>' />
-                            <?php echo(isset($error['title']))?$error['title']:""; ?></p>
-                            <p><label class="form-label">Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } else { echo htmlentities($row['description'], ENT_QUOTES); } ?></textarea>
-                            <?php echo(isset($error['description']))?$error['description']:""; ?></p>
-                            <p><label class="form-label">Roles:</label>
-                                <?php
-                                    $sel_open = false;
-                                    $role_ids = array ();
-                                    while ($row2 = $res2->fetch_assoc())
-                                    {
-                                        if (in_array($row2['role_id'], $role_ids))
-                                        {
-                                            if ($row2['user_id'])
-                                            {
-                                            ?>
-                                                <option <?php echo (($row2['selected'])? "selected" : "");?> value='<?php echo htmlentities($row2['user_id'], ENT_QUOTES); ?>'><?php echo htmlentities($row2['firstName'], ENT_QUOTES); ?></option>
-                                            <?php
-                                            }
-                                        }
-                                        else
-                                        {
-                                            array_push($role_ids, $row2['role_id']);
-                                            if ($sel_open) { ?></select><?php $sel_open = false; } ?>
-                                            <br>
-                                            <input type="text" name='role_name<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>' value='<?php echo htmlentities($row2['role'], ENT_QUOTES);?>'></input>
-                                            <input type="hidden" name='role_id<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>' value='<?php echo htmlentities($row2['role_id'], ENT_QUOTES);?>'/>
-                                            <select name='role_user<?php echo htmlentities($row2['role_id'], ENT_QUOTES); ?>'>
-                                            <option>None</option>
-                                            <?php
-                                            if ($row2['user_id'])
-                                            {
-                                            ?>
-                                                <option <?php echo (($row2['selected'])? "selected" : "");?> value='<?php echo htmlentities($row2['user_id'], ENT_QUOTES); ?>'><?php echo htmlentities($row2['firstName'], ENT_QUOTES); ?></option>
-                                            <?php
-                                            }
-                                            $sel_open = true;
-                                        }
-                                    }
-                                     ?>
-                            </p>
-                            <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
-                    </form>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-

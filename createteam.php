@@ -3,6 +3,8 @@
     ob_start();
     
     require_once("config/config.php");
+    require_once("functions.php");
+    require_once("vendor/autoload.php");
     
     // if user is not signed in
     if (!isset($_SESSION['user_id']))
@@ -64,25 +66,16 @@
             }
         }
     }
+    
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    $admin = check_if_user_is_admin($_SESSION['user_id']);
+    
+    echo $twig->render('createteam.html', array(
+                                             'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                                'error' => $error,
+                                                'title' => $title,
+                                                'description' => $description
+                                             ));
 ?>
-<?php include "resources/templates/header.php"; ?>
-<?php include "resources/templates/navbar.php"; ?>
-<body>
-    <div id="login-panel" class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading text-center">Enter the information for a new team</div>
-            <div class="panel-body">
-                <div class="container">
-                    <form method="post" action="/createteam.php">
-                        <p><label class="form-label">Title:</label><input class="textbox" name="title" type="text" value='<?php if (isset($title)) { echo htmlentities($title, ENT_QUOTES); } ?>'/>
-                        <?php echo(isset($error['title']))?$error['title']:""; ?></p>
-                        <p><label class="form-label">Description:</label><textarea name="description"><?php if (isset($description)) { echo htmlentities($description, ENT_QUOTES); } ?></textarea>
-                        <?php echo(isset($error['description']))?$error['description']:""; ?></p>
-                        <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>

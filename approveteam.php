@@ -3,6 +3,8 @@
     ob_start();
     
     require_once("config/config.php");
+    require_once("functions.php");
+    require_once("vendor/autoload.php");
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
@@ -41,59 +43,29 @@
         $stmt->execute();
     }
     
-?>
-
-<?php include "resources/templates/header.php"; ?>
-<?php include "resources/templates/navbar.php"; ?>
-<body>
-    <div id="join-panel" class="panel panel-primary">
-        <div class="panel-body">
-            <?php
-            $user_id = $_SESSION['user_id'];
-            // get teams
-            $stmt = $conn->prepare("SELECT `id`, `title`, `description` FROM `teams` WHERE NOT `public`");
-            $stmt->execute();
-            $res = $stmt->get_result();
+    $user_id = $_SESSION['user_id'];
+    // get teams
+    $stmt = $conn->prepare("SELECT `id`, `title`, `description` FROM `teams` WHERE NOT `public`");
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $i = 0;
+    while ($row = $res->fetch_assoc())
+    {
+        $rows[$i] = $row;
+        $i++;
+    }
+    $length = count($rows);
     
-            if ($res->num_rows == 0)
-            {
-                echo "No teams need approval";
-            }
-            else
-            {
-            ?>
-                <script>
-                    function setDelete()
-                    {
-                        document.getElementById("action").value = "delete";
-                    }
-                </script>
-                    <table class="table-striped table-bordered">
-                        <tr>
-                            <th>Team Title</th><th>Description</th><th>Approve</th><th>Delete</th>
-                        </tr>
-                        <?php
-                        while ($row = $res->fetch_assoc()) {
-                        ?>
-                            <tr>
-                                <td><?php echo htmlentities($row['title'], ENT_QUOTES); ?></td>
-                                <td><?php echo htmlentities($row['description'], ENT_QUOTES); ?></td>
-                                <form method="post" action="/approveteam.php" />
-                                <input type="hidden" id="action" name="action" value="approve" />
-                                <input type="hidden" name="id" value='<?php echo $row['id'] ?>'/>
-                                <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Approve" /></div></td>
-                                <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Delete" onclick="setDelete()"/></div></td>
-                            </tr>
-                        <?php
-                        } // closes while row loop
-                        ?>
-                    </table>
-                </form>
-            <?php
-            } // closes else statment to no rows
-            ?>
-        </div>
-    </div>
-</body>
-</html>
-
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    $admin = check_if_user_is_admin($_SESSION['user_id']);
+    
+    echo $twig->render('approveteam.html', array(
+                                             'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                             'error' => $error,
+                                             'rows' => $rows,
+                                             'length' => $length
+                                             ));
+    
+?>

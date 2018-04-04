@@ -4,6 +4,8 @@
     header('Content-Type: text/html; charset=utf-8');
     
     require_once("config/config.php");
+    require_once("functions.php");
+    require_once("vendor/autoload.php");
     
     // if user is not signed in
     if (!isset($_SESSION['user_id']))
@@ -75,29 +77,19 @@
         die("User not found.");
     }
     $row = $res->fetch_assoc();
+    
+    $loader = new Twig_Loader_Filesystem('resources/views');
+    $twig = new Twig_Environment($loader);
+    
+    $admin = check_if_user_is_admin($_SESSION['user_id']);
+    
+    echo $twig->render('profile.html', array(
+                                             'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                             'error' => $error,
+                                             'faculty_id' => $row['faculty_id'],
+                                             'department' => ((isset($department))? $department : $row['department']),
+                                             'student_id' => $row['student_id'],
+                                             'major' => ((isset($major))? $major : $row['major']),
+                                             'interests' => ((isset($interests))? $interests : $row['interests'])
+                                          ));
 ?>
-<?php include "resources/templates/header.php"; ?>
-<?php include "resources/templates/navbar.php"; ?>
-<body>
-    <div id="signup-panel" class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Change your information</div>   
-            <div class="panel-body">
-                <form method="post" action="/profile.php">
-                    <?php if (isset($row['faculty_id'])) { ?>
-                    <p><label class="form-label">Department:</label><input class="textbox" name="department" type="text" value='<?php if (isset($department)) { echo htmlentities($department, ENT_QUOTES); } else { echo htmlentities($row['department'], ENT_QUOTES); } ?>'/>
-                    <?php echo(isset($error['department']))?$error['department']:""; ?></p>
-                    <?php } ?>
-                    <?php if (isset($row['student_id'])) { ?>
-                    <p><label class="form-label">Major:</label><input class="textbox" name="major" type="text" value='<?php if (isset($major)) { echo htmlentities($major, ENT_QUOTES); } else { echo htmlentities($row['major'], ENT_QUOTES); } ?>'/>
-                    <?php echo(isset($error['major']))?$error['major']:""; ?></p>
-                    <p><label class="form-label">Interests:</label><textarea name="interests" rows="4" cols="50" ><?php if (isset($interests)) { echo htmlentities($interests, ENT_QUOTES); } else { echo htmlentities($row['interests'], ENT_QUOTES); } ?></textarea>
-                    <?php echo(isset($error['interests']))?$error['interests']:""; ?></p>
-                    <?php } ?>
-                    <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
-                </form>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
