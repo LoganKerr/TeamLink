@@ -5,16 +5,16 @@
         <div class="panel panel-primary">
             <div class="panel-heading text-center">Update the information for your team</div>
             <div class="panel-body">
-                <form method="post" action='/editteam.php?id={{ user_id }}'>
+                <form method="post" action='editteam.php?id={{ user_id }}'>
                     <p>
                         <label class="form-label">Title:</label>
                         <input class="textbox" name="title" type="text" value='{{ title }}' />
-                        {{ error['title']? error['title'] | raw }}
+                        {{ error['title']? error['title'] }}
                     </p>
                     <p>
                         <label class="form-label">Description:</label>
                         <textarea name="description">{{ description }}</textarea>
-                        {{ error['description']? error['description'] | raw }}
+                        {{ error['description']? error['description'] }}
                     </p>
                     <p>
                         <label class="form-label">Roles:</label>

@@ -2,6 +2,7 @@
     session_start();
     ob_start();
     
+    
     require_once("config/config.php");
     require_once("vendor/autoload.php");
     
@@ -21,7 +22,7 @@
         {
             if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
             {
-                $error[$value] = "<strong>This field is required.</strong>";
+                $error[$value] = "This field is required";
             }
         }
         $email = $_POST['email'];
@@ -60,7 +61,7 @@
     $twig = new Twig_Environment($loader);
     
     echo $twig->render('login.html', array(
-                                           'error' => $error['email'],
+                                           'error' => $error,
                                            'email' => $email
                        ));
     

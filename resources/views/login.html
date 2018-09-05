@@ -3,19 +3,19 @@
     <div id="login-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <a href="/index.php" class="btn btn-default btn-sm"><</a>
+                <a href="index.php" class="btn btn-default btn-sm"><</a>
                     Enter your email address and password
             </div>
             <div class="panel-body">
-                <form method="post" action="/login.php">
+                <form method="post" action="login.php">
                     <p>
                         <label class="form-label">Email:</label>
                         <input class="textbox" name="email" type="text" value='{{ email }}'/>
-                        {{ error['email']? error['email'] | raw }}
+                        <strong>{{ error['email']? error['email'] }}</strong>
                     </p>
                     <p>
                         <label class="form-label">Password:</label><input class="textbox" name="pass" type="password" />
-                        {{ error['password']? error['password'] | raw }}
+                        {{ error['pass']? error['pass'] }}
                     </p>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Log in" /></div>
                 </form>

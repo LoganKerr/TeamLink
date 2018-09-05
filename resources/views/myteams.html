@@ -16,7 +16,7 @@
                             <td>{{ row['description'] }}</td>
                             <td>{{ row['role'] }}</td>
                             <td>{{ ((row['public'])? "Yes" : "No") }}</td>
-                            <td><a href='/editteam.php?id={{ row['id'] }}'>Edit</a></td>
+                            <td><a href='editteam.php?id={{ row['id'] }}'>Edit</a></td>
                         </tr>
                     {% endfor %}
                 </table>

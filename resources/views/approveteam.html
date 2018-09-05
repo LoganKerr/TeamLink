@@ -15,7 +15,7 @@
                         <tr>
                             <td>{{ row['title'] }}</td>
                             <td>{{ row['description'] }}</td>
-                                <form method="post" action="/approveteam.php" />
+                                <form method="post" action="approveteam.php" />
                                 <input type="hidden" id="action" name="action" value="approve" />
                                     <input type="hidden" name="id" value='{{ row['id'] }}'/>
                                     <td><div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Approve" /></div></td>

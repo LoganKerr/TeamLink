@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
 		{
-			$error[$value] = "<strong>This field is required.</strong>";
+			$error[$value] = "This field is required.";
 		}
 	}
 	// escape data
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $res = $stmt->get_result();
         
         if ($res->num_rows != 0) {
-            $error['email'] = " <strong>Email is already in use.</strong>";
+            $error['email'] = " Email is already in use.";
         }
 	}
     
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	if (!empty($pass1))
 	{
-		// $error['hostname'] .= " <strong>The hostname is the name configured in the operating system.&nbsp; For VMs, it is usually the DNS Name field shown in the vSphere client.</strong>";
+		// $error['hostname'] .= " The hostname is the name configured in the operating system.&nbsp; For VMs, it is usually the DNS Name field shown in the vSphere client.";
 		// TODO: validate password
 	}
 	
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $stmt->bind_param("ss", $major, $interests);
             if (!$stmt->execute())
             {
-                echo "<p><strong>Registration error: ".$stmt->error."</strong></p>";
+                echo "Registration error: ".$stmt->error;
             }
             else
             {
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 }
                 else
                 {
-                    echo "<strong>Registration error: ".$stmt->error."</strong>";
+                    echo "Registration error: ".$stmt->error;
                 }
             }
         }
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $stmt->bind_param("s", $department);
             if (!$stmt->execute())
             {
-                echo "<p><strong>Registration error: ".$stmt->error."</strong></p>";
+                echo "Registration error: ".$stmt->error;
             }
             else
             {
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 }
                 else
                 {
-                    echo "<strong>Registration error: ".$stmt->error."</strong>";
+                    echo "Registration error: ".$stmt->error;
                 }
             }
         }

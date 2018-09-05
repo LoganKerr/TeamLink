@@ -8,10 +8,10 @@
                 <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
                 <br>{{ ((search)? "Showing results for \""~search~"\"" : "") }}<br>
                 {% if length == 0%}
-                    There are no teams :(
+                    There are no projects :(
                 {% else %}
                     <table class="table-striped table-bordered">
-                        <tr><th>Name</th><th>Team Title</th><th>Description</th><th></th></tr>
+                        <tr><th>Name</th><th>Project Title</th><th>Description</th><th></th></tr>
                         {% for row in rows %}
                             <tr>
                                 <td>{{ row['firstName']~" "~row['lastName'] }}</td>
