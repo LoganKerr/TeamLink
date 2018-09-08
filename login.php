@@ -4,6 +4,7 @@
     
     
     require_once("config/config.php");
+    require_once("functions.php");
     require_once("vendor/autoload.php");
     
     // if user signed in
