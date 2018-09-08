@@ -5,6 +5,9 @@
         <div class="panel panel-primary">
             <div class="panel-heading text-center">Update the information for your team</div>
             <div class="panel-body">
+                {% if request_method == "POST" %}
+                {{ error|length? "An error occurred" : "Changes saved" }}
+                {% endif %}
                 <form method="post" action='editteam.php?id={{ user_id }}'>
                     <p>
                         <label class="form-label">Title:</label>
