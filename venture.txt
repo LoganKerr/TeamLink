@@ -1,5 +1,0 @@
-Venture is a web app for college students to form teams with each other and faculty. We will charge Universities a subscription fee for access to our services. They will supply a roster of students/faculty to receive accounts.
-
-Students can create  and edit teams. They can add roles other students/faculty can fill.
-
-Faculty can create teams too and have separate table for their projects.
