@@ -21,13 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	// validate data -----------------------------------
 	// check empty fields
 	$required = array("email", "firstName", "lastName", "pass1", "pass2", "university", "role");
-	foreach ($required as $key => $value)
-	{
-		if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
-		{
-			$error[$value] = "This field is required.";
-		}
-	}
+	$error = set_error_on_empty_required_fields($POST, $required, $error);
 	// escape data
 	$email = $_POST['email'];
     $university = $_POST['university'];

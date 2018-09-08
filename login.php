@@ -18,13 +18,7 @@
     {
         $error = array();
         $required = array("email", "pass");
-        foreach ($required as $key => $value)
-        {
-            if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
-            {
-                $error[$value] = "This field is required";
-            }
-        }
+        $error = set_error_on_empty_required_fields($POST, $required, $error);
         $email = $_POST['email'];
         $pass = $_POST['pass'];
         

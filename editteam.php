@@ -32,13 +32,7 @@
         // validate data -----------------------------------
         // check empty fields
         $required = array("title", "description");
-        foreach ($required as $key => $value)
-        {
-            if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
-            {
-                $error[$value] = "This field is required";
-            }
-         }
+        $error = set_error_on_empty_required_fields($POST, $required, $error);
         // escape data
         $id = $_GET['id'];
         $title = $_POST['title'];
