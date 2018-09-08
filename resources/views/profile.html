@@ -5,6 +5,9 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Change your information</div>
             <div class="panel-body">
+                {% if request_method == "POST" %}
+                    {{ error|length? "An error occurred" : "Changes saved" }}
+                {% endif %}
                 <form method="post" action="profile.php">
                     {% if faculty_id %}
                         <p>

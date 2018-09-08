@@ -25,7 +25,7 @@
         {
             if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
             {
-                $error[$value] = "<strong>This field is required.</strong>";
+                $error[$value] = "This field is required";
             }
         }
         // escape data
@@ -51,18 +51,10 @@
                 $team_id = $stmt->insert_id;
                 $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role_id`, `selected`) VALUES (?,?, 0, 1)");
                 $stmt->bind_param("ii", $user_id, $team_id);
-                if ($stmt->execute())
+                if (!$stmt->execute())
                 {
-                    echo "<p><strong>Team created.</strong></p>";
+                    $error['sql'] = $stmt->error;
                 }
-                else
-                {
-                echo "<p><strong>Error: ".$stmt->error."</strong></p>";
-                }
-            }
-            else
-            {
-                echo "<p><strong>Error: ".$stmt->error."</strong></p>";
             }
         }
     }
@@ -74,6 +66,7 @@
     
     echo $twig->render('createteam.html', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                                'request_method' => $_SERVER['REQUEST_METHOD'],
                                                 'error' => $error,
                                                 'title' => $title,
                                                 'description' => $description

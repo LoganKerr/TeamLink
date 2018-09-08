@@ -36,7 +36,7 @@
         {
             if(!isset($_POST[$value]) || empty($_POST[$value]) && $_POST[$value] != '0')
             {
-                $error[$value] = "<strong>This field is required.</strong>";
+                $error[$value] = "This field is required";
             }
          }
         // escape data
@@ -86,13 +86,9 @@
         {
             $stmt = $conn->prepare("UPDATE `teams` SET `title`=?, `description`=? WHERE `id`=?");
             $stmt->bind_param("ssi", $title, $description, $id);
-            if ($stmt->execute())
+            if (!$stmt->execute())
             {
-                echo "Changes saved.";
-            }
-            else
-            {
-                echo "Error: ".$stmt->error;
+                $error['sql'] = $stmt->error;
             }
         }
     }
@@ -136,6 +132,7 @@
     
     echo $twig->render('editteam.html', array(
                                               'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                              'request_method' => $_SERVER['REQUEST_METHOD'],
                                               'error' => $error,
                                               'user_id' => $_GET['id'],
                                               'title' => ((isset($title))? $title : $row['title']),

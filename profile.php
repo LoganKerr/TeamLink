@@ -54,16 +54,12 @@
             //if (mysqli_query($conn, $stmt))
             if ($stmt->execute())
             {
-                if ($stmt2->execute())
+                if (!$stmt2->execute())
                 {
-                    echo "<p><strong>Changes have been saved.</strong></p>";
-                }
-                else
-                {
-                    echo "<strong>Changes could not be saved: ".$stmt2->error."</strong>";
+                    $error['sql'] = $stmt2->error;
                 }
             } else {
-                echo "<strong>Changes could not be saved: ".$stmt->error."</strong>";
+                $error['sql'] = $stmt->error;
             }
         }
     }
@@ -85,6 +81,7 @@
     
     echo $twig->render('profile.html', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                             'request_method' => $_SERVER['REQUEST_METHOD'],
                                              'error' => $error,
                                              'faculty_id' => $row['faculty_id'],
                                              'department' => ((isset($department))? $department : $row['department']),

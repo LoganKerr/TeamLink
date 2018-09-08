@@ -5,6 +5,9 @@
         <div class="panel panel-primary">
             <div class="panel-heading text-center">Enter the information for a new team</div>
             <div class="panel-body">
+                {% if request_method == "POST" %}
+                {{ error|length ? "An error occurred" : "Team created" }}
+                {% endif %}
                 <form method="post" action="createteam.php">
                     <p>
                         <label class="form-label">Title:</label>
