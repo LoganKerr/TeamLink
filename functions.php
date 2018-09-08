@@ -2,6 +2,7 @@
     
     require_once("config/config.php");
     
+    // checks if user_id is marked admin in database
     function check_if_user_is_admin($user_id)
     {
         global $conn;
