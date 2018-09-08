@@ -21,6 +21,7 @@
                     </p>
                     <p>
                         <label class="form-label">Roles:</label>
+                        <button type="button" class="btn btn-success" onclick="addField(event)">Add role</button>
                             {% set sel_open = false %}
                             {% set curr_role_id = -1 %}
                             {% for row2 in rows2 %}
@@ -46,7 +47,9 @@
                                 {% endif%}
                             {% endfor %}
                         </p>
-                    <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
+                    <div class="submit-button">
+                        <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+                    </div>
                 </form>
             </div>
         </div>
