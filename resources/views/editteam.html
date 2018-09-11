@@ -23,26 +23,30 @@
                     <p>
                         <label class="form-label" id="roles">Roles:</label>
                         <button type="button" class="btn btn-success" onclick="addField(event)">Add role</button>
-                        {# for each role for this team #}
-                        {% for row2 in rows2 %}
-                            {# sets role id if role textbox hasn't been created yet #}
-                            {% if row2['role_id'] != curr_role_id %}
-                                {% set curr_role_id = row2['role_id'] %}
-                                <br>
-                                <input type="text" name='role_name{{ row2['role_id'] }}' id='role_name{{ row2['role_id'] }}' value='{{ row2['role'] }}'></input>
-                                <input type="hidden" name='role_id{{ row2['role_id'] }}' value='{{ row2['role_id'] }}'/>
-                                <select name='role_user{{ row2['role_id'] }}'>
-                                    <option>None</option>
-                                    {# for each user applying for selected role #}
-                                    {% for row2 in rows2 %}
-                                        {% if row2['role_id'] == curr_role_id and row2['user_id'] %}
-                                            <option {{ ((row2['selected'])? "selected" : "") }} value='{{ row2['user_id'] }}'>{{ row2['firstName'] }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                                <button type="button" id='role_button{{ row2['role_id'] }}' onclick='removeRole(event, {{ row2['role_id'] }})'>Remove</button>
-                            {% endif %}
-                        {% endfor %}
+                        <div id='role_list'>
+                            {# for each role for this team #}
+                            {% for row2 in rows2 %}
+                                {# sets role id if role textbox hasn't been created yet #}
+                                {% if row2['role_id'] != curr_role_id %}
+                                    {% set curr_role_id = row2['role_id'] %}
+                                    <br>
+                                    <div id='role{{ row2['role_id'] }}'>
+                                        <input type="text" name='role_name{{ row2['role_id'] }}' id='role_name{{ row2['role_id'] }}' value='{{ row2['role'] }}'></input>
+                                        <input type="hidden" name='role_id{{ row2['role_id'] }}' value='{{ row2['role_id'] }}'/>
+                                        <select name='role_user{{ row2['role_id'] }}'>
+                                            <option>None</option>
+                                            {# for each user applying for selected role #}
+                                            {% for row2 in rows2 %}
+                                                {% if row2['role_id'] == curr_role_id and row2['user_id'] %}
+                                                    <option {{ ((row2['selected'])? "selected" : "") }} value='{{ row2['user_id'] }}'>{{ row2['firstName'] }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <button type="button" id='role_button{{ row2['role_id'] }}' onclick='removeRole(event, {{ row2['role_id'] }})'>Remove</button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                         </p>
                     <div class="submit-button">
                         <input class="btn btn-primary btn-block" type="submit" value="Submit" />

@@ -1,21 +1,28 @@
-/*
+// id of new roles being added
 var boxId = 1;
+// adds role when "Add role" is clicked
 function addField(e)
 {
-    var end = document.getElementById("roles");
-    var inputRoleName = document.createElement("textbox");
-    inputRoleName.name="role_new"+boxId;
-    boxId++;
+    var tempId = boxId;
+    // finds end of role list
+    var end = document.getElementById("role_list");
+    var inputRoleName = document.createElement("input");
+    inputRoleName.name="role_new"+tempId;
+    inputRoleName.id="role_new"+tempId;
+    var removeRoleButton = document.createElement("button");
+    removeRoleButton.id = "role_new_button"+tempId;
+    removeRoleButton.type = "button";
+    removeRoleButton.innerHTML='Remove';
     end.appendChild(document.createElement("br"));
     end.appendChild(inputRoleName);
+    end.appendChild(removeRoleButton);
     end.appendChild(document.createElement("br"));
+    removeRoleButton.addEventListener("click", function() { console.log(tempId); document.getElementById("role_new"+tempId).remove(); document.getElementById("role_new_button"+tempId).remove();  });
+    boxId++;
 }
-*/
 function removeRole(e, id)
 {
-    console.log("id: "+id);
     var role_name = document.getElementById("role_name"+id);
-    console.log(role_name);
     var role_button = document.getElementById("role_button"+id);
     if (role_button.value == "remove")
     {
