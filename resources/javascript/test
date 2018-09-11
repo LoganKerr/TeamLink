@@ -1,0 +1,36 @@
+/*
+var boxId = 1;
+function addField(e)
+{
+    var end = document.getElementById("roles");
+    var inputRoleName = document.createElement("textbox");
+    inputRoleName.name="role_new"+boxId;
+    boxId++;
+    end.appendChild(document.createElement("br"));
+    end.appendChild(inputRoleName);
+    end.appendChild(document.createElement("br"));
+}
+*/
+function removeRole(e, id)
+{
+    console.log("id: "+id);
+    var role_name = document.getElementById("role_name"+id);
+    console.log(role_name);
+    var role_button = document.getElementById("role_button"+id);
+    if (role_button.value == "remove")
+    {
+        role_name.disabled=false;
+        role_name.style="";
+        role_button.value="";
+    }
+    else
+    {
+        var removeRole = document.createElement("input");
+        removeRole.type="hidden";
+        removeRole.name="role_remove"+id;
+        role_button.appendChild(removeRole);
+        role_name.disabled=true;
+        role_name.style="background: #CCC;";
+        role_button.value="remove";
+    }
+}
