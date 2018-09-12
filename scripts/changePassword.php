@@ -7,15 +7,16 @@ $email = $argv[1];
 // password is second parameter
 $pass = $argv[2];
 $hash = password_hash($pass, PASSWORD_DEFAULT);
-$query = "UPDATE `users` SET `passHash`='".$hash."' WHERE `email`='".$email."'";
+$stmt = $conn->prepare("UPDATE `users` SET `passHash`=? WHERE `email`=?");
+$stmt->bind_param("ss", $hash, $email);
 
-if(mysqli_query($conn, $query))
+if($stmt->execute())
 {
     echo "Password successfully updated";
 }
 else
 {
-    echo "Error: ".mysqli_error($conn);
+    echo "Error: ".$stmt->error;
 }
 ?>
 
