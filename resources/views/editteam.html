@@ -9,7 +9,7 @@
                 {{ error|length? "An error occurred" : "Changes saved" }}
                 {% endif %}
                 <script src='resources/javascript/test'></script>
-                <form method="post" action='editteam.php?id={{ user_id }}'>
+                <form method="post" action='editteam.php?id={{ team_id }}'>
                     <p>
                         <label class="form-label">Title:</label>
                         <input class="textbox" name="title" type="text" value='{{ title }}' />

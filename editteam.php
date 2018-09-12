@@ -128,7 +128,7 @@
                                               'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
                                               'request_method' => $_SERVER['REQUEST_METHOD'],
                                               'error' => $error,
-                                              'user_id' => $_GET['id'],
+                                              'team_id' => $_GET['id'],
                                               'title' => ((isset($title))? $title : $row['title']),
                                               'description' => ((isset($description))? $description : $row['description']),
                                               'rows2' => $rows2,
