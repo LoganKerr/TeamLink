@@ -33,6 +33,7 @@ function removeRole(e, id)
         role_name.disabled=false;
         role_name.style="";
         role_button.value="";
+        role_button.innerHTML="Remove";
         ((document.getElementById("role_remove"+id))? document.getElementById("role_remove"+id).remove(): '');
     }
     // sets role to disabled for removal
@@ -46,6 +47,7 @@ function removeRole(e, id)
         role_name.disabled=true;
         role_name.style="background: #CCC;";
         role_button.value="remove";
+        role_button.innerHTML="Add";
     }
 }
 // sets team to be deleted from database
