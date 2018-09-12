@@ -41,3 +41,8 @@ function removeRole(e, id)
         role_button.value="remove";
     }
 }
+function setDeletedTeam(e, id)
+{
+    document.getElementById('team').value=id;
+    document.getElementById('myteams_form').submit();
+}
