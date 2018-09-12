@@ -8,7 +8,7 @@
                 {% if request_method == "POST" %}
                 {{ error|length? "An error occurred" : "Changes saved" }}
                 {% endif %}
-                <script src='resources/javascript/test'></script>
+                <script src='resources/javascript/test.js'></script>
                 <form method="post" action='editteam.php?id={{ team_id }}'>
                     <p>
                         <label class="form-label">Title:</label>
