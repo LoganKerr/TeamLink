@@ -33,12 +33,14 @@ function removeRole(e, id)
         role_name.disabled=false;
         role_name.style="";
         role_button.value="";
+        ((document.getElementById("role_remove"+id))? document.getElementById("role_remove"+id).remove(): '');
     }
     // sets role to disabled for removal
     else
     {
         var removeRole = document.createElement("input");
         removeRole.type="hidden";
+        removeRole.id="role_remove"+id;
         removeRole.name="role_remove"+id;
         role_button.appendChild(removeRole);
         role_name.disabled=true;
