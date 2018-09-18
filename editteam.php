@@ -89,6 +89,7 @@
                     $stmt->bind_param("ii", $user_id, $new_role_id);
                     $stmt->execute();
                 }
+            }
             // removes roles that a user has requested removal of
             else if (substr($key, 0, 11) == "role_remove")
             {
