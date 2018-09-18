@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Sep 18, 2018 at 03:21 AM
+-- Generation Time: Sep 18, 2018 at 06:13 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -42,7 +42,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `role`, `team_id`) VALUES
-(8, 'Owner', 27);
+(8, 'Owner', 27),
+(10, 'Singer', 27),
+(12, 'DRUMMER', 27);
 
 -- --------------------------------------------------------
 
@@ -211,7 +213,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `role_assoc`
 --
