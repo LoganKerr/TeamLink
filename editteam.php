@@ -74,6 +74,21 @@
                 $stmt->execute();
                 
             }
+            else if (substr($key, 0, 8) == "role_new")
+            {
+                if ($value != "")
+                {
+                    // inserts new goal into goals table with name and empty text
+                    $stmt = $conn->prepare("INSERT INTO `roles` (role) VALUES (?)");
+                    $stmt->bind_param("s", $value);
+                    $stmt->execute();
+                    $new_goal_id = $conn->insert_id;
+                    // inserts new goal into role_assoc for user who posted request
+                    $stmt = $conn->prepare("INSERT INTO `role_assoc` (user_id, role_id) VALUES (?, ?)");
+                    $stmt->bind_param("ii", $user_id, $new_role_id);
+                    $stmt->execute();
+                }
+            }
         }
         
         if (count($error) == 0)
