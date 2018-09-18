@@ -74,6 +74,19 @@
                 $stmt->execute();
                 
             }
+            // removes roles that a user has requested removal of
+            if (substr($key, 0, 11) == "role_remove")
+            {
+                $role_id = filter_var(substr($key, 11), FILTER_SANITIZE_NUMBER_INT);
+                // deletes role from role_assoc
+                $stmt = $conn->prepare("DELETE FROM `role_assoc` WHERE `role_id`=?");
+                $stmt->bind_param("i", $role_id);
+                $stmt->execute();
+                // deletes role from row
+                $stmt = $conn->prepare("DELETE FROM `roles` WHERE `id`=?");
+                $stmt->bind_param("i", $role_id);
+                $stmt->execute();
+            }
         }
         
         if (count($error) == 0)
