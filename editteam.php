@@ -74,6 +74,21 @@
                 $stmt->execute();
                 
             }
+            else if (substr($key, 0, 8) == "role_new")
+            {
+                if ($value != "")
+                {
+                    // inserts new goal into goals table with name and empty text
+                    $stmt = $conn->prepare("INSERT INTO `roles` (role, team_id) VALUES (?, ?)");
+                    $stmt->bind_param("si", $value, $id);
+                    $stmt->execute();
+                    $new_goal_id = $conn->insert_id;
+                    // inserts new goal into role_assoc for user who posted request
+                    $stmt = $conn->prepare("INSERT INTO `role_assoc` (user_id, role_id) VALUES (?, ?)");
+                    $stmt->bind_param("ii", $user_id, $new_role_id);
+                    $stmt->execute();
+                }
+            }
         }
         
         if (count($error) == 0)
@@ -98,15 +113,13 @@
         die("Team not found.");
     }
     
-    $stmt2 = $conn->prepare("SELECT `role_assoc`.`role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`, roles.`role`, users.`firstName`, users.`lastName` FROM `role_assoc` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE roles.`role`!='Owner' && role_assoc.`team_id`=? ORDER BY `role_assoc`.`role_id`");
+    //$stmt2 = $conn->prepare("SELECT `role_assoc`.`role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`, roles.`role`, users.`firstName`, users.`lastName` FROM `role_assoc` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE roles.`role`!='Owner' && role_assoc.`team_id`=? ORDER BY `role_assoc`.`role_id`");
+    $stmt2 = $conn->prepare("SELECT `roles`.`role`, `roles`.`team_id`, `roles`.`id` AS `role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`, users.`firstName`, users.`lastName` FROM `roles` LEFT JOIN `role_assoc` ON `roles`.`id` = `role_assoc`.`role_id` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` WHERE `roles`.`team_id`=?");
     $stmt2->bind_param("i", $id);
     $stmt2->execute();
     $res2 = $stmt2->get_result();
     
     $row = $res->fetch_assoc();
-    
-    
-    
     
     $role_ids = array();
     $i = 0;
@@ -116,8 +129,6 @@
         $i++;
     }
     $length = count($rows2);
-    
-    
     
     $loader = new Twig_Loader_Filesystem('resources/views');
     $twig = new Twig_Environment($loader);
