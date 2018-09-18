@@ -11,12 +11,13 @@
                     There are no projects :(
                 {% else %}
                     <table class="table-striped table-bordered">
-                        <tr><th>Name</th><th>Project Title</th><th>Description</th><th></th></tr>
+                        <tr><th>Name</th><th>Project Title</th><th>Description</th><th></th><th></th></tr>
                         {% for row in rows %}
                             <tr>
                                 <td>{{ row['firstName']~" "~row['lastName'] }}</td>
                                 <td>{{ row['title'] }}</td>
                                 <td>{{ row['description'] }}</td>
+                                <td>{{ row['role'] }}</td>
                                 <td><button type="button" class="btn btn-primary disabled">Join</button></td>
                             </tr>
                             {% endfor %}
