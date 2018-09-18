@@ -19,7 +19,7 @@
     {
         $error = array();
         $required = array("email", "pass");
-        $error = set_error_on_empty_required_fields($POST, $required, $error);
+        $error = set_error_on_empty_required_fields($_POST, $required, $error);
         $email = $_POST['email'];
         $pass = $_POST['pass'];
         

@@ -32,7 +32,7 @@
         // validate data -----------------------------------
         // check empty fields
         $required = array("title", "description");
-        $error = set_error_on_empty_required_fields($POST, $required, $error);
+        $error = set_error_on_empty_required_fields($_POST, $required, $error);
         // escape data
         $id = $_GET['id'];
         $title = $_POST['title'];
