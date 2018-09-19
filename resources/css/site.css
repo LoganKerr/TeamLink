@@ -44,6 +44,30 @@ body
 	float: right;
 }
 
+.logo-image
+{
+	width: 30%;
+	display: block;
+	margin: auto;
+	margin-bottom: 0.5em;
+}
+
+.login-panel
+{
+	background: white;
+	width: 75%;
+	margin: auto;
+	padding: 1em;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.center-align
+{
+	text-align: center;
+}
+
 #menu-panel
 {
     position: absolute;
