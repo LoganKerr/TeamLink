@@ -38,6 +38,12 @@ body
     width: 50%;
 }
 
+.search-box
+{
+	display: block;
+	float: right;
+}
+
 #menu-panel
 {
     position: absolute;
