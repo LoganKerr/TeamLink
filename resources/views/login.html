@@ -5,11 +5,13 @@
         	<div class="login-panel">
 				<h1 class="center-align">Sign in</h1>
                 	<form method="post" action="login.php">
-                    <p>
-                        <label class="form-label">Email:</label>
-                        <input class="textbox" name="email" type="text" value='{{ email }}'/>
-                        <strong>{{ error['email']? error['email'] }}</strong>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-4 center-align"><label class="form-label">Email:</label></div>
+                        <div class="col-md-8">
+							<input class="textbox" name="email" type="text" value='{{ email }}'/>
+                    		<strong class="error-label">{{ error['email']? error['email'] }}</strong>
+						</div>
+                    </div>
                     <p>
                         <label class="form-label">Password:</label><input class="textbox" name="pass" type="password" />
                         {{ error['pass']? error['pass'] }}
