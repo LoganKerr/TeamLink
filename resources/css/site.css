@@ -51,6 +51,28 @@ body
 	margin-bottom: 1em;
 }
 
+.nav-logo
+{
+	width: 10%;
+}
+
+.navbar
+{
+	background-color: #337ab7;
+	border: none;
+}
+
+.navbar-default .navbar-nav>li>a 
+{
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav>.active>a 
+{
+	color: #EEEEEE;
+	background-color: #204d74;
+}
+
 .login-panel
 {
 	background: white;
