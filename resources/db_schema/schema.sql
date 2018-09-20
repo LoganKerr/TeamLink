@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Sep 18, 2018 at 06:13 PM
+-- Generation Time: Sep 20, 2018 at 03:12 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -84,7 +84,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `major`, `interests`) VALUES
-(8, 'Dance', '<b>No XSS here baby</b>'),
+(8, 'Computer Science', '<b>No XSS here baby</b>'),
 (9, '<image></image>', 'hofstra');
 
 -- --------------------------------------------------------
@@ -97,16 +97,15 @@ CREATE TABLE `teams` (
 `id` int(11) NOT NULL,
 `owner` int(11) NOT NULL,
 `title` varchar(256) NOT NULL,
-`description` text NOT NULL,
-`public` tinyint(1) NOT NULL
+`description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `teams`
 --
 
-INSERT INTO `teams` (`id`, `owner`, `title`, `description`, `public`) VALUES
-(27, 13, 'Band', 'we spit fire', 1);
+INSERT INTO `teams` (`id`, `owner`, `title`, `description`) VALUES
+(27, 13, 'Band', 'we spit fire');
 
 -- --------------------------------------------------------
 
