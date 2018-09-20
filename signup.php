@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	// validate data -----------------------------------
 	// check empty fields
 	$required = array("email", "firstName", "lastName", "pass1", "pass2", "university", "role");
-	$error = set_error_on_empty_required_fields($POST, $required, $error);
+	$error = set_error_on_empty_required_fields($_POST, $required, $error);
 	// escape data
 	$email = $_POST['email'];
     $university = $_POST['university'];

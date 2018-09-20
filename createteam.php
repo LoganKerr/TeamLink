@@ -21,7 +21,7 @@
         // validate data -------------------------------------
         // check empty fields
         $required = array("title", "description");
-        $error = set_error_on_empty_required_fields($POST, $required, $error);
+        $error = set_error_on_empty_required_fields($_POST, $required, $error);
         // escape data
         $title = $_POST['title'];
         $description = $_POST['description'];
@@ -43,11 +43,17 @@
             if ($stmt->execute())
             {
                 $team_id = $stmt->insert_id;
-                $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role_id`, `selected`) VALUES (?,?, 0, 1)");
-                $stmt->bind_param("ii", $user_id, $team_id);
-                if (!$stmt->execute())
+                $stmt = $conn->prepare("INSERT INTO `roles` (`role`, `team_id`) VALUES ('Owner', ?)");
+                $stmt->bind_param("i", $team_id);
+                if ($stmt->execute())
                 {
-                    $error['sql'] = $stmt->error;
+                    $role_id = $stmt->insert_id;
+                    $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role_id`, `selected`) VALUES (?,?, ?, 1)");
+                    $stmt->bind_param("iii", $user_id, $team_id, $role_id);
+                    if (!$stmt->execute())
+                    {
+                        $error['sql'] = $stmt->error;
+                    }
                 }
             }
         }

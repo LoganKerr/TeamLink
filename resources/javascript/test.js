@@ -27,6 +27,7 @@ function removeRole(e, id)
 {
     var role_name = document.getElementById("role_name"+id);
     var role_button = document.getElementById("role_button"+id);
+    var role_div = document.getElementById("role"+id);
     // re-enables role
     if (role_button.value == "remove")
     {
@@ -43,7 +44,7 @@ function removeRole(e, id)
         removeRole.type="hidden";
         removeRole.id="role_remove"+id;
         removeRole.name="role_remove"+id;
-        role_button.appendChild(removeRole);
+        role_div.appendChild(removeRole);
         role_name.disabled=true;
         role_name.style="background: #CCC;";
         role_button.value="remove";

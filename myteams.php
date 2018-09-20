@@ -13,6 +13,32 @@
     }
     
     $user_id = $_SESSION['user_id'];
+    
+    // myteams form submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        $error = array();
+        // for each team field
+        foreach ($_POST as $key => $value)
+        {
+            // team is being deleted
+            if ($key == "team")
+            {
+                $team_id = (int)$value;
+                // deletes team from teams table
+                $stmt = $conn->prepare("DELETE FROM `teams` WHERE `id`=?");
+                $stmt2 = $conn->prepare("DELETE FROM `roles` WHERE `team_id`=?");
+                $stmt3 = $conn->prepare("DELETE FROM `role_assoc` WHERE `team_id`=?");
+                $stmt->bind_param("i", $team_id);
+                $stmt2->bind_param("i", $team_id);
+                $stmt3->bind_param("i", $team_id);
+                $stmt->execute();
+                $stmt2->execute();
+                $stmt3->execute();
+            }
+        }
+    }
+    
     // get teams
     $stmt = $conn->prepare("SELECT `teams`.`id`, GROUP_CONCAT(`roles`.`role`) AS `role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE `user_id`=? AND role_assoc.`selected` GROUP BY `teams`.`id`");
     $stmt->bind_param("i", $user_id);
