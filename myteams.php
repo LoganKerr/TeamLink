@@ -40,7 +40,7 @@
     }
     
     // get teams
-    $stmt = $conn->prepare("SELECT `teams`.`id`, GROUP_CONCAT(`roles`.`role`) AS `role`, `title`, `description`, `public` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE `user_id`=? AND role_assoc.`selected` GROUP BY `teams`.`id`");
+    $stmt = $conn->prepare("SELECT `teams`.`id`, GROUP_CONCAT(`roles`.`role`) AS `role`, `title`, `description` FROM `role_assoc` INNER JOIN `teams` ON `role_assoc`.`team_id`=`teams`.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE `user_id`=? AND role_assoc.`selected` GROUP BY `teams`.`id`");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $res = $stmt->get_result();
