@@ -23,7 +23,7 @@
     $user_id = $_SESSION['user_id'];
     $search_wildcard = "%".$search."%";
     // get teams that are similar to searched value
-    $stmt = $conn->prepare("SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public` AND (`title` LIKE ? OR `description` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+    $stmt = $conn->prepare("SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE (`title` LIKE ? OR `description` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
     $stmt->bind_param("sss", $search_wildcard, $search_wildcard, $search_wildcard);
     $stmt->execute();
     $res = $stmt->get_result();
