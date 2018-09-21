@@ -1,12 +1,8 @@
-<nav class="navbar navbar-inverse bg-primary">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/TeamLink/">TeamLink</a>
-        </div>
         <ul class="nav navbar-nav">
-            <li {{ page == "/TeamLink/menu.php"? "class='active'" }}>
-                <a href="/TeamLink/menu.php">Main Menu</a>
-            </li>
+            <a href="/TeamLink/menu.php"><img src="/TeamLink/resources/images/logo.png" class="nav-logo"></img></a>
+			</li>
             <li {{ page == "/TeamLink/profile.php"? "class='active'" }}>
                 <a href="/TeamLink/profile.php">Profile</a>
             </li>
@@ -24,6 +20,9 @@
                     <a href="/TeamLink/approveteam.php">Approve teams</a>
                 </li>
             {% endif %}
+			<li class="signout-link">
+				<a href="/TeamLink/signout.php">Sign out</a>
+			</li>
         </ul>
     </div>
 </nav>

@@ -5,12 +5,12 @@
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
             <form method="post" action="jointeam.php">
-                <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
+                <input type="textbox" name="search" class="search-box" placeholder="Search" />
                 <br>{{ ((search)? "Showing results for \""~search~"\"" : "") }}<br>
                 {% if length == 0%}
                     There are no projects :(
                 {% else %}
-                    <table class="table-striped table-bordered">
+                    <table class="table table-striped table-bordered">
                         <tr><th>Name</th><th>Project Title</th><th>Description</th><th></th></tr>
                         {% for row in rows %}
                             <tr>
