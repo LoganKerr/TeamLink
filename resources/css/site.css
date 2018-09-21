@@ -54,6 +54,15 @@ body
 .nav-logo
 {
 	width: 10%;
+	display: block;
+	float: left;
+	padding-top: 5px;
+	padding-right: 5px;
+}
+
+.signout-link
+{
+	float: right;
 }
 
 .navbar
@@ -62,9 +71,15 @@ body
 	border: none;
 }
 
-.navbar-default .navbar-nav>li>a 
+.navbar-default .navbar-nav>li>a
 {
 	color: #FFFFFF;
+} 
+
+.navbar-default .navbar-nav>li>a:hover 
+{
+	color: #FFFFFF;
+	background-color: #204d74;
 }
 
 .navbar-default .navbar-nav>.active>a 
