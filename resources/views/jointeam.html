@@ -11,18 +11,22 @@
                 {% if length == 0%}
                     There are no projects :(
                 {% else %}
-                    <table class="table-striped table-bordered">
-                        <tr><th>Owner</th><th>Project Title</th><th>Description</th><th></th><th></th></tr>
-                        {% for row in rows %}
-                            <tr>
-                                <td>{{ row['firstName']~" "~row['lastName'] }}</td>
-                                <td>{{ row['title'] }}</td>
-                                <td>{{ row['description'] }}</td>
-                                <td>{{ row['role'] }}</td>
-                                <td><button type="button" class="btn btn-primary disabled">Apply</button></td>
-                            </tr>
-                            {% endfor %}
-                    </table>
+                    <script src='resources/javascript/test.js'></script>
+                    <form method="POST" action="jointeam.php" id="jointeams_form">
+                        <input type="hidden" id="role" name="role" value="-1"></input>
+                        <table class="table-striped table-bordered">
+                            <tr><th>Owner</th><th>Project Title</th><th>Description</th><th></th><th></th></tr>
+                            {% for row in rows %}
+                                <tr>
+                                    <td>{{ row['firstName']~" "~row['lastName'] }}</td>
+                                    <td>{{ row['title'] }}</td>
+                                    <td>{{ row['description'] }}</td>
+                                    <td>{{ row['role'] }}</td>
+                                    <td><button type="button" onclick="setAppliedRole(event, {{ row['id'] }})">Apply</button></td>
+                                </tr>
+                                {% endfor %}
+                        </table>
+                    </form>
                 {% endif %}
         </div>
     </div>
