@@ -51,9 +51,16 @@ function removeRole(e, id)
         role_button.innerHTML="Add";
     }
 }
-// sets team to be deleted from database
+// sets team to be deleted from database and submits form
 function setDeletedTeam(e, id)
 {
     document.getElementById('team').value=id;
     document.getElementById('myteams_form').submit();
+}
+
+// sets role user wants to apply for on jointeams page and submits form
+function setAppliedRole(event, id)
+{
+    document.getElementById('role').value=id;
+    document.getElementById('jointeams_form').submit();
 }
