@@ -4,8 +4,9 @@
 <body>
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
-            <form method="post" action="jointeam.php">
+            <form method="GET" action="jointeam.php">
                 <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
+            </form>
                 <br>{{ ((search)? "Showing results for \""~search~"\"" : "") }}<br>
                 {% if length == 0%}
                     There are no projects :(
@@ -23,7 +24,6 @@
                             {% endfor %}
                     </table>
                 {% endif %}
-            </form>
         </div>
     </div>
 </body>
