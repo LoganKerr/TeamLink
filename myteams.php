@@ -18,6 +18,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $error = array();
+        $message = "";
         // for each team field
         foreach ($_POST as $key => $value)
         {
@@ -35,6 +36,7 @@
                 $stmt->execute();
                 $stmt2->execute();
                 $stmt3->execute();
+                $message = "Team deleted";
             }
         }
     }
@@ -59,8 +61,10 @@
     
     echo $twig->render('myteams.html', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
+                                             'request_method' => $_SERVER['REQUEST_METHOD'],
                                              'error' => $error,
                                              'rows' => $rows,
-                                             'length' => $length
+                                             'length' => $length,
+                                             'message' => $message
                                              ));
 ?>

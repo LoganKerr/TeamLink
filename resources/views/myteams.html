@@ -8,6 +8,9 @@
             {% if length == 0 %}
                 You have no teams :(
             {% else %}
+            {% if request_method == "POST" %}
+                {{ error|length? "An error occurred" : ((message)? message : "Changes saved") }}
+            {% endif %}
                 <script src='resources/javascript/test.js'></script>
                 <form method="post" action='myteams.php' id='myteams_form'>
                 <input type="hidden" id="team" name="team" value="-1"></input>
