@@ -7,8 +7,9 @@
                 <image class="logo" src="{{ asset('images/logo.png') }}"></image>
             </div>
             <div class="panel-body">
-                <a href="{{ path('login') }}" class="btn btn-primary btn-block">Log in</a><br />
-                <a href="{{ path('signup') }}" class="btn btn-primary btn-block" role="button">Sign up</a>
+                {% for team in teams %}
+                    {{ team.title }}
+                {% endfor %}
             </div>
         </div>
     </div>
