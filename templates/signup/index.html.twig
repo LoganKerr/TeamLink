@@ -10,56 +10,58 @@
             <div class="panel-body">
                 <form method="post" action="signup.php">
                     <p>
-                        <label class="form-label">Email:</label><input class="textbox" name="email" type="text" value='{{ email }}'/>
-                        {{ error['email']? error['email'] }}
+                        <label class="form-label">Email:</label><input class="textbox" name="email" type="text" value='{{ email is defined? email }}'/>
+                        {{ error['email'] is defined? error['email'] }}
                     </p>
                     <p>
-                        <label class="form-label">University:</label><input class="textbox" name="university" type="text" value='{{ university }}'/>
-                        {{ error['university']? error['university'] }}
+                        <label class="form-label">University:</label><input class="textbox" name="university" type="text" value='{{ university is defined? university }}'/>
+                        {{ error['university'] is defined? error['university'] }}
                     </p>
                     <p>
                         <label class="form-label">Role:</label>
                         <select name="role">
-                            {% for role in roles %}
-                                <option>{{ role }}</option>
-                            {% endfor %}
+                            {% if roles is defined %}
+                                {% for role in roles %}
+                                    <option>{{ role }}</option>
+                                {% endfor %}
+                            {% endif %}
                         </select>
-                        {{ error['role']? error['role'] }}
+                        {{ error['role'] is defined? error['role'] }}
                     </p>
                     <p>
                         <label class="form-label">First Name:</label>
-                        <input class="textbox" name="firstName" type="text" value='{{ firstName }}'/>
-                        {{ error['firstName']? error['firstName'] }}
+                        <input class="textbox" name="firstName" type="text" value='{{ firstName is defined? firstName }}'/>
+                        {{ error['firstName'] is defined? error['firstName'] }}
                     </p>
                     <p>
                         <label class="form-label">Last Name:</label>
-                        <input class="textbox" name="lastName" type="text" value='{{ lastName }}'/>
-                        {{ error['lastName']? error['lastName'] }}
+                        <input class="textbox" name="lastName" type="text" value='{{ lastName is defined? lastName }}'/>
+                        {{ error['lastName'] is defined? error['lastName'] }}
                     </p>
                     <p>
                         <label class="form-label">Password:</label>
                         <input class="textbox" name="pass1" type="password" />
-                        {{ error['pass1']? error['pass1'] }}
+                        {{ error['pass1'] is defined? error['pass1'] }}
                     </p>
                     <p>
                         <label class="form-label">Confirm password:</label>
                         <input class="textbox" name="pass2" type="password" />
-                        {{ error['pass2']? error['pass2'] }}
+                        {{ error['pass2'] is defined? error['pass2'] }}
                     </p>
                     <p>
                         <label class="form-label">Department:</label>
-                        <input class="textbox" name="department" type="text" value='{{ department }}'/>
-                        {{ error['department']? error['department'] }}
+                        <input class="textbox" name="department" type="text" value='{{ department is defined? department }}'/>
+                        {{ error['department'] is defined? error['department'] }}
                     </p>
                     <p>
                         <label class="form-label">Major:</label>
-                        <input class="textbox" name="major" type="text" value='{{ major }}'/>
-                        {{ error['major']? error['major'] }}
+                        <input class="textbox" name="major" type="text" value='{{ major is defined? major }}'/>
+                        {{ error['major'] is defined? error['major'] }}
                     </p>
                     <p>
                         <label class="form-label">Interests:</label>
-                        <textarea name="interests" rows="4" cols="50">{{ interests }}</textarea>
-                        {{ error['interests']? error['interests'] }}
+                        <textarea name="interests" rows="4" cols="50">{{ interests is defined? interests }}</textarea>
+                        {{ error['interests'] is defined? error['interests'] }}
                     </p>
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>
