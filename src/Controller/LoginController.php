@@ -13,7 +13,7 @@ class LoginController extends AbstractController
 {
     public $user_id = -1;
     /**
-     * @Route("/login", name="login")
+     * @Route("/dfgdfgdf", name="dfhgfhgf")
      */
     public function index()
     {

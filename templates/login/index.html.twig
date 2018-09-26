@@ -5,17 +5,18 @@
         <img src="{{ asset('images/logo.png') }}" alt="logo image" class="logo-image"></img>
         <div class="login-panel">
             <h1 class="center-align">Sign in</h1>
+            {% if error %}
+                {{ error.messageKey }}
+            {% endif %}
             <form method="post" action="{{ path('login') }}">
                 <div class="row">
                     <div class="col-md-4 center-align"><label class="form-label">Email:</label></div>
                     <div class="col-md-8">
-                        <input class="textbox" name="email" type="text" value='{{ email }}'/>
-                        <strong class="error-label">{{ error.email is defined? error.email }}</strong>
+                        <input class="textbox" name="username" type="text" value="{{ last_username }}"/>
                     </div>
                 </div>
                 <p>
-                    <label class="form-label">Password:</label><input class="textbox" name="pass" type="password" />
-                    {{ error.pass is defined? error.pass }}
+                    <label class="form-label">Password:</label><input class="textbox" name="password" type="password" />
                 </p>
                 <div class="center-align">
                     <a href="index.php" class="btn btn-primary">Back</a>
