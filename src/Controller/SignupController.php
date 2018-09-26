@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +25,7 @@ class SignupController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
             // 4) save the User!
@@ -34,7 +36,7 @@ class SignupController extends AbstractController
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
 
-            return $this->redirectToRoute('replace_with_some_route');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render(
