@@ -11,27 +11,29 @@ use App\Entity\Teams;
 
 class LoginController extends AbstractController
 {
+    public $user_id = -1;
     /**
      * @Route("/login", name="login")
      */
     public function index()
     {
-        $session = new Session();
-        $user_id = -1;
         $request = Request::createFromGlobals();
         $request_method = $request->getMethod();
         if ($request_method == "POST")
         {
-            if(self::checkLogin($request))
+            if(self::checkLogin($request, $user_id))
             {
-                self::login($user_id, $session);
-                dump($session);
+                dump($user_id);
+                self::login($user_id);
             }
         }
-        if ($session.get('id'))
+        dump($this->get('session')->get('user_id'));
+        /*
+        if ($this->get('session')->get('id'))
         {
-            header("Location: menu.php");
+            return $this->redirect($this->generateUrl('menu'));
         }
+        */
         $error = array(
         );
         $email = "";
@@ -41,7 +43,7 @@ class LoginController extends AbstractController
             'email' => $email,
         ]);
     }
-    public function checkLogin($request)
+    public function checkLogin($request, $user_id) : Boolean
     {
         // TODO: THROW ERROR IF REQUIRED FIELDS ARE EMPTY
         $email = $request->request->get('email');
@@ -55,7 +57,7 @@ class LoginController extends AbstractController
             // no user with that email found
             if (count($user) == 0)
             {
-                return -1;
+                return false;
 
             }
             else {
@@ -64,15 +66,17 @@ class LoginController extends AbstractController
                 if (password_verify($pass, $passhash))
                 {
                     $user_id = $user->getId();
+                    dump($user_id);
                     return true;
                 }
             }
         }
-        return -1;
+        return false;
     }
 
-    public function login($user_id, $session)
+    // sets session
+    public function login($user_id)
     {
-        $session->set('id', '$user_id');
+        $this->get('session')->set('user_id', $user_id);
     }
 }
