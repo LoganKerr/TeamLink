@@ -82,6 +82,8 @@ class User implements UserInterface
 
     public function getSalt()
     {
+        // bcrypt does not require separate salt
+        return null;
 
     }
 
