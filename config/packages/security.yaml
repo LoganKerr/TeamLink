@@ -7,7 +7,7 @@ security:
         my_provider:
             entity:
                 class: App\Entity\User
-                property: username
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,8 +18,9 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                username_parameter: "username"
+                username_parameter: "email"
                 password_parameter: "password"
+                default_target_path: menu
                 provider: my_provider
 
             logout:
@@ -31,4 +32,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/menu, roles: ROLE_USER }

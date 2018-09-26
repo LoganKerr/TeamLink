@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% include 'navbar.html.twig' with nav %}
+{% block nav %}{% include 'navbar.html.twig' %}{% endblock %}
 {% block main %}
     <div id="login-panel" class="container">
         <div class="panel panel-primary">

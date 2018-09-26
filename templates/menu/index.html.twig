@@ -1,16 +1,16 @@
-{% extends '../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% include '../navbar.html.twig' with nav %}
+{% block nav %}{% include 'navbar.html.twig' with nav %}{% endblock %}
 {% block main %}
     <div id="menu-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">Choose one of the following options</div>
             <div class="panel-body">
-                <a href="/TeamLink/profile.php" class="btn btn-primary btn-block">Profile</a><br />
-                <a href="/TeamLink/myteams.php" class="btn btn-primary btn-block">My Teams</a><br />
-                <a href="/TeamLink/createteam.php" class="btn btn-primary btn-block">Create Team</a><br />
-                <a href="/TeamLink/jointeam.php" class="btn btn-primary btn-block">Join Team</a><br />
-                <a href="/TeamLink/signout.php" class="btn btn-primary btn-block">Sign out</a><br />
+                <a href="{{ path('profile') }}" class="btn btn-primary btn-block">Profile</a><br />
+                <a href="{{ path('my_teams') }}" class="btn btn-primary btn-block">My Teams</a><br />
+                <a href="{{ path('create_team') }}" class="btn btn-primary btn-block">Create Team</a><br />
+                <a href="{{ path('join_team') }}" class="btn btn-primary btn-block">Join Team</a><br />
+                <a href="{{ path('logout') }}" class="btn btn-primary btn-block">Sign out</a><br />
             </div>
         </div>
     </div>

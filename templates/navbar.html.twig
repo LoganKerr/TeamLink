@@ -1,22 +1,22 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <a href="/TeamLink/menu.php"><img src="/TeamLink/resources/images/logo.png" class="nav-logo"></img></a>
+            <a href="{{ path('menu') }}"><img src="{{ asset('images/logo.png') }}" class="nav-logo"></img></a>
             </li>
-            <li {{ page == "/TeamLink/profile.php"? "class='active'" }}>
-                <a href="/TeamLink/profile.php">Profile</a>
+            <li {{ page == "profile"? "class='active'" }}>
+                <a href="{{ path('profile') }}">Profile</a>
             </li>
-            <li {{ page == "/TeamLink/myteams.php" or page == "/TeamLink/editteam.php"? "class='active'" }}>
-                <a href="/TeamLink/myteams.php">My Teams</a>
+            <li {{ page == "myteams" or page == "editteam"? "class='active'" }}>
+                <a href="{{ path('my_teams') }}">My Teams</a>
             </li>
-            <li {{ page == "/TeamLink/createteam.php"? "class='active'" }}>
-                <a href="/TeamLink/createteam.php">Create a Team</a>
+            <li {{ page == "createteam"? "class='active'" }}>
+                <a href="{{ path('create_team') }}">Create a Team</a>
             </li>
-            <li {{ page == "/TeamLink/jointeam.php"? "class='active'" }}>
-                <a href="/TeamLink/jointeam.php">Join a Team</a>
+            <li {{ page == "jointeam"? "class='active'" }}>
+                <a href="{{ path('join_team') }}">Join a Team</a>
             </li>
             <li class="signout-link">
-                <a href="/TeamLink/signout.php">Sign out</a>
+                <a href="{{ path('logout') }}">Sign out</a>
             </li>
         </ul>
     </div>
