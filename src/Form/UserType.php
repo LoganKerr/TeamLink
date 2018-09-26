@@ -23,6 +23,8 @@ class UserType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
         ;
     }
 
