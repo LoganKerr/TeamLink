@@ -17,6 +17,9 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->universities = $options['universities'];
+        dump($this->universities[0]);
+
         $builder
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, array(
@@ -26,6 +29,10 @@ class UserType extends AbstractType
             ))
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
+            ->add('university', ChoiceType::class, array(
+                'choices' => $this->universities,
+                'mapped' => false
+            ))
             ->add('role', ChoiceType::class, array(
                 'choices' => array(
                     'Student' => 'Student',
@@ -33,6 +40,9 @@ class UserType extends AbstractType
                 ),
                 'mapped' => false
             ))
+            ->add('major',TextType::class, array('mapped' => false))
+            ->add('interests',TextType::class, array('mapped' => false))
+            ->add('department',TextType::class, array('mapped' => false))
         ;
     }
 
@@ -40,6 +50,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => User::class,
+            'universities' => null
         ));
     }
 }

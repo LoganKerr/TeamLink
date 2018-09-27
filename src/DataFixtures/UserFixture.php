@@ -25,6 +25,7 @@ class UserFixture extends Fixture
         $user->setEmail('lkerr1998@gmail.com');
         $user->setFirstName('Logan');
         $user->setLastName('Kerr');
+        $user->setUniversityId(0);
 
         $manager->persist($user);
 

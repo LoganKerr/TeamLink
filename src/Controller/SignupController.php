@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\University;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,13 +19,24 @@ class SignupController extends AbstractController
     {
         // 1) build the form
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $universities = $this->getDoctrine()->getRepository(University::class)->findAll();
+
+        dump($universities);
+
+        $form = $this->createForm(UserType::class, $user, array(
+            'universities' => $universities
+        ));
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $role = $form['role']->getData();
+            $major = $form['major']->getData();
+            $interests = $form['interests']->getData();
+            $department = $form['departments']->getData();
+            //$universityId = $form['university']->getData();
+            //$university = $this->getDoctrine()->getRepository(University::class)->findOneBy(['id'] => $universityId);
 
             $user->setUniversityId(99);
 
