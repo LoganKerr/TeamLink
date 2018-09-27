@@ -24,6 +24,18 @@ class SignupController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $role = $form['role']->getData();
+
+            $user->setUniversityId(99);
+
+            if ($role == "Student") {
+                $user->setStudentId(98);
+            }
+            else
+            {
+                $user->setFacultyId(98);
+            }
+
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);

@@ -37,6 +37,21 @@ class User implements UserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $universityId;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $studentId = null;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $facultyId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,6 +111,42 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getUniversityId(): ?int
+    {
+        return $this->universityId;
+    }
+
+    public function setUniversityId(int $universityId): self
+    {
+        $this->universityId = $universityId;
+
+        return $this;
+    }
+
+    public function getStudentId(): ?int
+    {
+        return $this->studentId;
+    }
+
+    public function setStudentId(int $studentId): self
+    {
+        $this->studentId = $studentId;
+
+        return $this;
+    }
+
+    public function getFacultyId(): ?int
+    {
+        return $this->facultyId;
+    }
+
+    public function setFacultyId(int $facultyId): self
+    {
+        $this->facultyId = $facultyId;
+
+        return $this;
+    }
+
     public function getRoles()
     {
         return [
@@ -103,9 +154,9 @@ class User implements UserInterface
         ];
     }
 
+    // bcrypt does not require separate salt
     public function getSalt()
     {
-        // bcrypt does not require separate salt
         return null;
 
     }
