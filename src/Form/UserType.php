@@ -3,7 +3,9 @@
 // src/Form/UserType.php
 namespace App\Form;
 
+use App\Entity\University;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,8 +19,8 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->universities = $options['universities'];
-        dump($this->universities[0]);
+        $universities = $options['universities'];
+        dump($universities[0]);
 
         $builder
             ->add('email', EmailType::class)
@@ -29,8 +31,11 @@ class UserType extends AbstractType
             ))
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('university', ChoiceType::class, array(
-                'choices' => $this->universities,
+            ->add('university', EntityType::class, array(
+                'class' => University::class,
+                'choice_label' => function ($university) {
+                    return $university->getTitle();
+                },
                 'mapped' => false
             ))
             ->add('role', ChoiceType::class, array(

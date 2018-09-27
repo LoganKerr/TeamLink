@@ -21,8 +21,6 @@ class SignupController extends AbstractController
         $user = new User();
         $universities = $this->getDoctrine()->getRepository(University::class)->findAll();
 
-        dump($universities);
-
         $form = $this->createForm(UserType::class, $user, array(
             'universities' => $universities
         ));
@@ -34,11 +32,14 @@ class SignupController extends AbstractController
             $role = $form['role']->getData();
             $major = $form['major']->getData();
             $interests = $form['interests']->getData();
-            $department = $form['departments']->getData();
-            //$universityId = $form['university']->getData();
-            //$university = $this->getDoctrine()->getRepository(University::class)->findOneBy(['id'] => $universityId);
-
-            $user->setUniversityId(99);
+            $department = $form['department']->getData();
+            $university = $form['university']->getData();
+            $universityId = $university->getId();
+            // if university id submitted exists
+            if($this->getDoctrine()->getRepository(University::class)->findOneBy(['id' => $universityId]))
+            {
+                $user->setUniversityId($universityId);
+            }
 
             if ($role == "Student") {
                 $user->setStudentId(98);
