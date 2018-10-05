@@ -58,7 +58,7 @@ class SignupController extends AbstractController
             else
             {
                 $faculty = new Faculty();
-                $faculty->setDepartment($department)
+                $faculty->setDepartment($department);
                 $entityManager->persist($faculty);
                 $entityManager->flush();
                 $faculty_id = $faculty->getId();
