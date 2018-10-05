@@ -3,8 +3,11 @@
 // src/Form/UserType.php
 namespace App\Form;
 
+use App\Entity\University;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -16,14 +19,35 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $universities = $options['universities'];
+        dump($universities[0]);
+
         $builder
             ->add('email', EmailType::class)
-            ->add('username', TextType::class)
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('university', EntityType::class, array(
+                'class' => University::class,
+                'choice_label' => function ($university) {
+                    return $university->getTitle();
+                },
+                'mapped' => false
+            ))
+            ->add('role', ChoiceType::class, array(
+                'choices' => array(
+                    'Student' => 'Student',
+                    'Faculty' => 'Faculty'
+                ),
+                'mapped' => false
+            ))
+            ->add('major',TextType::class, array('mapped' => false))
+            ->add('interests',TextType::class, array('mapped' => false))
+            ->add('department',TextType::class, array('mapped' => false))
         ;
     }
 
@@ -31,6 +55,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => User::class,
+            'universities' => null
         ));
     }
 }
