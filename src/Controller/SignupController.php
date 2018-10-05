@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Student;
 use App\Entity\University;
 use App\Entity\User;
 use App\Form\UserType;
@@ -35,6 +36,9 @@ class SignupController extends AbstractController
             $department = $form['department']->getData();
             $university = $form['university']->getData();
             $universityId = $university->getId();
+
+            $entityManager = $this->getDoctrine()->getManager();
+
             // if university id submitted exists
             if($this->getDoctrine()->getRepository(University::class)->findOneBy(['id' => $universityId]))
             {
@@ -42,7 +46,13 @@ class SignupController extends AbstractController
             }
 
             if ($role == "Student") {
-                $user->setStudentId(98);
+                $student = new Student();
+                $student->setMajor($major);
+                $student->setInterests($interests);
+                $entityManager->persist($student);
+                $entityManager->flush();
+                $student_id = $student->getId();
+                $user->setStudentId($student_id);
             }
             else
             {
@@ -54,7 +64,6 @@ class SignupController extends AbstractController
             $user->setPassword($password);
 
             // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
