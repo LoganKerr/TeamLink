@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Faculty;
 use App\Entity\Student;
 use App\Entity\University;
 use App\Entity\User;
@@ -56,7 +57,12 @@ class SignupController extends AbstractController
             }
             else
             {
-                $user->setFacultyId(98);
+                $faculty = new Faculty();
+                $faculty->setDepartment($department)
+                $entityManager->persist($faculty);
+                $entityManager->flush();
+                $faculty_id = $faculty->getId();
+                $user->setFacultyId($faculty_id);
             }
 
             // 3) Encode the password (you could also do this via Doctrine listener)
