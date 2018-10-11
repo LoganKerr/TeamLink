@@ -15,25 +15,33 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class UserType extends AbstractType
+class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $universities = $options['universities'];
-        dump($universities[0]);
+        $studentData = $options['studentData'];
+        dump($studentData);
+        $facultyData = $options['facultyData'];
+        dump($facultyData);
 
-        $builder
-            ->add('major',TextType::class, array('mapped' => false))
-            ->add('interests',TextType::class, array('mapped' => false))
-            ->add('department',TextType::class, array('mapped' => false))
-        ;
+        if ($studentData['student_id'])
+        {
+            $builder
+                ->add('major',TextType::class, array('mapped' => false, 'data' => $studentData['major']))
+                ->add('interests',TextType::class, array('mapped' => false, 'data' => $studentData['interests']));
+        }
+        else if ($facultyData['faculty_id']) {
+            $builder
+                ->add('department', TextType::class, array('mapped' => false, 'data' => $facultyData['department']));
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => User::class,
-            'universities' => null
+            'studentData' => null,
+            'facultyData' => null
         ));
     }
 }
