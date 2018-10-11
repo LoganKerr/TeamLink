@@ -1,0 +1,30 @@
+{% include 'templates/header.html' %}
+{% include 'templates/navbar.html' with nav %}
+
+<body>
+    <div id="join-panel" class="panel panel-primary">
+        <div class="panel-body">
+            <form method="post" action="jointeam.php">
+                <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
+                <br>{{ ((search)? "Showing results for \""~search~"\"" : "") }}<br>
+                {% if length == 0%}
+                    There are no projects :(
+                {% else %}
+                    <table class="table-striped table-bordered">
+                        <tr><th>Name</th><th>Project Title</th><th>Description</th><th></th></tr>
+                        {% for row in rows %}
+                            <tr>
+                                <td>{{ row['firstName']~" "~row['lastName'] }}</td>
+                                <td>{{ row['title'] }}</td>
+                                <td>{{ row['description'] }}</td>
+                                <td><button type="button" class="btn btn-primary disabled">Join</button></td>
+                            </tr>
+                            {% endfor %}
+                    </table>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
