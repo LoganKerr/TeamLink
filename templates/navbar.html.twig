@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <a href="{{ path('menu') }}"><img src="{{ asset('images/logo.png') }}" class="nav-logo"></img></a>
+            </li>
+            <li {{ page == "profile"? "class='active'" }}>
+                <a href="{{ path('profile') }}">Profile</a>
+            </li>
+            <li {{ page == "myteams" or page == "editteam"? "class='active'" }}>
+                <a href="{{ path('my_teams') }}">My Teams</a>
+            </li>
+            <li {{ page == "createteam"? "class='active'" }}>
+                <a href="{{ path('create_team') }}">Create a Team</a>
+            </li>
+            <li {{ page == "jointeam"? "class='active'" }}>
+                <a href="{{ path('join_team') }}">Join a Team</a>
+            </li>
+            <li class="signout-link">
+                <a href="{{ path('logout') }}">Sign out</a>
+            </li>
+        </ul>
+    </div>
+</nav>

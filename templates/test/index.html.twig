@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div id="home-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <image class="logo" src="{{ asset('images/logo.png') }}"></image>
+            </div>
+            <div class="panel-body">
+                {% for team in teams %}
+                    {{ team.title }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
