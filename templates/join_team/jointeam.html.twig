@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}{% include 'navbar.html.twig' %}{% endblock %}
+{% block main %}
+    <div id="join-panel" class="panel panel-primary">
+        <div class="panel-body">
+            {% if request_method == "POST" %}
+                {{ error|length? "An error occurred" : "Changes saved" }}
+            {% endif %}
+            <form method="GET" action="jointeam.php">
+                <input type="textbox" name="search" placeholder="Search" style="float: right;"/>
+            </form>
+            <br>{{ ((search)? "Showing results for \""~search~"\"" : "") }}<br>
+            {% if length == 0%}
+                There are no projects :(
+            {% else %}
+                <script src="{{ asset('javascript/test.js') }}"></script>
+                <form method="POST" action="jointeam.php" id="jointeams_form">
+                    <input type="hidden" id="role" name="role" value="-1"></input>
+                    <table class="table table-striped table-bordered">
+                        <tr><th>Owner</th><th>Project Title</th><th>Description</th><th></th><th></th></tr>
+                        {% for row in rows %}
+                            <tr>
+                                <td>{{ row['firstName']~" "~row['lastName'] }}</td>
+                                <td>{{ row['title'] }}</td>
+                                <td>{{ row['description'] }}</td>
+                                <td>{{ row['role'] }}</td>
+                                <td><button type="button" onclick="setAppliedRole(event, {{ row['id'] }})">Apply</button></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

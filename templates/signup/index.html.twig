@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div id="signup-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <a href="index.php" class="btn btn-default btn-sm"><</a>
+                Enter your information
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password.first) }}
+                {{ form_row(form.password.second) }}
+                {{ form_row(form.firstName) }}
+                {{ form_row(form.lastName) }}
+                {{ form_row(form.role) }}
+                {{ form_row(form.major) }}
+                {{ form_row(form.interests) }}
+                {{ form_row(form.department) }}
+                {{ form_row(form.university) }}
+
+                <button type="submit">Register!</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

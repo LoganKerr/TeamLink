@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}{% include 'navbar.html.twig' with nav %}{% endblock %}
+{% block main %}
+    <div id="signup-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Change your information</div>
+            <div class="panel-body">
+
+                {{ form_start(form) }}
+                {% if student_id %}
+                    {{ form_row(form.major) }}
+                    {{ form_row(form.interests) }}
+                {% endif %}
+                {% if faculty_id %}
+                    {{ form_row(form.department) }}
+                {% endif %}
+
+                <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
+                {{ form_end(form) }}
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
