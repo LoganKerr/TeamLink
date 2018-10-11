@@ -1,0 +1,68 @@
+body
+{
+    background-image: url("/TeamLink/resources/images/blueprint.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-label
+{
+    width: 5em;
+    margin-right: 1em;
+}
+
+#home-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 30%;
+}
+
+#login-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 30%;
+}
+
+#signup-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+#menu-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+#join-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+.submit-button
+{
+    width: 25%;
+}
+
+.logo
+{
+    width: 75%;
+    padding-right: 1.5em;
+}
