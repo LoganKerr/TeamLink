@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}{% include 'navbar.html.twig' %}{% endblock %}
+{% block main %}
+    <div id="login-panel" class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">Update the information for your team</div>
+            <div class="panel-body">
+                {% if request_method == "POST" %}
+                    {{ error|length? "An error occurred" : "Changes saved" }}
+                {% endif %}
+                <script src='resources/javascript/test.js'></script>
+                <form method="post" action='editteam.php?id={{ team_id }}'>
+                    <p>
+                        <label class="form-label">Title:</label>
+                        <input class="textbox" name="title" type="text" value='{{ title }}' />
+                        {{ error['title']? error['title'] }}
+                    </p>
+                    <p>
+                        <label class="form-label">Description:</label>
+                        <textarea name="description">{{ description }}</textarea>
+                        {{ error['description']? error['description'] }}
+                    </p>
+                    <p>
+                        <label class="form-label" id="roles">Roles:</label>
+                        <button type="button" class="btn btn-success" onclick="addField(event)">Add role</button>
+                    <div id='role_list'>
+                        {# for each role for this team #}
+                        {% for row2 in rows2 %}
+                            {# sets role id if role textbox hasn't been created yet #}
+                            {% if row2['role_id'] != curr_role_id %}
+                                {% set curr_role_id = row2['role_id'] %}
+                                <br>
+                                <div id='role{{ row2['role_id'] }}'>
+                                    <input type="text" name='role_name{{ row2['role_id'] }}' id='role_name{{ row2['role_id'] }}' value='{{ row2['role'] }}'></input>
+                                    <input type="hidden" name='role_id{{ row2['role_id'] }}' value='{{ row2['role_id'] }}'/>
+                                    <select name='role_user{{ row2['role_id'] }}'>
+                                        <option>None</option>
+                                        {# for each user applying for selected role #}
+                                        {% for row2 in rows2 %}
+                                            {% if row2['role_id'] == curr_role_id and row2['user_id'] %}
+                                                <option {{ ((row2['selected'])? "selected" : "") }} value='{{ row2['user_id'] }}'>{{ row2['firstName'] }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <button type="button" id='role_button{{ row2['role_id'] }}' onclick='removeRole(event, {{ row2['role_id'] }})'>Remove</button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    </p>
+                    <div class="submit-button">
+                        <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

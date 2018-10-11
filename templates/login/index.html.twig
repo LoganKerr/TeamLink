@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <img src="{{ asset('images/logo.png') }}" alt="logo image" class="logo-image"></img>
+        <div class="login-panel">
+            <h1 class="center-align">Sign in</h1>
+            {% if error %}
+                {{ error.messageKey }}
+            {% endif %}
+            <form method="post" action="{{ path('login') }}">
+                <div class="row">
+                    <div class="col-md-4 center-align"><label class="form-label">Email:</label></div>
+                    <div class="col-md-8">
+                        <input class="textbox" name="email" type="text" value="{{ last_email }}"/>
+                    </div>
+                </div>
+                <p>
+                    <label class="form-label">Password:</label><input class="textbox" name="password" type="password" />
+                </p>
+                <div class="center-align">
+                    <a href="index.php" class="btn btn-primary">Back</a>
+                    <input class="btn btn-primary" type="submit" value="Log in" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
