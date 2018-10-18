@@ -82,10 +82,10 @@
     echo $twig->render('profile.html.twig', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
                                              'request_method' => $_SERVER['REQUEST_METHOD'],
-                                             'error' => $error,
-                                             'faculty_id' => $row['faculty_id'],
+                                             'error' => (isset($error)? $error : array()),
+                                             'faculty_id' => (isset($row['faculty_id'])? $row['faculty_id'] : false),
                                              'department' => ((isset($department))? $department : $row['department']),
-                                             'student_id' => $row['student_id'],
+                                             'student_id' => (isset($row['student_id'])? $row['student_id'] : false),
                                              'major' => ((isset($major))? $major : $row['major']),
                                              'interests' => ((isset($interests))? $interests : $row['interests'])
                                           ));
