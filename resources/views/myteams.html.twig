@@ -1,6 +1,6 @@
-{% extends 'templates/base.html' %}
+{% extends 'templates/base.html.twig' %}
 
-{% block nav %}{% include 'templates/navbar.html' %}{% endblock %}
+{% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
 {% block main %}
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
