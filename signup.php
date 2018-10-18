@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                             'department' => (isset($department)? $department : ""),
                                             'major' => (isset($major)? $major : ""),
                                             'interests' => (isset($interests)? $interests : ""),
-                                            'error' => (isset($error)? $error: "")
+                                            'error' => (isset($error)? $error: array())
                        ));
     
 ?>
