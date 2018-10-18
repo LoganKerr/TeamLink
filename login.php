@@ -56,8 +56,8 @@
     $twig = new Twig_Environment($loader);
     
     echo $twig->render('login.html.twig', array(
-                                           'error' => $error,
-                                           'email' => $email
+                                           'error' => (isset($error)? $error : array()),
+                                           'email' => (isset($email)? $email: "")
                        ));
     
 ?>
