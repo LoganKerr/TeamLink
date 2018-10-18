@@ -1,6 +1,7 @@
-{% include 'templates/header.html' %}
-{% include 'templates/navbar.html' with nav %}
-<body>
+{% extends 'templates/base.html' %}
+
+{% block nav %}{% include 'templates/navbar.html' with nav %}{% endblock %}
+{% block main %}
     <div id="menu-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">Choose one of the following options</div>
@@ -13,5 +14,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

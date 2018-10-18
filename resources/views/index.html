@@ -1,13 +1,15 @@
-{% include 'templates/header.html' %}
-<body>
-    <div id="home-panel" class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading text-center"><image class="logo" src="/TeamLink/resources/images/logo.png"></image></div>
-            <div class="panel-body">
-                <a href="login.php" class="btn btn-primary btn-block">Log in</a><br />
-                <a href="signup.php" class="btn btn-primary btn-block" role="button">Sign up</a>
-            </div>
+{% extends 'templates/base.html' %}
+
+{% block main %}
+<div id="home-panel" class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            <image class="logo" src="/TeamLink/resources/images/logo.png"></image>
+        </div>
+        <div class="panel-body">
+            <a href="login.php" class="btn btn-primary btn-block">Log in</a><br />
+            <a href="signup.php" class="btn btn-primary btn-block" role="button">Sign up</a>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

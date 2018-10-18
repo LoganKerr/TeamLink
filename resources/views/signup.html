@@ -1,5 +1,6 @@
-{% include 'templates/header.html' %}
-<body>
+{% extends 'templates/base.html' %}
+
+{% block main %}
     <div id="signup-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -65,5 +66,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
