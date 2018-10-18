@@ -47,6 +47,7 @@
     $stmt->execute();
     $res = $stmt->get_result();
     $i = 0;
+    $rows = array();
     while ($row = $res->fetch_assoc())
     {
         $rows[$i] = $row;
@@ -62,9 +63,9 @@
     echo $twig->render('myteams.html.twig', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
                                              'request_method' => $_SERVER['REQUEST_METHOD'],
-                                             'error' => $error,
+                                             'error' => (isset($error)? $error : array()),
                                              'rows' => $rows,
                                              'length' => $length,
-                                             'message' => $message
+                                             'message' => (isset($message)? $message : "")
                                              ));
 ?>
