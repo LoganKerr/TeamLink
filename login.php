@@ -55,7 +55,7 @@
     $loader = new Twig_Loader_Filesystem('resources/views');
     $twig = new Twig_Environment($loader);
     
-    echo $twig->render('login.html', array(
+    echo $twig->render('login.html.twig', array(
                                            'error' => $error,
                                            'email' => $email
                        ));

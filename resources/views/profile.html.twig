@@ -1,6 +1,7 @@
-{% include 'templates/header.html' %}
-{% include 'templates/navbar.html' with nav %}
-<body>
+{% extends 'templates/base.html.twig' %}
+
+{% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
+{% block main %}
     <div id="signup-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">Change your information</div>
@@ -33,5 +34,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

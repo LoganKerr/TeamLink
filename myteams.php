@@ -59,7 +59,7 @@
     
     $admin = check_if_user_is_admin($_SESSION['user_id']);
     
-    echo $twig->render('myteams.html', array(
+    echo $twig->render('myteams.html.twig', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
                                              'request_method' => $_SERVER['REQUEST_METHOD'],
                                              'error' => $error,

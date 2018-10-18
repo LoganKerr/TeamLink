@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $loader = new Twig_Loader_Filesystem('resources/views');
     $twig = new Twig_Environment($loader);
     
-    echo $twig->render('signup.html', array(
+    echo $twig->render('signup.html.twig', array(
                                             'email' => $email,
                                             'university' => $university,
                                             'roles' => $roles,

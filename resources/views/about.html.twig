@@ -1,6 +1,7 @@
-{% include 'templates/header.html' %}
-<body>
-    <div id="about-panel" class="container">
+{% extends 'templates/base.html.twig' %}
+
+{% block main %}
+<div id="about-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">About Us</div>
             <div class="panel-body">
@@ -10,5 +11,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

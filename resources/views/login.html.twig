@@ -1,5 +1,6 @@
-{% include 'templates/header.html' %}
-<body>
+{% extends 'templates/base.html.twig' %}
+
+{% block main %}
     <div class="container">
 		<img src="/TeamLink/resources/images/logo.png" alt="logo image" class="logo-image"></img>
         	<div class="login-panel">
@@ -24,5 +25,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

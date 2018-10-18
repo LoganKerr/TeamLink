@@ -1,7 +1,7 @@
-{% include 'templates/header.html' %}
-{% include 'templates/navbar.html' with nav %}
+{% extends 'templates/base.html.twig' %}
 
-<body>
+{% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
+{% block main %}
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
             {% if request_method == "POST" %}
@@ -33,6 +33,4 @@
                 {% endif %}
         </div>
     </div>
-</body>
-</html>
-
+{% endblock %}
