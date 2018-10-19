@@ -67,8 +67,8 @@
     echo $twig->render('createteam.html.twig', array(
                                              'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
                                                 'request_method' => $_SERVER['REQUEST_METHOD'],
-                                                'error' => $error,
-                                                'title' => $title,
-                                                'description' => $description
+                                                'error' => (isset($error)? $error : array()),
+                                                'title' => (isset($title)? $title : ""),
+                                                'description' => (isset($description)? $description : "")
                                              ));
 ?>
