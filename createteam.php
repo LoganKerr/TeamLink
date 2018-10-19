@@ -40,22 +40,7 @@
         {
             $stmt = $conn->prepare("INSERT INTO `teams` (`owner`, `title`, `description`) VALUES (?,?,?)");
             $stmt->bind_param("iss", $user_id, $title, $description);
-            if ($stmt->execute())
-            {
-                $team_id = $stmt->insert_id;
-                $stmt = $conn->prepare("INSERT INTO `roles` (`role`, `team_id`) VALUES ('Owner', ?)");
-                $stmt->bind_param("i", $team_id);
-                if ($stmt->execute())
-                {
-                    $role_id = $stmt->insert_id;
-                    $stmt = $conn->prepare("INSERT INTO `role_assoc` (`user_id`, `team_id`, `role_id`, `selected`) VALUES (?,?, ?, 1)");
-                    $stmt->bind_param("iii", $user_id, $team_id, $role_id);
-                    if (!$stmt->execute())
-                    {
-                        $error['sql'] = $stmt->error;
-                    }
-                }
-            }
+            $stmt->execute();
         }
     }
     
