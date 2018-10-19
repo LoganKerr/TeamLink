@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             {
                 $faculty_id = $conn->insert_id;
                 $stmt = $conn->prepare("INSERT INTO `users` (`email`, `university_id`, `firstName`, `lastName`, `passHash`, `faculty_id`) VALUES (?, (SELECT `id` FROM `universities` WHERE `title`=?), ?, ?, ?, ?)");
-                $stmt->bind_param("sssssi", $email, $firstName, $lastName, $hash, $faculty_id);
+                $stmt->bind_param("sssssi", $email, $university, $firstName, $lastName, $hash, $faculty_id);
                 
                 if ($stmt->execute())
                 {
