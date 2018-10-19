@@ -13,7 +13,10 @@
     
     $user_id = $_SESSION['user_id'];
     $id = $_GET['id'];
-    $stmt = $conn->prepare("SELECT `user_id` FROM `role_assoc` WHERE `user_id`=? AND `team_id`=?");
+    $stmt = $conn->prepare("
+        SELECT `teams`.`owner`, `role_assoc`.`user_id` FROM `teams` 
+        LEFT JOIN `role_assoc` ON `teams`.`id`=`role_assoc`.`team_id` 
+        WHERE (`teams`.`owner`=13 OR `role_assoc`.`user_id`=13) AND `teams`.`id`=33");
     $stmt->bind_param("ii", $user_id, $id);
     $stmt->execute();
     $res = $stmt->get_result();
