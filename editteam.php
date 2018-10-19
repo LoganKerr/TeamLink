@@ -137,6 +137,7 @@
     
     $role_ids = array();
     $i = 0;
+    $rows2 = array();
     while ($row2 = $res2->fetch_assoc())
     {
         $rows2[$i] = $row2;
@@ -152,7 +153,7 @@
     echo $twig->render('editteam.html.twig', array(
                                               'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
                                               'request_method' => $_SERVER['REQUEST_METHOD'],
-                                              'error' => $error,
+                                              'error' => (isset($error)? $error : array()),
                                               'team_id' => $_GET['id'],
                                               'title' => ((isset($title))? $title : $row['title']),
                                               'description' => ((isset($description))? $description : $row['description']),
