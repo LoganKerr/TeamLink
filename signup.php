@@ -152,15 +152,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $twig = new Twig_Environment($loader);
     
     echo $twig->render('signup.html.twig', array(
-                                            'email' => $email,
-                                            'university' => $university,
+                                            'email' => (isset($email)? $email : ""),
+                                            'university' => (isset($university)? $university : ""),
                                             'roles' => $roles,
-                                            'firstName' => $firstName,
-                                            'lastName' => $lastName,
-                                            'department' => $department,
-                                            'major' => $major,
-                                            'interests' => $interests,
-                                            'error' => $error
+                                            'firstName' => (isset($firstName)? $firstName : ""),
+                                            'lastName' => (isset($lastName)? $lastName : ""),
+                                            'department' => (isset($department)? $department : ""),
+                                            'major' => (isset($major)? $major : ""),
+                                            'interests' => (isset($interests)? $interests : ""),
+                                            'error' => (isset($error)? $error: array())
                        ));
     
 ?>
