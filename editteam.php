@@ -16,8 +16,8 @@
     $stmt = $conn->prepare("
         SELECT `teams`.`owner`, `role_assoc`.`user_id` FROM `teams` 
         LEFT JOIN `role_assoc` ON `teams`.`id`=`role_assoc`.`team_id` 
-        WHERE (`teams`.`owner`=13 OR `role_assoc`.`user_id`=13) AND `teams`.`id`=33");
-    $stmt->bind_param("ii", $user_id, $id);
+        WHERE (`teams`.`owner`=? OR `role_assoc`.`user_id`=?) AND `teams`.`id`=?");
+    $stmt->bind_param("iii", $user_id, $user_id, $id);
     $stmt->execute();
     $res = $stmt->get_result();
     // if user is not associated with team
@@ -52,7 +52,6 @@
         }
         
         // TODO: validate team and user adding
-        //var_dump($_POST);
         // for each role field
         foreach ($_POST as $key => $value)
         {
