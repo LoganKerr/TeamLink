@@ -45,16 +45,16 @@
     $stmt = $conn->prepare("
         SELECT `teams`.`id`, `title`, `description`,
         (CASE
-            WHEN `teams`.`owner`=13 then \"Owner\"
+            WHEN `teams`.`owner`=? then \"Owner\"
             ELSE GROUP_CONCAT(`roles`.`role`)
         END) AS `role`
         FROM `teams` 
         LEFT JOIN `role_assoc` ON `teams`.`id`=`role_assoc`.`team_id` 
         LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` 
-        WHERE `role_assoc`.`user_id`=13 AND role_assoc.`selected` OR `teams`.`owner`=13 
+        WHERE `role_assoc`.`user_id`=? AND role_assoc.`selected` OR `teams`.`owner`=?
         GROUP BY `teams`.`id`
     ");
-    $stmt->bind_param("ii", $user_id, $user_id);
+    $stmt->bind_param("iii", $user_id,$user_id, $user_id);
     $stmt->execute();
     $res = $stmt->get_result();
     $i = 0;

@@ -101,7 +101,7 @@
     }
     
     // sets search to default value
-    $search = (($_GET['search']));
+    $search = (($_GET['search'])? : '');
     $search_wildcard = "%".$search."%";
     // get teams that are similar to searched value
     //$stmt = $conn->prepare("SELECT `firstName`, `lastName`, `title`, `description` FROM `teams` INNER JOIN `users` ON teams.`owner`=users.`id` WHERE `public` AND (`title` LIKE ? OR `description` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
