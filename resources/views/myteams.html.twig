@@ -14,13 +14,12 @@
                 <form method="post" action='myteams.php' id='myteams_form'>
                 <input type="hidden" id="team" name="team" value="-1"></input>
                 <table class="table table-striped table-bordered">
-                    <tr><th>Team Title</th><th>Description</th><th>Role</th><th>Public?</th><th></th><th></th></tr>
+                    <tr><th>Team Title</th><th>Description</th><th>Role</th><th></th><th></th></tr>
                     {% for row in rows %}
                         <tr>
                             <td>{{ row['title'] }}</td>
                             <td>{{ row['description'] }}</td>
                             <td>{{ row['role'] }}</td>
-                            <td>{{ ((row['public'])? "Yes" : "No") }}</td>
                             <td><a href='editteam.php?id={{ row['id'] }}'>Edit</a></td>
                             <td><button type="button" onclick="setDeletedTeam(event, {{ row['id'] }})">Delete Team</button></td>
                         </tr>
