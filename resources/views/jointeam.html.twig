@@ -5,7 +5,13 @@
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
             {% if request_method == "POST" %}
-                {{ error|length? "An error occurred" : "Changes saved" }}
+                {%  if error|length == 0 %}
+                    Changes saved
+                {% else %}
+                    {% for element in error %}
+                        {{ element }}
+                    {% endfor %}
+                {% endif %}
             {% endif %}
             <form method="GET" action="jointeam.php">
                 <input type="textbox" name="search" placeholder="Search" style="float: right;"/>

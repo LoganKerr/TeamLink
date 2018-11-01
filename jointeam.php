@@ -49,14 +49,23 @@
                         if ($stmt->execute())
                         {
                             $res = $stmt->get_result();
-                            // get university of user id
-                            $row = $res->fetch_assoc();
-                            $user_university_id = $row['university_id'];
-                            // get university of owner id
-                            $row = $res->fetch_assoc();
-                            $owner_university_id = $row['university_id'];
-                            // owner and user are from same university
-                            if ($user_university_id == $owner_university_id)
+                            $same_university = false;
+                            // owner is same as user
+                            if (mysqli_num_rows($res) == 1)
+                            {
+                                $same_university = true;
+                            }
+                            else {
+                                // get university of user id
+                                $row = $res->fetch_assoc();
+                                $user_university_id = $row['university_id'];
+                                // get university of owner id
+                                $row = $res->fetch_assoc();
+                                $owner_university_id = $row['university_id'];
+                                // owner and user are from same university
+                                $same_university = $user_university_id == $owner_university_id;
+                            }
+                            if ($same_university)
                             {
                                 $stmt = $conn->prepare("SELECT COUNT(`role_assoc`.`user_id`) AS `count` FROM `role_assoc` WHERE `role_assoc`.`role_id`=? AND `role_assoc`.`user_id`=?");
                                 $stmt->bind_param("ii", $role_id, $user_id);
