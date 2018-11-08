@@ -6,6 +6,7 @@
         <div class="panel-body">
             <div class="split-view">
                 <h3>Teams</h3>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create a Team</button>
                 <form method="GET" action="teams.php">
                     <label>Filter</label>
                     <select name="filter" onchange="this.form.submit()">
@@ -19,7 +20,8 @@
                 <div class="list-view">
                     <div class="list-results">
                         <ul>
-                            {% for row in rows %}
+                            {{ test }}
+                            {% for row in list_items %}
                                 <li>
                                     <div class="list-item-div">
                                         <a href="teams.php?filter={{ filter }}&id={{ row['id'] }}">
@@ -41,7 +43,7 @@
                         {% else %}
                             <div class="update-div">
                                 <label>Description</label>
-                                <div class="view-teams-aligned-values">{{ description }}</div>
+                                <div class="view-teams-aligned-values">{{ modal[description] }}</div>
                             </div>
                             <div class="update-div">
                                 {% for row in roles %}
@@ -56,4 +58,25 @@
             </div>
         </div>
     </div>
+    {% embed 'templates/modal.html.twig' %}
+        {% block modal_header %}
+            Create a Team
+        {% endblock %}
+        {% block modal_content %}
+            <form method="post" action="teams.php">
+                <input type="hidden" name="action" value="create"/>
+                <p>
+                    <label class="form-label">Title:</label>
+                    <input class="textbox" name="title" type="text" value='{{ ((modal['title'] is defined)? modal['title'] : '') }}'/>
+                    {{ error['title']? error['title'] }}
+                </p>
+                <p>
+                    <label class="form-label">Description:</label>
+                    <textarea name="description">{{ ((modal['description'] is defined)? modal['description'] : '') }}</textarea>
+                    {{ error['description']? error['description'] }}
+                </p>
+                <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
+            </form>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

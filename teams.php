@@ -63,10 +63,9 @@
             $rows[$i] = $row;
             $i++;
         }
-        $length = count($rows);
 
-        $render_items['rows'] = $rows;
-        $render_items['length'] = $length;
+        $render_items['list_items'] = $rows;
+        $render_items['test'] = "test";
 
         // if team selected
         if (isset($_GET['id']))
@@ -102,5 +101,5 @@
     
     $admin = check_if_user_is_admin($_SESSION['user_id']);
     
-    echo $twig->render('myteamstest.html.twig', $render_items);
+    echo $twig->render('teams.html.twig', $render_items);
 ?>

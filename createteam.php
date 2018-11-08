@@ -32,6 +32,6 @@ if (count($error) == 0)
     $stmt->execute();
 }
 
-$render_items['title'] = (isset($title)? $title : "");
-$render_items['description'] = (isset($description)? $description : "");
+$render_items['modal']['title'] = (isset($title)? $title : "");
+$render_items['modal']['description'] = (isset($description)? $description : "");
 ?>
