@@ -32,7 +32,10 @@
             include "delete_team.php";
         }
     }
-    
+
+    // filter
+    $render_items['filter'] = (isset($_GET['filter'])? $_GET['filter'] : '');
+
     // get teams
     $stmt = $conn->prepare("
         SELECT `teams`.`id`, `title`, `description`,

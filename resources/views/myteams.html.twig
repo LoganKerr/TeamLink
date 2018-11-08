@@ -5,6 +5,14 @@
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
             <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create a Team</button>
+            <form method="GET" action="myteams.php">
+                <label>Filter</label><select name="filter" onchange="this.form.submit()">
+                    <option {{ ((filter=='all')? "selected" : "") }} value="all">All teams</option>
+                    <option {{ ((filter=='my')? "selected" : "") }} value="my">My teams</option>
+                    <option {{ ((filter=='applied')? "selected" : "") }} value="applied">Applied teams</option>
+                    <option {{ ((filter=='nonapplied')? "selected" : "") }} value="nonapplied">Non applied teams</option>
+                </select>
+            </form>
             {% if length == 0 %}
                 You have no teams :(
             {% else %}
