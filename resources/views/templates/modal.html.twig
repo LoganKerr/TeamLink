@@ -1,6 +1,6 @@
 {% block modal %}
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal" id="myModal" role="dialog" data-show="true">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -10,6 +10,9 @@
                 <h4 class="modal-title">{% block modal_header %}{% endblock %}</h4>
             </div>
             <div class="modal-body">
+                {% if request_method == "POST" %}
+                    {{ error|length? "An error occurred" : ((message)? message : "Changes saved") }}
+                {% endif %}
                 <p>{% block modal_content %}{% endblock %}</p>
             </div>
             <div class="modal-footer">
@@ -19,4 +22,9 @@
 
     </div>
 </div>
+<script>
+{% if (error|length != 0) %}
+    $('#myModal').modal('show');
+{% endif %}
+</script>
 {% endblock %}

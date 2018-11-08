@@ -5,6 +5,10 @@
     require_once("config/config.php");
     require_once("functions.php");
     require_once("vendor/autoload.php");
+
+    $render_items = array();
+    $error = array();
+    $message = "";
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
@@ -17,12 +21,10 @@
     // myteams form submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        $error = array();
-        $message = "";
         // create team
         if($_POST['action']=='create')
         {
-            include "createteamtest.php";
+            include "createteam.php";
         }
         // team deletion
         else
@@ -55,18 +57,18 @@
         $i++;
     }
     $length = count($rows);
+
+    $render_items['nav'] = array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin);
+    $render_items['request_method'] = $_SERVER['REQUEST_METHOD'];
+    $render_items['error'] = (isset($error)? $error : array());
+    $render_items['rows'] = $rows;
+    $render_items['length'] = $length;
+    $render_items['message'] = (isset($message)? $message : "");
     
     $loader = new Twig_Loader_Filesystem('resources/views');
     $twig = new Twig_Environment($loader);
     
     $admin = check_if_user_is_admin($_SESSION['user_id']);
     
-    echo $twig->render('myteams.html.twig', array(
-                                             'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
-                                             'request_method' => $_SERVER['REQUEST_METHOD'],
-                                             'error' => (isset($error)? $error : array()),
-                                             'rows' => $rows,
-                                             'length' => $length,
-                                             'message' => (isset($message)? $message : "")
-                                             ));
+    echo $twig->render('myteams.html.twig', $render_items);
 ?>

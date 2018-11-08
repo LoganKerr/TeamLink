@@ -17,3 +17,4 @@ foreach ($_POST as $key => $value) {
         $message = "Team deleted";
     }
 }
+?>
