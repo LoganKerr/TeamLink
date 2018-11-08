@@ -37,23 +37,29 @@
     $filter = $_GET['filter'];
     $render_items['filter'] = $filter;
 
+    // sets search to default value
+    $search = (($_GET['search'])? : '');
+    $search_wildcard = "%".$search."%";
+    $render_items['search'] = $search;
+
     // show my teams
     if ($filter == "my")
     {
         // get teams
         $stmt = $conn->prepare("
-        SELECT `teams`.`id`, `title`, `description`,
+        SELECT `teams`.`id`, `title`, `firstName`, `lastName`,
         (CASE
             WHEN `teams`.`owner`=? then \"Owner\"
             ELSE GROUP_CONCAT(`roles`.`role`)
         END) AS `role`
         FROM `teams` 
         LEFT JOIN `role_assoc` ON `teams`.`id`=`role_assoc`.`team_id` 
-        LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` 
-        WHERE `role_assoc`.`user_id`=? AND role_assoc.`selected` OR `teams`.`owner`=?
+        LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id`
+        LEFT JOIN `users` ON `teams`.`owner` = `users`.`id` 
+        WHERE `role_assoc`.`user_id`=? AND role_assoc.`selected` OR `teams`.`owner`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)
         GROUP BY `teams`.`id`
     ");
-        $stmt->bind_param("iii", $user_id,$user_id, $user_id);
+        $stmt->bind_param("iiissss", $user_id,$user_id, $user_id, $search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
         $stmt->execute();
         $res = $stmt->get_result();
         $i = 0;
@@ -65,7 +71,6 @@
         }
 
         $render_items['list_items'] = $rows;
-        $render_items['test'] = "test";
 
         // if team selected
         if (isset($_GET['id']))
@@ -91,7 +96,7 @@
 
     }
 
-    $render_items['nav'] = array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin);
+    $render_items['nav'] = array('page' => $_SERVER['PHP_SELF']);
     $render_items['request_method'] = $_SERVER['REQUEST_METHOD'];
     $render_items['error'] = (isset($error)? $error : array());
     $render_items['message'] = (isset($message)? $message : "");
