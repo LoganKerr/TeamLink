@@ -16,7 +16,16 @@ if ($res->num_rows == 0)
 }
 
 //$stmt2 = $conn->prepare("SELECT `role_assoc`.`role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`, roles.`role`, users.`firstName`, users.`lastName` FROM `role_assoc` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` LEFT JOIN `roles` ON `role_assoc`.`role_id`=`roles`.`id` WHERE roles.`role`!='Owner' && role_assoc.`team_id`=? ORDER BY `role_assoc`.`role_id`");
-$stmt2 = $conn->prepare("SELECT `roles`.`role`, `roles`.`team_id`, `roles`.`id` AS `role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`, users.`firstName`, users.`lastName` FROM `roles` LEFT JOIN `role_assoc` ON `roles`.`id` = `role_assoc`.`role_id` LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` WHERE `roles`.`team_id`=?");
+$stmt2 = $conn->prepare("
+SELECT `roles`.`role`, `roles`.`team_id`, `roles`.`id` AS `role_id`, `role_assoc`.`user_id`, `role_assoc`.`selected`,
+(CASE
+    WHEN `selected` THEN `users`.`firstName`
+ 	ELSE \"None\"
+END) AS `firstName`
+FROM `roles` 
+LEFT JOIN `role_assoc` ON `roles`.`id` = `role_assoc`.`role_id` 
+LEFT JOIN `users` ON role_assoc.`user_id`=users.`id` 
+WHERE `roles`.`team_id`=?");
 $stmt2->bind_param("i", $id);
 $stmt2->execute();
 $res2 = $stmt2->get_result();

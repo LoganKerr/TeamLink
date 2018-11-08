@@ -71,19 +71,28 @@
         }
 
         $render_items['list_items'] = $rows;
-
-        // if team selected
-        if (isset($_GET['id']))
-        {
-            $id = $_GET['id'];
-            $render_items['id'] = $id;
-            include "load-team.php";
-        }
     }
     // applied teams
     else if ($filter == "applied")
     {
+        $stmt = $conn->prepare("
+        SELECT `teams`.`id`, `title`, `firstName`, `lastName` 
+        FROM `teams`
+        INNER JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
+        INNER JOIN `users` ON `teams`.`owner` = `users`.`id`
+        WHERE `user_id`=?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $i = 0;
+        $rows = array();
+        while ($row = $res->fetch_assoc())
+        {
+            $rows[$i] = $row;
+            $i++;
+        }
 
+        $render_items['list_items'] = $rows;
     }
     // nonapplied teams
     else if ($filter == "nonapplied")
@@ -94,6 +103,14 @@
     else
     {
 
+    }
+
+    // if team selected
+    if (isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+        $render_items['id'] = $id;
+        include "load-team.php";
     }
 
     $render_items['nav'] = array('page' => $_SERVER['PHP_SELF']);
