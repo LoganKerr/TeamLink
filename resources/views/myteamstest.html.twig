@@ -6,7 +6,7 @@
         <div class="panel-body">
             <div class="split-view">
                 <h3>Teams</h3>
-                <form method="GET" action="myteams.php">
+                <form method="GET" action="teams.php">
                     <label>Filter</label>
                     <select name="filter" onchange="this.form.submit()">
                         <option {{ ((filter == "all")? "selected") }} value="all">All teams</option>
@@ -22,7 +22,7 @@
                             {% for row in rows %}
                                 <li>
                                     <div class="list-item-div">
-                                        <a href="myteams.php?filter={{ filter }}&id={{ row['id'] }}">
+                                        <a href="teams.php?filter={{ filter }}&id={{ row['id'] }}">
                                             <div class="pi">{{ row['title'] }}</div>
                                             <div class="pi">{{ row['firstName'] }}</div>
                                         </a>

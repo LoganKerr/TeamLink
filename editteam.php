@@ -23,7 +23,7 @@
     // if user is not associated with team
     if ($res->num_rows == 0)
     {
-        header("Location: myteams.php");
+        header("Location: teams.php");
         exit();
     }
     

@@ -8,7 +8,7 @@ require_once("vendor/autoload.php");
 
 if (isset($_SESSION['user_id']))
 {
-    header("Location: myteams.php");
+    header("Location: teams.php");
 }
 
 // possible signup roles
