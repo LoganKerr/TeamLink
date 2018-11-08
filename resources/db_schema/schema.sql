@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Sep 20, 2018 at 03:12 AM
+-- Generation Time: Nov 08, 2018 at 08:32 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -21,9 +21,38 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `faculty` (
-`id` int(11) NOT NULL,
-`department` varchar(256) NOT NULL
+  `id` int(11) NOT NULL,
+  `department` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `faculty`
+--
+
+INSERT INTO `faculty` (`id`, `department`) VALUES
+(2, 'tech'),
+(3, 'doot'),
+(4, 'test');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interests`
+--
+
+CREATE TABLE `interests` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `tag` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `interests`
+--
+
+INSERT INTO `interests` (`id`, `user_id`, `tag`) VALUES
+(1, 13, 'test'),
+(2, 13, 'test2');
 
 -- --------------------------------------------------------
 
@@ -32,9 +61,9 @@ CREATE TABLE `faculty` (
 --
 
 CREATE TABLE `roles` (
-`id` int(11) NOT NULL,
-`role` varchar(256) NOT NULL,
-`team_id` int(11) DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `role` varchar(256) NOT NULL,
+  `team_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -42,9 +71,10 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `role`, `team_id`) VALUES
-(8, 'Owner', 27),
-(10, 'Singer', 27),
-(12, 'DRUMMER', 27);
+(21, 'test', 28),
+(23, 'test', 33),
+(24, 'code monkey', 34),
+(25, 'test2', 28);
 
 -- --------------------------------------------------------
 
@@ -53,11 +83,11 @@ INSERT INTO `roles` (`id`, `role`, `team_id`) VALUES
 --
 
 CREATE TABLE `role_assoc` (
-`id` int(11) NOT NULL,
-`user_id` int(11) DEFAULT NULL,
-`team_id` int(11) NOT NULL,
-`role_id` int(11) NOT NULL,
-`selected` tinyint(1) NOT NULL
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `team_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `selected` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -65,7 +95,9 @@ CREATE TABLE `role_assoc` (
 --
 
 INSERT INTO `role_assoc` (`id`, `user_id`, `team_id`, `role_id`, `selected`) VALUES
-(15, 13, 27, 8, 1);
+(33, 13, 28, 21, 1),
+(34, 13, 33, 23, 0),
+(35, 13, 34, 24, 0);
 
 -- --------------------------------------------------------
 
@@ -74,18 +106,19 @@ INSERT INTO `role_assoc` (`id`, `user_id`, `team_id`, `role_id`, `selected`) VAL
 --
 
 CREATE TABLE `students` (
-`id` int(11) NOT NULL,
-`major` varchar(256) NOT NULL,
-`interests` varchar(256) NOT NULL
+  `id` int(11) NOT NULL,
+  `major` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `major`, `interests`) VALUES
-(8, 'Computer Science', '<b>No XSS here baby</b>'),
-(9, '<image></image>', 'hofstra');
+INSERT INTO `students` (`id`, `major`) VALUES
+(8, ''),
+(9, '<image></image>'),
+(10, 'test'),
+(11, 'test');
 
 -- --------------------------------------------------------
 
@@ -94,10 +127,10 @@ INSERT INTO `students` (`id`, `major`, `interests`) VALUES
 --
 
 CREATE TABLE `teams` (
-`id` int(11) NOT NULL,
-`owner` int(11) NOT NULL,
-`title` varchar(256) NOT NULL,
-`description` text NOT NULL
+  `id` int(11) NOT NULL,
+  `owner` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -105,7 +138,10 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` (`id`, `owner`, `title`, `description`) VALUES
-(27, 13, 'Band', 'we spit fire');
+(28, 14, 'Book Club', 'We read books for fun!'),
+(30, 14, 'test', 'test'),
+(33, 13, 'Band (Name pending)', 'Let\'s start a rock band together!'),
+(34, 13, 'Software Team', 'Let\'s get together and make some apps');
 
 -- --------------------------------------------------------
 
@@ -114,9 +150,9 @@ INSERT INTO `teams` (`id`, `owner`, `title`, `description`) VALUES
 --
 
 CREATE TABLE `universities` (
-`id` int(11) NOT NULL,
-`title` varchar(256) NOT NULL,
-`expired` tinyint(1) NOT NULL
+  `id` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `expired` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -134,15 +170,15 @@ INSERT INTO `universities` (`id`, `title`, `expired`) VALUES
 --
 
 CREATE TABLE `users` (
-`id` int(11) NOT NULL,
-`university_id` int(11) DEFAULT NULL,
-`student_id` int(11) DEFAULT NULL,
-`faculty_id` int(11) DEFAULT NULL,
-`admin` tinyint(1) NOT NULL,
-`email` varchar(256) NOT NULL,
-`firstName` varchar(256) NOT NULL,
-`lastName` varchar(256) NOT NULL,
-`passHash` varchar(256) NOT NULL
+  `id` int(11) NOT NULL,
+  `university_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `faculty_id` int(11) DEFAULT NULL,
+  `admin` tinyint(1) NOT NULL,
+  `email` varchar(256) NOT NULL,
+  `firstName` varchar(256) NOT NULL,
+  `lastName` varchar(256) NOT NULL,
+  `passHash` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -151,7 +187,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `university_id`, `student_id`, `faculty_id`, `admin`, `email`, `firstName`, `lastName`, `passHash`) VALUES
 (13, 1, 8, NULL, 1, 'lkerr1998@gmail.com', 'Logan', 'Kerr', '$2y$10$s/d78kRd5V2bx4Y2wkMMp.K7QZglTMcgI/FzG5NC7HUgaam4xvm8e'),
-(14, 1, 9, NULL, 1, 'lkerr2@pride.hofstra.edu', 'Derrick', 'Hamilton', '$2y$10$B3T7s.IVWqVDBBgRTJSPYedEc6gosedbwGSRKxWkzb6Z9lYe/..hW');
+(14, 1, 9, NULL, 1, 'dhamilton1@pride.hofstra.edu', 'Derrick', 'Hamilton', '$2y$10$SyV.E8cAYy2UdOGwIZ9vducBefYnP2YgD0THLUnmTYs2ZZujzTEGG'),
+(15, 1, NULL, 2, 0, 'test', 'Logan', 'Kerr', '$2y$10$n0YarW/O15EJ1FkMA82Rb.C7BHXu/HwS7db7bo1oNrZRwUVimv5aC'),
+(16, 1, NULL, 3, 0, 'test1', 'logan', 'kerr', '$2y$10$21OrxkWs3gWr8MBKZao1jeRJiIbAM8zhw4iOrCHD8jfMltrru4a92'),
+(17, 1, 11, NULL, 0, 'test@gmail.com', 'Logan', 'Kerr', '$2y$10$T5NZaxDxnP7QvYCrF9TLae65ZGkTtaA5C4UEqAPHPTJU7JqtCbddy');
 
 --
 -- Indexes for dumped tables
@@ -161,43 +200,49 @@ INSERT INTO `users` (`id`, `university_id`, `student_id`, `faculty_id`, `admin`,
 -- Indexes for table `faculty`
 --
 ALTER TABLE `faculty`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `interests`
+--
+ALTER TABLE `interests`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `role_assoc`
 --
 ALTER TABLE `role_assoc`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `teams`
 --
 ALTER TABLE `teams`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `universities`
 --
 ALTER TABLE `universities`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -207,34 +252,39 @@ ADD PRIMARY KEY (`id`);
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `interests`
+--
+ALTER TABLE `interests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `role_assoc`
 --
 ALTER TABLE `role_assoc`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `universities`
 --
 ALTER TABLE `universities`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
