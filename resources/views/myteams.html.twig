@@ -35,7 +35,8 @@
             Create a Team
         {% endblock %}
         {% block modal_content %}
-            <form method="post" action="createteam.php">
+            <form method="post" action="myteams.php">
+                <input type="hidden" name="action" value="create"/>
                 <p>
                     <label class="form-label">Title:</label>
                     <input class="textbox" name="title" type="text" value='{{ title }}'/>

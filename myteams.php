@@ -5,6 +5,10 @@
     require_once("config/config.php");
     require_once("functions.php");
     require_once("vendor/autoload.php");
+
+    $render_items = array();
+    $error = array();
+    $message = "";
     
     // if user not signed in
     if (!isset($_SESSION['user_id']))
@@ -17,27 +21,15 @@
     // myteams form submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        $error = array();
-        $message = "";
-        // for each team field
-        foreach ($_POST as $key => $value)
+        // create team
+        if($_POST['action']=='create')
         {
-            // team is being deleted
-            if ($key == "team")
-            {
-                $team_id = (int)$value;
-                // deletes team from teams table
-                $stmt = $conn->prepare("DELETE FROM `teams` WHERE `id`=?");
-                $stmt2 = $conn->prepare("DELETE FROM `roles` WHERE `team_id`=?");
-                $stmt3 = $conn->prepare("DELETE FROM `role_assoc` WHERE `team_id`=?");
-                $stmt->bind_param("i", $team_id);
-                $stmt2->bind_param("i", $team_id);
-                $stmt3->bind_param("i", $team_id);
-                $stmt->execute();
-                $stmt2->execute();
-                $stmt3->execute();
-                $message = "Team deleted";
-            }
+            include "createteam.php";
+        }
+        // team deletion
+        else
+        {
+            include "delete_team.php";
         }
     }
     
@@ -65,18 +57,18 @@
         $i++;
     }
     $length = count($rows);
+
+    $render_items['nav'] = array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin);
+    $render_items['request_method'] = $_SERVER['REQUEST_METHOD'];
+    $render_items['error'] = (isset($error)? $error : array());
+    $render_items['rows'] = $rows;
+    $render_items['length'] = $length;
+    $render_items['message'] = (isset($message)? $message : "");
     
     $loader = new Twig_Loader_Filesystem('resources/views');
     $twig = new Twig_Environment($loader);
     
     $admin = check_if_user_is_admin($_SESSION['user_id']);
     
-    echo $twig->render('myteams.html.twig', array(
-                                             'nav' => array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin),
-                                             'request_method' => $_SERVER['REQUEST_METHOD'],
-                                             'error' => (isset($error)? $error : array()),
-                                             'rows' => $rows,
-                                             'length' => $length,
-                                             'message' => (isset($message)? $message : "")
-                                             ));
+    echo $twig->render('myteams.html.twig', $render_items);
 ?>
