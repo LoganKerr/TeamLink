@@ -32,9 +32,16 @@
             include "delete_team.php";
         }
     }
-    
-    // get teams
-    $stmt = $conn->prepare("
+
+    // filter
+    $filter = $_GET['filter'];
+    $render_items['filter'] = $filter;
+
+    // show my teams
+    if ($filter == "my")
+    {
+        // get teams
+        $stmt = $conn->prepare("
         SELECT `teams`.`id`, `title`, `description`,
         (CASE
             WHEN `teams`.`owner`=? then \"Owner\"
@@ -46,23 +53,48 @@
         WHERE `role_assoc`.`user_id`=? AND role_assoc.`selected` OR `teams`.`owner`=?
         GROUP BY `teams`.`id`
     ");
-    $stmt->bind_param("iii", $user_id,$user_id, $user_id);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $i = 0;
-    $rows = array();
-    while ($row = $res->fetch_assoc())
-    {
-        $rows[$i] = $row;
-        $i++;
+        $stmt->bind_param("iii", $user_id,$user_id, $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $i = 0;
+        $rows = array();
+        while ($row = $res->fetch_assoc())
+        {
+            $rows[$i] = $row;
+            $i++;
+        }
+        $length = count($rows);
+
+        $render_items['rows'] = $rows;
+        $render_items['length'] = $length;
+
+        // if team selected
+        if (isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+            $render_items['id'] = $id;
+            include "load-team.php";
+        }
     }
-    $length = count($rows);
+    // applied teams
+    else if ($filter == "applied")
+    {
+
+    }
+    // nonapplied teams
+    else if ($filter == "nonapplied")
+    {
+
+    }
+    // all teams
+    else
+    {
+
+    }
 
     $render_items['nav'] = array('page' => $_SERVER['PHP_SELF'], 'admin' => $admin);
     $render_items['request_method'] = $_SERVER['REQUEST_METHOD'];
     $render_items['error'] = (isset($error)? $error : array());
-    $render_items['rows'] = $rows;
-    $render_items['length'] = $length;
     $render_items['message'] = (isset($message)? $message : "");
     
     $loader = new Twig_Loader_Filesystem('resources/views');
@@ -70,5 +102,5 @@
     
     $admin = check_if_user_is_admin($_SESSION['user_id']);
     
-    echo $twig->render('myteams.html.twig', $render_items);
+    echo $twig->render('myteamstest.html.twig', $render_items);
 ?>

@@ -1,0 +1,59 @@
+{% extends 'templates/base.html.twig' %}
+
+{% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
+{% block main %}
+    <div id="join-panel" class="panel panel-primary">
+        <div class="panel-body">
+            <div class="split-view">
+                <h3>Teams</h3>
+                <form method="GET" action="myteams.php">
+                    <label>Filter</label>
+                    <select name="filter" onchange="this.form.submit()">
+                        <option {{ ((filter == "all")? "selected") }} value="all">All teams</option>
+                        <option {{ ((filter == "my")? "selected") }} value="my">My teams</option>
+                        <option {{ ((filter == "applied")? "selected") }} value="applied">Applied teams</option>
+                        <option {{ ((filter == "nonapplied")? "selected") }} value="nonapplied">Nonapplied teams</option>
+                    </select>
+                </form>
+                <hr>
+                <div class="list-view">
+                    <div class="list-results">
+                        <ul>
+                            {% for row in rows %}
+                                <li>
+                                    <div class="list-item-div">
+                                        <a href="myteams.php?filter={{ filter }}&id={{ row['id'] }}">
+                                            <div class="pi">{{ row['title'] }}</div>
+                                            <div class="pi">{{ row['firstName'] }}</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-view">
+                    <h3>{{ title }}</h3>
+                    <hr>
+                    <div class="view-teams-aligned-fields">
+                        {% if not(roles is defined) %}
+                            Choose a team on the left
+                        {% else %}
+                            <div class="update-div">
+                                <label>Description</label>
+                                <div class="view-teams-aligned-values">{{ description }}</div>
+                            </div>
+                            <div class="update-div">
+                                {% for row in roles %}
+                                    <label>{{ row['role'] }}</label>
+                                    <div class="view-teams-aligned-values">{{ ((row['firstName'])? row['firstName'] : 'None') }}</div>
+                                    <br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
