@@ -25,8 +25,13 @@
                         </p>
                         <p>
                             <label class="form-label">Interests:</label>
-                            <textarea name="interests" rows="4" cols="50" >{{ interests }}</textarea>
                             {{ error['interests']? error['interests'] }}
+                            <ul>
+                                <label>Add interest</label><input type="textbox" name="new-interest"/>
+                                {% for interest in interests %}
+                                    <li>{{ interest }} <button type="button" onclick="">Remove</button></li>
+                                {% endfor %}
+                            </ul>
                         </p>
                     {% endif %}
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>

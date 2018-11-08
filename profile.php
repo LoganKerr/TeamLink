@@ -64,7 +64,7 @@
         }
     }
     
-    $stmt = $conn->prepare("SELECT `student_id`, `faculty_id`, `major`, `interests`, `department` FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=?");
+    $stmt = $conn->prepare("SELECT `student_id`, `faculty_id`, `major`, `department` FROM `users` LEFT JOIN `faculty` ON `users`.`faculty_id`=`faculty`.`id` LEFT JOIN `students` ON `users`.`student_id`=`students`.`id` WHERE `users`.`id`=?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $res = $stmt->get_result();
@@ -73,6 +73,17 @@
         die("User not found.");
     }
     $row = $res->fetch_assoc();
+
+    $stmt = $conn->prepare("SELECT `tag` FROM `interests` WHERE `user_id`=?");
+    $stmt->bind_param("i",$user_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $interests = array();
+    while ($interest = $res->fetch_assoc())
+    {
+        $interests[$i] = $interest['tag'];
+        $i++;
+    }
     
     $loader = new Twig_Loader_Filesystem('resources/views');
     $twig = new Twig_Environment($loader);
@@ -87,6 +98,6 @@
                                              'department' => ((isset($department))? $department : $row['department']),
                                              'student_id' => (isset($row['student_id'])? $row['student_id'] : false),
                                              'major' => ((isset($major))? $major : $row['major']),
-                                             'interests' => ((isset($interests))? $interests : $row['interests'])
+                                             'interests' => ($interests)
                                           ));
 ?>
