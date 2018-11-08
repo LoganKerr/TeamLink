@@ -79,9 +79,10 @@
         SELECT `teams`.`id`, `title`, `firstName`, `lastName` 
         FROM `teams`
         INNER JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
+        INNER JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
         INNER JOIN `users` ON `teams`.`owner` = `users`.`id`
-        WHERE `user_id`=?");
-        $stmt->bind_param("i", $user_id);
+        WHERE `user_id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+        $stmt->bind_param("issss", $user_id,$search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
         $stmt->execute();
         $res = $stmt->get_result();
         $i = 0;
