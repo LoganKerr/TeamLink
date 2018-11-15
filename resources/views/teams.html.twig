@@ -17,7 +17,6 @@
                         <option {{ ((filter == "all")? "selected") }} value="all">All teams</option>
                         <option {{ ((filter == "my")? "selected") }} value="my">My teams</option>
                         <option {{ ((filter == "applied")? "selected") }} value="applied">Applied teams</option>
-                        <option {{ ((filter == "nonapplied")? "selected") }} value="nonapplied">Nonapplied teams</option>
                     </select>
                 </form>
                 <hr>
@@ -46,7 +45,7 @@
                         {% else %}
                             <div class="update-div">
                                 <label>Description</label>
-                                <div class="view-teams-aligned-values">{{ modal[description] }}</div>
+                                <div class="view-teams-aligned-values">{{ description }}</div>
                             </div>
                             <div class="update-div">
                                 {% for row in roles %}

@@ -95,15 +95,34 @@
 
         $render_items['list_items'] = $rows;
     }
-    // nonapplied teams
-    else if ($filter == "nonapplied")
-    {
-
-    }
     // all teams
     else
     {
-
+        $stmt = $conn->prepare("SELECT `users`.`university_id` FROM `users` WHERE `users`.`id`=?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        $university_id = $row['university_id'];
+        $stmt = $conn->prepare("
+    SELECT `teams`.`id`,`firstName`, `lastName`, `teams`.`title`
+    FROM `teams`
+    LEFT JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
+    LEFT JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
+    INNER JOIN `users` ON `teams`.`owner`=`users`.`id` 
+    INNER JOIN `universities` ON `users`.`university_id`=`universities`.`id` 
+    WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+        $stmt->bind_param("issss", $university_id, $search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $i = 0;
+        $rows = array();
+        while ($row = $res->fetch_assoc())
+        {
+            $rows[$i] = $row;
+            $i++;
+        }
+        $render_items['list_items'] = $rows;
     }
 
     // if team selected

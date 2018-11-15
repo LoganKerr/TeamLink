@@ -10,6 +10,8 @@ $stmt->bind_param("i", $id);
 $stmt->execute();
 $res = $stmt->get_result();
 
+$team_row = $res->fetch_assoc();
+
 if ($res->num_rows == 0)
 {
     die("Team not found.");
@@ -29,8 +31,6 @@ WHERE `roles`.`team_id`=?");
 $stmt2->bind_param("i", $id);
 $stmt2->execute();
 $res2 = $stmt2->get_result();
-
-$team_row = $res->fetch_assoc();
 
 $i = 0;
 $team_rows2 = array();
