@@ -111,7 +111,8 @@
             LEFT JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
             INNER JOIN `users` ON `teams`.`owner`=`users`.`id` 
             INNER JOIN `universities` ON `users`.`university_id`=`universities`.`id` 
-            WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+            WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)
+            ORDER BY `teams`.`id` DESC");
         $stmt->bind_param("issss", $university_id, $search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
         $stmt->execute();
         $res = $stmt->get_result();

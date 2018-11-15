@@ -4,8 +4,14 @@ require_once("config/config.php");
 require_once("functions.php");
 require_once("vendor/autoload.php");
 
+// check empty fields
+$required = array("role", "team-id", "role-application-action");
+$error['role-application'] = set_error_on_empty_required_fields($_POST, $required, $error);
+
 $role_id = (int)$_POST['role'];
 $team_id = (int)$_POST['team-id'];
+$role_action = $_POST['role-application-action'];
+
 
 // check if role exists
 $stmt = $conn->prepare("
@@ -54,16 +60,36 @@ if ($stmt->execute()) {
                 if ($stmt->execute()) {
                     $res = $stmt->get_result();
                     $row = $res->fetch_assoc();
-                    // if user has not already applied for this role
-                    if ($row['count'] == 0) {
+                    // if user wants to apply and has not already applied for this role
+                    if ($role_action == "apply" && $row['count'] == 0)
+                    {
                         // sets role_assoc row for role
                         $stmt = $conn->prepare("INSERT INTO `role_assoc` (user_id, team_id, role_id) VALUES (?, ?, ?)");
                         $stmt->bind_param("iii", $user_id, $team_id, $role_id);
                         if (!$stmt->execute()) {
                             $error['role-application']['sql'] = $stmt->error;
                         }
-                    } else {
+                    }
+                    // if user wants to apply and has already applied for this role
+                    else if ($role_action == "apply" && $row['count'] != 0)
+                    {
                         $error['role-application']['role'] = "Application has already been submitted for this role.";
+                    }
+                    // if user wants to retract role and has applied for this role previously
+                    else if ($role_action == "retract" && $row['count'] != 0)
+                    {
+                        // removes role_assoc row
+                        $stmt = $conn->prepare("DELETE FROM `role_assoc` WHERE `role_assoc`.`role_id`=? AND `role_assoc`.`user_id`=?");
+                        $stmt->bind_param("ii", $role_id, $user_id);
+                        if (!$stmt->execute()) {
+                            $error['role-application']['sql'] = $stmt->error;
+                        }
+
+                    }
+                    // if user wants to retract role and has not applied for this role previously
+                    else
+                    {
+                        $error['role-application']['role'] = "Application for this role has not been found";
                     }
                 }
             } // user applied to a role that belongs to a team outside his/her university
@@ -71,11 +97,19 @@ if ($stmt->execute()) {
                 $error['role-application']['role'] = "Invalid role";
             }
         }
+        else
+        {
+            $error['role-application']['sql'] = $stmt->error;
+        }
     }
     else
     {
         $error['role-application']['role'] = "Number of roles found: ".$row['count'];
     }
+}
+else
+{
+    $error['role-application']['sql'] = $stmt->error;
 }
 
 ?>

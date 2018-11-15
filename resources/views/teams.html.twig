@@ -53,13 +53,18 @@
                                     <input type="hidden" name="action" value="application"/>
                                     <input type="hidden" id="role-application-form-value" name="role" value="-1" />
                                     <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+                                    <input type="hidden" id="role-application-action" name="role-application-action" value="apply" />
                                     {% for err in error['role-application'] %}
                                         {{ err }}
                                     {% endfor %}
                                     {% for role in roles %}
                                         <label>{{ role['role'] }}</label>
                                         <div class="view-teams-aligned-values">{{ ((role['firstName'])? role['firstName'] : 'None') }}</div>
-                                        <button type="button" onclick="setAppliedRole(event, {{ role['role_id'] }})">Apply</button>
+                                        {% if role['applied'] %}
+                                            <button type="button" onclick="setRetractRole(event, {{ role['role_id'] }})">Retract Application</button>
+                                        {% else %}
+                                            <button type="button" onclick="setApplyRole(event, {{ role['role_id'] }})">Apply</button>
+                                        {% endif %}
                                         <br>
                                     {% endfor %}
                                 </form>
