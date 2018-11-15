@@ -43,5 +43,6 @@ while ($team_row2 = $res2->fetch_assoc())
 $render_items['title'] = $team_row['title'];
 $render_items['description']= $team_row['description'];
 $render_items['roles'] = $team_rows2;
+$render_items['selected_team_id'] = $id;
 
 ?>

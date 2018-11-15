@@ -2,6 +2,7 @@
 
 {% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
 {% block main %}
+    <script src='resources/javascript/test.js'></script>
     <div id="join-panel" class="panel panel-primary">
         <div class="panel-body">
             <div class="split-view">
@@ -48,11 +49,20 @@
                                 <div class="view-teams-aligned-values">{{ description }}</div>
                             </div>
                             <div class="update-div">
-                                {% for row in roles %}
-                                    <label>{{ row['role'] }}</label>
-                                    <div class="view-teams-aligned-values">{{ ((row['firstName'])? row['firstName'] : 'None') }}</div>
-                                    <br>
-                                {% endfor %}
+                                <form id="role-application-form" method="POST" action="teams.php?filter={{ filter }}&search={{ search }}&id={{ selected_team_id }}" >
+                                    <input type="hidden" name="action" value="application"/>
+                                    <input type="hidden" id="role-application-form-value" name="role" value="-1" />
+                                    <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+                                    {% for err in error['role-application'] %}
+                                        {{ err }}
+                                    {% endfor %}
+                                    {% for role in roles %}
+                                        <label>{{ role['role'] }}</label>
+                                        <div class="view-teams-aligned-values">{{ ((role['firstName'])? role['firstName'] : 'None') }}</div>
+                                        <button type="button" onclick="setAppliedRole(event, {{ role['role_id'] }})">Apply</button>
+                                        <br>
+                                    {% endfor %}
+                                </form>
                             </div>
                         {% endif %}
                     </div>
@@ -70,12 +80,12 @@
                 <p>
                     <label class="form-label">Title:</label>
                     <input class="textbox" name="title" type="text" value='{{ ((modal['title'] is defined)? modal['title'] : '') }}'/>
-                    {{ error['title']? error['title'] }}
+                    {{ error['create-team']['title']? error['create-team']['title'] }}
                 </p>
                 <p>
                     <label class="form-label">Description:</label>
                     <textarea name="description">{{ ((modal['description'] is defined)? modal['description'] : '') }}</textarea>
-                    {{ error['description']? error['description'] }}
+                    {{ error['create-team']['description']? error['create-team']['description'] }}
                 </p>
                 <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
             </form>

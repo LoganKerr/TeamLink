@@ -26,11 +26,11 @@
         {
             include "createteam.php";
         }
-        // team deletion
-        else
+        else if ($_POST['action'] == 'application')
         {
-            include "delete_team.php";
+            include "toggle_application.php";
         }
+         //   include "delete_team.php";
     }
 
     // filter
@@ -76,12 +76,12 @@
     else if ($filter == "applied")
     {
         $stmt = $conn->prepare("
-        SELECT `teams`.`id`, `title`, `firstName`, `lastName` 
-        FROM `teams`
-        INNER JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
-        INNER JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
-        INNER JOIN `users` ON `teams`.`owner` = `users`.`id`
-        WHERE `user_id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+            SELECT `teams`.`id`, `title`, `firstName`, `lastName` 
+            FROM `teams`
+            INNER JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
+            INNER JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
+            INNER JOIN `users` ON `teams`.`owner` = `users`.`id`
+            WHERE `user_id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
         $stmt->bind_param("issss", $user_id,$search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -105,13 +105,13 @@
         $row = $res->fetch_assoc();
         $university_id = $row['university_id'];
         $stmt = $conn->prepare("
-    SELECT `teams`.`id`,`firstName`, `lastName`, `teams`.`title`
-    FROM `teams`
-    LEFT JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
-    LEFT JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
-    INNER JOIN `users` ON `teams`.`owner`=`users`.`id` 
-    INNER JOIN `universities` ON `users`.`university_id`=`universities`.`id` 
-    WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+            SELECT `teams`.`id`,`firstName`, `lastName`, `teams`.`title`
+            FROM `teams`
+            LEFT JOIN `role_assoc` ON `teams`.`id` = `role_assoc`.`team_id`
+            LEFT JOIN `roles` ON `role_assoc`.`role_id` = `roles`.`id`
+            INNER JOIN `users` ON `teams`.`owner`=`users`.`id` 
+            INNER JOIN `universities` ON `users`.`university_id`=`universities`.`id` 
+            WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
         $stmt->bind_param("issss", $university_id, $search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
         $stmt->execute();
         $res = $stmt->get_result();

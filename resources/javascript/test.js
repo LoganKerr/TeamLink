@@ -61,6 +61,7 @@ function setDeletedTeam(e, id)
 // sets role user wants to apply for on jointeams page and submits form
 function setAppliedRole(event, id)
 {
-    document.getElementById('role').value=id;
-    document.getElementById('jointeams_form').submit();
+    console.log(id);
+    document.getElementById('role-application-form-value').value=id;
+    document.getElementById('role-application-form').submit();
 }
