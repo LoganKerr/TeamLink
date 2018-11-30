@@ -73,7 +73,7 @@ function ajaxRemoveInterest(event, role_id)
             role_id: role_id
         },
         function(data, status) {
-            alert("Removed thing");
+            window.location.reload();
         }
     );
 }
@@ -89,7 +89,7 @@ function ajaxAddInterest(event)
                 tag: $tag
             },
             function (data, status) {
-                alert("Added thing");
+                window.location.reload();
             }
         );
     }

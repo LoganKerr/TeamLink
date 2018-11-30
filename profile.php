@@ -44,8 +44,8 @@
         if (count($error) == 0)
         {
             //$query = "UPDATE `students` SET `major`='".$major."', `interests`='".$interests."' WHERE `id`=(SELECT `student_id` FROM `users` WHERE `id`=$user_id);";
-            $stmt = $conn->prepare("UPDATE `students` SET `major`=?, `interests`=? WHERE `id`=(SELECT `student_id` FROM `users` WHERE `id`=?);");
-            $stmt->bind_param("ssi", $major, $interests, $user_id);
+            $stmt = $conn->prepare("UPDATE `students` SET `major`=? WHERE `id`=(SELECT `student_id` FROM `users` WHERE `id`=?);");
+            $stmt->bind_param("si", $major, $user_id);
             
             //$query2 = "UPDATE `faculty` SET `department`='".$department."' WHERE `id`=(SELECT `faculty_id` FROM `users` WHERE `id`=$user_id);";
             $stmt2 = $conn->prepare("UPDATE `faculty` SET `department`=? WHERE `id`=(SELECT `faculty_id` FROM `users` WHERE `id`=?);");
