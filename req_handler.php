@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $role_id = (int)$_POST['role_id'];
         if (count($error) == 0)
         {
+            // removes tag for user
             $stmt = $conn->prepare("DELETE FROM `interests` WHERE `id`=? AND `user_id`=?");
             $stmt->bind_param("ii", $role_id, $user_id);
             $stmt->execute();
@@ -40,9 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if (!empty($tag))
         {
             // validate tag
+            // gets number of rows where user id has given tag
+            $stmt = $conn->prepare("SELECT * FROM `interests` WHERE `user_id`=? AND `tag`=?");
+            $stmt->bind_param("is", $user_id, $tag);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            // if user does not already have tag
+            if ($res->num_rows > 0) { $error['tag'] = "duplicate tag"; }
         }
         if (count($error) == 0)
         {
+            // insert new tag into database
             $stmt = $conn->prepare("INSERT INTO `interests` (`user_id`, `tag`) VALUES (?, ?)");
             $stmt->bind_param("is", $user_id, $tag);
             $stmt->execute();
