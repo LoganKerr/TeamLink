@@ -52,10 +52,10 @@ function removeRole(e, id)
     }
 }
 // sets team to be deleted from database and submits form
-function setDeletedTeam(e, id)
+function setDeleteTeam(e)
 {
-    document.getElementById('team').value=id;
-    document.getElementById('myteams_form').submit();
+    document.getElementById('submit-action').value="delete";
+    document.getElementById('edit-team-form').submit();
 }
 
 // sets role user wants to apply for on teams page and submits form

@@ -1,10 +1,11 @@
 <script src='resources/javascript/test.js'></script>
-<form method="post" action='teams.php?filter={{ filter }}&search={{ search }}&id={{ selected_team_id }}'>
+<form method="post" action='teams.php?filter={{ filter }}&search={{ search }}&id={{ selected_team_id }}' id="edit-team-form">
     <div class="update-div">
         <label>Description</label>
         <textarea name="description" class="view-teams-aligned-values">{{ description }}</textarea>
         <input type="hidden" name="action" value="edit"/>
         <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+        <input type="hidden" id="submit-action" name="submit-action" value="submit"/>
         <label>Roles</label>
         <button type="button" class="btn btn-success" onclick="addField(event)">Add role</button>
         <div id='role_list'>
@@ -36,6 +37,9 @@
         </div>
         <div class="submit-button">
             <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+        </div>
+        <div class="submit-button">
+            <button class="btn btn-primary btn-block" type="submit" onclick='setDeleteTeam(event)'>Delete team</button>
         </div>
     </div>
 </form>

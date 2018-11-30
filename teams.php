@@ -26,15 +26,21 @@
         {
             include "createteam.php";
         }
+        // deleting a team
+        else if ($_POST['action'] == 'edit' && $_POST['submit-action'] == 'delete')
+        {
+            include "delete_team.php";
+        }
+        // toggle application for role
         else if ($_POST['action'] == 'application')
         {
             include "toggle_application.php";
         }
+        // editing a team
         else if ($_POST['action'] == 'edit')
         {
             include "editteam.php";
         }
-         //   include "delete_team.php";
     }
 
     // filter

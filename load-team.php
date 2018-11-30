@@ -14,7 +14,7 @@ $team_row = $res->fetch_assoc();
 
 if ($res->num_rows == 0)
 {
-    die("Team not found.");
+    header("Location: index.php");
 }
 
 // gets if user is associated with team (can edit)
