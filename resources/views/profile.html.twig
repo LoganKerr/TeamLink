@@ -24,19 +24,19 @@
                             <input class="textbox" name="major" type="text" value='{{ major }}'/>
                             {{ error['major']? error['major'] }}
                         </p>
-                        <p>
-                            <label class="form-label">Interests:</label>
-                            {{ error['interests']? error['interests'] }}
-                            <ul>
-                                <label>Add interest</label><input type="textbox" id="new-interest" name="new-interest"/><button type="button" onclick="ajaxAddInterest(event)">Add interest</button>
-                                {% for interest in interests %}
-                                    <li>{{ interest['tag'] }} <button type="button" onclick="ajaxRemoveInterest(event, {{ interest['id'] }})">Remove</button></li>
-                                {% endfor %}
-                            </ul>
-                        </p>
                     {% endif %}
                     <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Submit" /></div>
                 </form>
+                <p>
+                    <label class="form-label">Interests:</label>
+                    {{ error['interests']? error['interests'] }}
+                    <ul>
+                        <label>Add interest</label><input type="textbox" id="new-interest" name="new-interest" onkeyup="ajaxAddInterestOnEnter(event)"/><button type="button" onclick="ajaxAddInterest(event)">Add interest</button>
+                        {% for interest in interests %}
+                            <li>{{ interest['tag'] }} <button type="button" onclick="ajaxRemoveInterest(event, {{ interest['id'] }})">Remove</button></li>
+                        {% endfor %}
+                    </ul>
+                </p>
             </div>
         </div>
     </div>

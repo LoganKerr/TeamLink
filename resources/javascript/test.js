@@ -80,6 +80,7 @@ function ajaxRemoveInterest(event, role_id)
 
 function ajaxAddInterest(event)
 {
+    console.log("TEST2");
     $tag = ((document.getElementById("new-interest").value)? document.getElementById("new-interest").value : null) // empty interest default. rejected
     console.log($tag);
     if ($tag != null) {
@@ -89,8 +90,16 @@ function ajaxAddInterest(event)
                 tag: $tag
             },
             function (data, status) {
-                alert("Removed thing");
+                alert("Added thing");
             }
         );
+    }
+}
+
+function ajaxAddInterestOnEnter(event)
+{
+    console.log("TEST");
+    if(event.keyCode == 13){
+        ajaxAddInterest(event);
     }
 }
