@@ -38,14 +38,16 @@
                     </div>
                 </div>
                 <div class="content-view">
-                    <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ id }}&edit=1">Edit</a>
+                    {% if associated and not edit %}
+                        <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ id }}&edit=1">Edit</a>
+                    {% endif %}
                     <h3>{{ title }}</h3>
                     <hr>
                     <div class="view-teams-aligned-fields">
                         {% if not(roles is defined) %}
                             Choose a team on the left
                         {% else %}
-                            {% if edit %}
+                            {% if edit and associated %}
                                 {% embed 'edit_team.html.twig' %}
                                 {% endembed %}
                             {% else %}

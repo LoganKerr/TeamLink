@@ -28,7 +28,7 @@ if (!empty($description))
 $stmt = $conn->prepare("
 SELECT `teams`.`owner`, `role_assoc`.`user_id` FROM `teams` 
 LEFT JOIN `role_assoc` ON `teams`.`id`=`role_assoc`.`team_id` 
-WHERE (`teams`.`owner`=? OR `role_assoc`.`user_id`=?) AND `teams`.`id`=?");
+WHERE (`teams`.`owner`=? OR (`role_assoc`.`user_id`=? AND `selected`)) AND `teams`.`id`=?");
 $stmt->bind_param("iii", $user_id, $user_id, $id);
 $stmt->execute();
 $res = $stmt->get_result();

@@ -47,7 +47,7 @@
     $render_items['search'] = $search;
 
     // sets edit value
-    $edit = $_GET['edit'];
+    $edit = (($_GET['edit'])? $_GET['edit'] : '');
     $render_items['edit'] = $edit;
 
     // show my teams
