@@ -74,14 +74,14 @@
     }
     $row = $res->fetch_assoc();
 
-    $stmt = $conn->prepare("SELECT `tag` FROM `interests` WHERE `user_id`=?");
+    $stmt = $conn->prepare("SELECT `id`, `tag` FROM `interests` WHERE `user_id`=?");
     $stmt->bind_param("i",$user_id);
     $stmt->execute();
     $res = $stmt->get_result();
     $interests = array();
     while ($interest = $res->fetch_assoc())
     {
-        $interests[$i] = $interest['tag'];
+        $interests[$i] = $interest;
         $i++;
     }
     

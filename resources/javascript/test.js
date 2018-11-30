@@ -64,3 +64,10 @@ function setAppliedRole(event, id)
     document.getElementById('role').value=id;
     document.getElementById('jointeams_form').submit();
 }
+
+function ajaxRemoveInterest(event, role_id)
+{
+    $.post("req_handler.php", { role_id: role_id } , function(data, status){
+        alert("Removed thing");
+    });
+}
