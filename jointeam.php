@@ -120,7 +120,12 @@
     $res = $stmt->get_result();
     $row = $res->fetch_assoc();
     $university_id = $row['university_id'];
-    $stmt = $conn->prepare("SELECT `firstName`, `lastName`, `teams`.`title`, `teams`.`description`, `roles`.`id`, `roles`.`role` FROM `roles` INNER JOIN `teams` ON `roles`.`team_id`=`teams`.`id` INNER JOIN `users` ON `teams`.`owner`=`users`.`id` INNER JOIN `universities` ON `users`.`university_id`=`universities`.`id` WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
+    $stmt = $conn->prepare("
+    SELECT `firstName`, `lastName`, `teams`.`title`, `teams`.`description`, `roles`.`id`, `roles`.`role` FROM `roles` 
+    INNER JOIN `teams` ON `roles`.`team_id`=`teams`.`id` 
+    INNER JOIN `users` ON `teams`.`owner`=`users`.`id` 
+    INNER JOIN `universities` ON `users`.`university_id`=`universities`.`id` 
+    WHERE `universities`.`id`=? AND (`teams`.`title` LIKE ? OR `description` LIKE ? OR `role` LIKE ? OR CONCAT(`firstName`, ' ', `lastName`) LIKE ?)");
     $stmt->bind_param("issss", $university_id, $search_wildcard, $search_wildcard, $search_wildcard, $search_wildcard);
     $stmt->execute();
     $res = $stmt->get_result();

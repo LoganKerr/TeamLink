@@ -1,0 +1,26 @@
+<script src='resources/javascript/test.js'></script>
+<div class="update-div">
+    <label>Description</label>
+    <div class="view-teams-aligned-values">{{ description }}</div>
+</div>
+<div class="update-div">
+    <label>Roles</label>
+    <form id="role-application-form" method="POST" action="teams.php?filter={{ filter }}&search={{ search }}&id={{ selected_team_id }}" style="">
+        <input type="hidden" name="action" value="application"/>
+        <input type="hidden" id="role-application-form-value" name="role" value="-1" />
+        <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+        <input type="hidden" id="role-application-action" name="role-application-action" value="apply" />
+        {% for err in error['role-application'] %}
+            {{ err }}
+        {% endfor %}
+        {% for role in roles %}
+            <label>{{ role['role'] }}</label>
+            <div class="view-teams-aligned-values">{{ ((role['selectedFirstName'])? role['selectedFirstName'] : 'None') }}</div>
+            {% if role['applied'] %}
+                <button type="button" onclick="setRetractRole(event, {{ role['role_id'] }})">Retract Application</button>
+            {% else %}
+                <button type="button" onclick="setApplyRole(event, {{ role['role_id'] }})">Apply</button>
+            {% endif %}
+            <br>
+        {% endfor %}
+    </form>

@@ -8,7 +8,7 @@
     
     if (isset($_SESSION['user_id']))
     {
-        header("Location: myteams.php");
+        header("Location: teams.php");
         exit();
     }
     

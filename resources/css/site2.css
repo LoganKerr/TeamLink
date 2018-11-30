@@ -1,0 +1,245 @@
+body
+{
+    background-image: url("/TeamLink/resources/images/blueprint.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-label
+{
+}
+
+.view-teams-aligned-fields label {
+    display: inline-block;
+    margin-left: 0%;
+    width: 21%;
+    text-align: right;
+    font-weight: bold;
+    margin-right: .5em;
+    margin-bottom: .1em;
+    vertical-align: top;
+}
+.view-teams-aligned-values {
+    display: inline-block;
+    /* width: 70%; */
+    vertical-align: bottom;
+}
+
+.list-view
+{
+    width: 25%;
+    float: left;
+}
+
+.list-results
+{
+    overflow-y:scroll;
+    max-height:600px;
+}
+
+.list-results ul {
+    margin-left: 0px;
+    margin-bottom: 0px;
+    list-style-type: none;
+}
+
+.list-results ul li {
+    display: block;
+    border-bottom: 1px solid #ccc;
+    padding: 0.25em 0;
+}
+
+.list-results a {
+    color: #3b73af;
+}
+
+.list-item-div {
+    padding: 0.5em 0.75em;
+    border: 1px solid #FFFFFF;
+}
+
+.list-item-div:hover {
+    border: 1px solid #1b8be0;
+}
+
+.list-item-div a:hover {
+    text-decoration: none;
+}
+
+.li-active .list-item-div {
+    background-color: #e1f1fc;
+}
+
+.split-view {
+    text-align:left;
+    display:inline;
+}
+
+.pi {
+    display:block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pill {
+    background: #E5E5E5;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #000000;
+    display: inline-block;
+    font-family: Arial,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: text-bottom;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 12em;
+    word-wrap: normal;
+    word-break: normal;
+}
+
+.pill + .pill {
+    margin-left: 1em;
+}
+
+.detail-view {
+    width: 70%;
+    float: right;
+}
+
+#home-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 30%;
+}
+
+#login-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 30%;
+}
+
+#signup-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+.search-box
+{
+	display: block;
+	float: right;
+}
+
+.logo-image
+{
+	width: 30%;
+	display: block;
+	margin: auto;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.nav-logo
+{
+	width: 10%;
+	display: block;
+	float: left;
+	padding-top: 5px;
+	padding-right: 5px;
+}
+
+.signout-link
+{
+	float: right;
+}
+
+.navbar
+{
+	background-color: #337ab7;
+	border: none;
+}
+
+.navbar-default .navbar-nav>li>a
+{
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav>li>a:hover
+{
+	color: #FFFFFF;
+	background-color: #204d74;
+}
+
+.navbar-default .navbar-nav>.active>a
+{
+	color: #EEEEEE;
+	background-color: #204d74;
+}
+
+.login-panel
+{
+	background: white;
+	width: 75%;
+	margin: auto;
+	padding: 1em;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.center-align
+{
+	text-align: center;
+}
+
+.error-label
+{
+	color: red;
+}
+
+#menu-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+#join-panel
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+
+.submit-button
+{
+    width: 25%;
+}
+
+.logo
+{
+    width: 75%;
+    padding-right: 1.5em;
+}

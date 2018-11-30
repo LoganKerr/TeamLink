@@ -1,0 +1,84 @@
+{% extends 'templates/base.html.twig' %}
+
+{% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
+{% block main %}
+    <script src='resources/javascript/test.js'></script>
+    <div id="join-panel" class="panel panel-primary">
+        <div class="panel-body">
+            <div class="split-view">
+                <h3>Teams</h3>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create a Team</button>
+                <form method="GET" action="teams.php">
+                    <input type="hidden" name="filter" value="{{ filter }}"/>
+                    <input type="textbox" name="search" placeholder="Search" value="{{ search }}" style="float: right;"/>
+                </form>
+                <form method="GET" action="teams.php">
+                    <label>Filter</label>
+                    <select name="filter" onchange="this.form.submit()">
+                        <option {{ ((filter == "all")? "selected") }} value="all">All teams</option>
+                        <option {{ ((filter == "my")? "selected") }} value="my">My teams</option>
+                        <option {{ ((filter == "applied")? "selected") }} value="applied">Applied teams</option>
+                    </select>
+                </form>
+                <hr>
+                <div class="list-view">
+                    <div class="list-results">
+                        <ul>
+                            {% for row in list_items %}
+                                <li>
+                                    <div class="list-item-div">
+                                        <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ row['id'] }}">
+                                            <div class="pi">{{ row['title'] }}</div>
+                                            <div class="pi">{{ row['firstName'] }}</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-view">
+                    {% if associated and not edit %}
+                        <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ id }}&edit=1">Edit</a>
+                    {% endif %}
+                    <h3>{{ title }}</h3>
+                    <hr>
+                    <div class="view-teams-aligned-fields">
+                        {% if not(roles is defined) %}
+                            Choose a team on the left
+                        {% else %}
+                            {% if edit and associated %}
+                                {% embed 'edit_team.html.twig' %}
+                                {% endembed %}
+                            {% else %}
+                                {% embed 'display_team.html.twig' %}
+                                {% endembed %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% embed 'templates/modal.html.twig' %}
+        {% block modal_header %}
+            Create a Team
+        {% endblock %}
+        {% block modal_content %}
+            <form method="post" action="teams.php">
+                <input type="hidden" name="action" value="create"/>
+                <p>
+                    <label class="form-label">Title:</label>
+                    <input class="textbox" name="title" type="text" value='{{ ((modal['title'] is defined)? modal['title'] : '') }}'/>
+                    {{ error['create-team']['title']? error['create-team']['title'] }}
+                </p>
+                <p>
+                    <label class="form-label">Description:</label>
+                    <textarea name="description">{{ ((modal['description'] is defined)? modal['description'] : '') }}</textarea>
+                    {{ error['create-team']['description']? error['create-team']['description'] }}
+                </p>
+                <div class="submit-button"><input class="btn btn-primary btn-block" type="submit" value="Create Team" /></div>
+            </form>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

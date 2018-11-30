@@ -1,0 +1,45 @@
+<script src='resources/javascript/test.js'></script>
+<form method="post" action='teams.php?filter={{ filter }}&search={{ search }}&id={{ selected_team_id }}' id="edit-team-form">
+    <div class="update-div">
+        <label>Description</label>
+        <textarea name="description" class="view-teams-aligned-values">{{ description }}</textarea>
+        <input type="hidden" name="action" value="edit"/>
+        <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+        <input type="hidden" id="submit-action" name="submit-action" value="submit"/>
+        <label>Roles</label>
+        <button type="button" class="btn btn-success" onclick="addField(event)">Add role</button>
+        <div id='role_list'>
+            {# for each role for this team #}
+            {% for err in error %}
+                {{ err }}
+            {% endfor %}
+            {% for role in roles %}
+                {# sets role id if role textbox hasn't been created yet #}
+                {% if role['role_id'] != curr_role_id %}
+                    {% set curr_role_id = role['role_id'] %}
+                    <br>
+                    <div id='role{{ role['role_id'] }}'>
+                        <input type="text" name='role_name{{ role['role_id'] }}' id='role_name{{ role['role_id'] }}' value='{{ role['role'] }}'/>
+                        <input type="hidden" name='role_id{{ role['role_id'] }}' value='{{ role['role_id'] }}'/>
+                        <select name='role_user{{ role['role_id'] }}'>
+                            <option>None</option>
+                            {# for each user applying for selected role #}
+                            {% for role in roles %}
+                                {% if role['role_id'] == curr_role_id and role['user_id'] %}
+                                    <option {{ ((role['selected'])? "selected" : "") }} value='{{ role['user_id'] }}'>{{ role['firstName'] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <button type="button" id='role_button{{ role['role_id'] }}' onclick='removeRole(event, {{ role['role_id'] }})'>Remove</button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="submit-button">
+            <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+        </div>
+        <div class="submit-button">
+            <button class="btn btn-primary btn-block" type="submit" onclick='setDeleteTeam(event)'>Delete team</button>
+        </div>
+    </div>
+</form>

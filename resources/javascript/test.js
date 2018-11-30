@@ -52,17 +52,26 @@ function removeRole(e, id)
     }
 }
 // sets team to be deleted from database and submits form
-function setDeletedTeam(e, id)
+function setDeleteTeam(e)
 {
-    document.getElementById('team').value=id;
-    document.getElementById('myteams_form').submit();
+    document.getElementById('submit-action').value="delete";
+    document.getElementById('edit-team-form').submit();
 }
 
-// sets role user wants to apply for on jointeams page and submits form
-function setAppliedRole(event, id)
+// sets role user wants to apply for on teams page and submits form
+function setApplyRole(event, id)
 {
-    document.getElementById('role').value=id;
-    document.getElementById('jointeams_form').submit();
+    document.getElementById('role-application-form-value').value=id;
+    document.getElementById('role-application-action').value="apply";
+    document.getElementById('role-application-form').submit();
+}
+
+// sets role user wants to retract application for on teams page and submits form
+function setRetractRole(event, id)
+{
+    document.getElementById('role-application-form-value').value=id;
+    document.getElementById('role-application-action').value="retract";
+    document.getElementById('role-application-form').submit();
 }
 
 function ajaxRemoveInterest(event, role_id)
