@@ -3,8 +3,11 @@
     <div class="update-div">
         <label>Description</label>
         <textarea name="description" class="view-teams-aligned-values">{{ description }}</textarea>
-            <input type="hidden" name="action" value="edit"/>
-            <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+        <input type="hidden" name="action" value="edit"/>
+        <input type="hidden" name="team-id" value="{{ selected_team_id }}" />
+        <label>Roles</label>
+        <button type="button" class="btn btn-success" onclick="addField(event)">Add role</button>
+        <div id='role_list'>
             {# for each role for this team #}
             {% for err in error %}
                 {{ err }}
@@ -30,8 +33,9 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            <div class="submit-button">
-                <input class="btn btn-primary btn-block" type="submit" value="Submit" />
-            </div>
+        </div>
+        <div class="submit-button">
+            <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+        </div>
     </div>
 </form>
