@@ -1,10 +1,10 @@
-{% extends 'templates/team_template.html.twig' %}
-
-{% block description %}
+<script src='resources/javascript/test.js'></script>
+<div class="update-div">
+    <label>Description</label>
     <div class="view-teams-aligned-values">{{ description }}</div>
-{% endblock %}
-
-{% block form %}
+</div>
+<div class="update-div">
+    <label>Roles</label>
     <form id="role-application-form" method="POST" action="teams.php?filter={{ filter }}&search={{ search }}&id={{ selected_team_id }}" style="">
         <input type="hidden" name="action" value="application"/>
         <input type="hidden" id="role-application-form-value" name="role" value="-1" />
@@ -24,8 +24,3 @@
             <br>
         {% endfor %}
     </form>
-{% endblock %}
-
-{% block role_list %}
-
-{% endblock %}
