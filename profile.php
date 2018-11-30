@@ -74,7 +74,7 @@
     }
     $row = $res->fetch_assoc();
 
-    $stmt = $conn->prepare("SELECT `id`, `tag` FROM `interests` WHERE `user_id`=?");
+    $stmt = $conn->prepare("SELECT `id`, `tag` FROM `interests` WHERE `user_id`=? ORDER BY `id` DESC");
     $stmt->bind_param("i",$user_id);
     $stmt->execute();
     $res = $stmt->get_result();
