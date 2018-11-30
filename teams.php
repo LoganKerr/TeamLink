@@ -30,6 +30,10 @@
         {
             include "toggle_application.php";
         }
+        else if ($_POST['action'] == 'edit')
+        {
+            include "editteam.php";
+        }
          //   include "delete_team.php";
     }
 
@@ -41,6 +45,10 @@
     $search = (($_GET['search'])? : '');
     $search_wildcard = "%".$search."%";
     $render_items['search'] = $search;
+
+    // sets edit value
+    $edit = $_GET['edit'];
+    $render_items['edit'] = $edit;
 
     // show my teams
     if ($filter == "my")
