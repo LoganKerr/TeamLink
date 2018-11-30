@@ -20,8 +20,19 @@ $user_id = $_SESSION['user_id'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     error_log(print_r($_POST, true));
-    $role_id = (int)$_POST['role_id'];
-    $stmt = $conn->prepare("DELETE FROM `interests` WHERE `id`=? AND `user_id`=?");
-    $stmt->bind_param("ii", $role_id, $user_id);
-    $stmt->execute();
+    if ($_POST['action'] == "remove")
+    {
+        $role_id = (int)$_POST['role_id'];
+        $stmt = $conn->prepare("DELETE FROM `interests` WHERE `id`=? AND `user_id`=?");
+        $stmt->bind_param("ii", $role_id, $user_id);
+        $stmt->execute();
+    }
+    else if ($_POST['action'] == "add")
+    {
+        $tag = $_POST['tag'];
+        $stmt = $conn->prepare("INSERT INTO `interests` (`user_id`, `tag`) VALUES (?, ?)");
+        $stmt->bind_param("is", $user_id, $tag);
+        $stmt->execute();
+    }
+
 }

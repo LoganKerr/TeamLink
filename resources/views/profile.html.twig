@@ -2,7 +2,7 @@
 
 {% block nav %}{% include 'templates/navbar.html.twig' with nav %}{% endblock %}
 {% block main %}
-    <script src='resources/javascript/test.js'></script>
+    <script src='resources/javascript/test.js'></script>xf
     <div id="signup-panel" class="container">
         <div class="panel panel-primary">
             <div class="panel-heading">Change your information</div>
@@ -28,7 +28,7 @@
                             <label class="form-label">Interests:</label>
                             {{ error['interests']? error['interests'] }}
                             <ul>
-                                <label>Add interest</label><input type="textbox" name="new-interest"/>
+                                <label>Add interest</label><input type="textbox" id="new-interest" name="new-interest"/><button type="button" onclick="ajaxAddInterest(event)">Add interest</button>
                                 {% for interest in interests %}
                                     <li>{{ interest['tag'] }} <button type="button" onclick="ajaxRemoveInterest(event, {{ interest['id'] }})">Remove</button></li>
                                 {% endfor %}

@@ -67,7 +67,30 @@ function setAppliedRole(event, id)
 
 function ajaxRemoveInterest(event, role_id)
 {
-    $.post("req_handler.php", { role_id: role_id } , function(data, status){
-        alert("Removed thing");
-    });
+    $.post("req_handler.php",
+        {
+            action: "remove",
+            role_id: role_id
+        },
+        function(data, status) {
+            alert("Removed thing");
+        }
+    );
+}
+
+function ajaxAddInterest(event)
+{
+    $tag = ((document.getElementById("new-interest").value)? document.getElementById("new-interest").value : null) // empty interest default. rejected
+    console.log($tag);
+    if ($tag != null) {
+        $.post("req_handler.php",
+            {
+                action: "add",
+                tag: $tag
+            },
+            function (data, status) {
+                alert("Removed thing");
+            }
+        );
+    }
 }
