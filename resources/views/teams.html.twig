@@ -44,7 +44,7 @@
 						<button id="delete-team" class="btn btn-primary">Delete team</button>
 					{% endif %}
                     <h3>{{ title }}</h3>
-					<input type="hidden" id="team-id" value="$id" />
+					<input type="hidden" id="team-id" value="{{ id }}" />
                     <hr>
                     <div class="view-teams-aligned-fields">
                         {% if not(roles is defined) %}
