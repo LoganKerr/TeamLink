@@ -23,21 +23,19 @@
 		</div>
         <hr>
 		<div class="row">
-            <div class="list-view col-md-3">
-                <div class="list-results">
-                    <ul>
-                        {% for row in list_items %}
-                            <li>
-                                <div class="list-item-div">
-                                    <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ row['id'] }}">
-                                        <div class="pi">{{ row['title'] }}</div>
-                                        <div class="pi">{{ row['firstName'] }}</div>
-                                    </a>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="col-md-3">
+                <ul class="list-results">
+                    {% for row in list_items %}
+                        <li>
+                            <div class="list-item-div">
+                                <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ row['id'] }}">
+                                    <div class="pi">{{ row['title'] }}</div>
+                                    <div class="pi">{{ row['firstName'] }}</div>
+                                </a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
             <div class="content-view col-md-9">
                 {% if associated and not edit %}
