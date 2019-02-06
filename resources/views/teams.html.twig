@@ -42,6 +42,7 @@
                         <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ id }}&edit=1">Edit</a>
                     {% endif %}
                     <h3>{{ title }}</h3>
+					<input type="hidden" id="team-id" value="$id" />
                     <hr>
                     <div class="view-teams-aligned-fields">
                         {% if not(roles is defined) %}
