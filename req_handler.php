@@ -57,5 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $stmt->execute();
         }
     }
-
+	else if ($_POST['action']=="delete_team")
+	{
+		$required = array("id");
+        $error = set_error_on_empty_required_fields($_POST, $required, $error);
+		$id = $_POST['id'];
+		if (!empty($id))
+		{
+			// do validation
+		}
+	}
 }
