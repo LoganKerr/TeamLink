@@ -20,7 +20,47 @@ $user_id = $_SESSION['user_id'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     error_log(print_r($_POST, true));
-    if ($_POST['action'] == "remove")
+     if ($_POST['action']=="delete_team")
+     {
+        $required = array("id");
+        $error = set_error_on_empty_required_fields($_POST, $required, $error);
+        $id = (int)$_POST['id'];
+        if ($id > -1)
+        {
+            // validate team exists
+            $stmt = $conn->prepare("SELECT * FROM `teams` WHERE `id`=?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if ($res->num_rows == 0) {
+                $error['id'] = "No team found";
+            }
+            else {
+                // validate user associated with team or owner
+                $stmt = $conn->prepare("SELECT * FROM `teams` LEFT JOIN `role_assoc` ON `teams`.`id`=`team_id` WHERE `teams`.`id`=? AND (`owner`=? OR `user_id`=?)");
+                $stmt->bind_param("iii", $id, $user_id, $user_id);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                if ($res->num_rows == 0) {
+                    $error['id'] = "User not associated with team";
+                }
+            }
+        }
+        if (count($error) == 0)
+        {
+            // deletes team from teams table
+            $stmt = $conn->prepare("DELETE FROM `teams` WHERE `id`=?");
+            $stmt->bind_param("i", $id);
+            $stmt2 = $conn->prepare("DELETE FROM `roles` WHERE `team_id`=?");
+            $stmt2->bind_param("i", $id);
+            $stmt3 = $conn->prepare("DELETE FROM `role_assoc` WHERE `team_id`=?");
+            $stmt3->bind_param("i", $id);
+            $stmt->execute();
+            $stmt2->execute();
+            $stmt3->execute();
+        }
+    }
+    else if ($_POST['action'] == "remove")
     {
         $required = array("role_id");
         $error = set_error_on_empty_required_fields($_POST, $required, $error);
@@ -57,42 +97,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $stmt->execute();
         }
     }
-	else if ($_POST['action']=="delete_team")
-	{
-		$required = array("id");
-        $error = set_error_on_empty_required_fields($_POST, $required, $error);
-		$id = (int)$_POST['id'];
-		if (!empty($id))
-		{
-			// validate team exists
-            $stmt = $conn->prepare("SELECT * FROM `teams` WHERE `id`=?");
-            $stmt->bind_param("i",$id);
-            $stmt->execute();
-            $res = $stmt->get_result();
-            if ($res->num_rows == 0) { $error['id'] = "No team found"; }
-            else {
-                // validate user associated with team or owner
-                $stmt = $conn->prepare("SELECT * FROM `teams` LEFT JOIN `role_assoc` ON `teams`.`id`=`team_id` WHERE `teams`.`id`=? AND (`owner`=? OR `user_id`=?)");
-                $stmt->bind_param("iii", $id, $user_id, $user_id);
-                $stmt->execute();
-                if ($res->num_rows == 0) {
-                    $error['id'] = "User not associated with team";
-                }
-            }
-		}
-		if (count($error) == 0)
-        {
-            error_log(print_r(gettype($id), true));
-            // deletes team from teams table
-            $stmt = $conn->prepare("DELETE FROM `teams` WHERE `id`=?");
-            $stmt->bind_param("i", $id);
-            $stmt2 = $conn->prepare("DELETE FROM `roles` WHERE `team_id`=?");
-            $stmt2->bind_param("i", $id);
-            $stmt3 = $conn->prepare("DELETE FROM `role_assoc` WHERE `team_id`=?");
-            $stmt3->bind_param("i", $id);
-            $stmt->execute();
-            $stmt2->execute();
-            $stmt3->execute();
-        }
-	}
 }
