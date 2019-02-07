@@ -11,4 +11,23 @@ $(document).ready(function() {
 			window.location.reload();
 		});
 	});
+	$("#team-title").mouseenter(function() {
+		$("#title-symbol").show();
+		$("#team-title").css("border", "3px solid red");
+	});
+	$("#team-title").mouseleave(function() {
+		$("#title-symbol").hide();
+		$("#team-title").css("border", "none");
+	});
+	$("#team-title").click(function() {
+		$(".title-textbox").show();
+		$("#team-title").hide();
+	});
+	$("#title-confirm").click(function() {
+		alert("you did it");
+	});
+	$("#title-remove").click(function() {
+		$(".title-textbox").hide();
+		$("#team-title").show();
+	});
 });

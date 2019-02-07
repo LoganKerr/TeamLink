@@ -222,3 +222,18 @@
 {
 	margin: auto;
 }
+
+.pink 
+{
+	color: #FFAAAA;
+}
+
+#title-symbol
+{
+	display: none;
+}
+
+.title-textbox
+{
+	display: none;
+}	
