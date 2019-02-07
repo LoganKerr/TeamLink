@@ -123,4 +123,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $stmt->execute();
         }
     }
+    else if ($_POST['action'] == "change_desc")
+    {
+        $required = array("desc", "id");
+        $error = set_error_on_empty_required_fields($_POST, $required, $error);
+        $desc = $_POST["desc"];
+        $id = $_POST["id"];
+        if (!empty($desc))
+        {
+            // validate description
+            // validate user has permission to change title
+            $stmt = $conn->prepare("SELECT * FROM `teams` LEFT JOIN `role_assoc` ON `teams`.`id`=`team_id` WHERE `teams`.`id`=? AND (`owner`=? OR `user_id`=?)");
+            $stmt->bind_param("iii", $id, $user_id, $user_id);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if ($res->num_rows == 0) {
+                $error['id'] = "User not associated with team";
+            }
+        }
+        if (count($error) == 0)
+        {
+            // change title
+            $stmt = $conn->prepare("UPDATE `teams` SET `description` = ? WHERE `teams`.`id` = ?");
+            $stmt->bind_param("si", $desc, $id);
+            $stmt->execute();
+        }
+    }
 }
