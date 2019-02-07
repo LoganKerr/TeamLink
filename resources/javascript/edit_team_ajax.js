@@ -24,10 +24,12 @@ $(document).ready(function() {
 	});
 	$("#title-confirm").click(function() {
 		var title = $("#title-content").val();
+        var id = $("#team-id").val();
 		$.post("req_handler.php",
 		{
 			action: "change_title",
-			title: title
+			title: title,
+			id: id
 		},
 		function(data, status) {
 			window.location.reload();
