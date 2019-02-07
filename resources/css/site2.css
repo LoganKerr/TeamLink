@@ -223,19 +223,46 @@
 	margin: auto;
 }
 
-.pink 
-{
-	color: #FFAAAA;
-}
-
 #title-symbol
 {
-	font-size: 20px;
+	padding-left: 0.5em;
+	padding-right: 0.25em;
+	color: #717b8c;
 }
 
 #team-title
 {
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
 	border: 3px solid white;
 	border-radius: 5px;
 	display: inline-block;
+	font-size: 2em;
+	margin-bottom: 0;
+}
+
+#title-content
+{
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+	font-size: 2em;
+	background-color: white;
+	border: 3px solid #717b8c;
+	border-radius: 5px;
+}
+
+.glyphicon.glyphicon-ok
+{
+	color: green;
+}
+
+.glyphicon.glyphicon-remove
+{
+	color: red;
+}
+
+.title-button
+{
+	font-size: 2em;
+	padding-left: 0.25em;
 }
