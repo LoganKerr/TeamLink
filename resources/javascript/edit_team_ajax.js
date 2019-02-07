@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	$("#delete-team").click(function() {
-		var team_id = document.getElementById("team-id");
-		var id = team_id.value;
+		var id = $("#team-id").val();
 		$.post("req_handler.php",
 		{
 			action: "delete_team",
@@ -24,7 +23,15 @@ $(document).ready(function() {
 		$("#team-title").hide();
 	});
 	$("#title-confirm").click(function() {
-		alert("you did it");
+		var title = $("#title-content").val();
+		$.post("req_handler.php",
+		{
+			action: "change_title",
+			title: title
+		},
+		function(data, status) {
+			window.location.reload();
+		});
 	});
 	$("#title-remove").click(function() {
 		$(".title-textbox").hide();
