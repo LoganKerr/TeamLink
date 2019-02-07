@@ -11,16 +11,16 @@ $(document).ready(function() {
 		});
 	});
 	$("#team-title").mouseenter(function() {
-		$("#title-symbol").show();
-		$("#team-title").css("border", "3px solid red");
+		$("#title-symbol").removeClass("hidden");
+		$("#team-title").css("border", "3px solid #717b8c");
 	});
 	$("#team-title").mouseleave(function() {
-		$("#title-symbol").hide();
-		$("#team-title").css("border", "none");
+		$("#title-symbol").addClass("hidden");
+		$("#team-title").css("border", "3px solid white");
 	});
 	$("#team-title").click(function() {
-		$(".title-textbox").show();
-		$("#team-title").hide();
+		$(".title-textbox").removeClass("hidden");
+		$("#team-title").addClass("hidden");
 	});
 	$("#title-confirm").click(function() {
 		var title = $("#title-content").val();
@@ -36,12 +36,12 @@ $(document).ready(function() {
 		});
 	});
 	$("#title-remove").click(function() {
-		$(".title-textbox").hide();
-		$("#team-title").show();
+		$(".title-textbox").addClass("hidden");
+		$("#team-title").removeClass("hidden");
 	});
 	$("#desc-content").click(function() {
-		$("#desc-textarea").show();
-		$("#desc-content").hide();
+		$("#desc-textarea").removeClass("hidden");
+		$("#desc-content").addClass("hidden");
 		$("#desc-confirm").removeClass("hidden");
 		$("#desc-remove").removeClass("hidden");
 	});
@@ -59,8 +59,8 @@ $(document).ready(function() {
 		});
 	});
 	$("#desc-remove").click(function() {
-		$("#desc-textarea").hide();
-		$("#desc-content").show();
+		$("#desc-textarea").addClass("hidden");
+		$("#desc-content").removeClass("hidden");
 		$("#desc-confirm").addClass("hidden");
 		$("#desc-remove").addClass("hidden");
 	});

@@ -230,15 +230,12 @@
 
 #title-symbol
 {
-	display: none;
+	font-size: 20px;
 }
 
-.title-textbox
+#team-title
 {
-	display: none;
-}	
-
-#desc-textarea
-{
-	display: none;
+	border: 3px solid white;
+	border-radius: 5px;
+	display: inline-block;
 }

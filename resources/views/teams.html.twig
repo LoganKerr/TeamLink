@@ -39,11 +39,13 @@
             </div>
             <div class="content-view col-md-9">
                 {% if associated and not edit %}
-                    <a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ id }}&edit=1">Edit</a>
-					<button id="delete-team" class="btn btn-primary">Delete team</button>
+					<p>
+						<a href="teams.php?filter={{ filter }}&search={{ search }}&id={{ id }}&edit=1">Edit</a>
+						<button id="delete-team" class="btn btn-primary">Delete team</button>
+					</p>
 				{% endif %}
-                <h1 id="team-title">{{ title }}<span id="title-symbol" class="glyphicon glyphicon-pencil"/></h1>
-				<p class="title-textbox">
+                <h1 id="team-title">{{ title }}<span id="title-symbol" class="hidden glyphicon glyphicon-pencil"/></h1>
+				<p class="hidden title-textbox">
 					<input id="title-content" type="textbox" value="{{ title }}">
 					<span id="title-confirm" class="glyphicon glyphicon-ok"></span>
 					<span id="title-remove" class="glyphicon glyphicon-remove"></span>
