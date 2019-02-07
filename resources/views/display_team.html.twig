@@ -1,7 +1,10 @@
 <script src='resources/javascript/test.js'></script>
 <div class="update-div">
     <label>Description</label>
-    <div class="view-teams-aligned-values">{{ description }}</div>
+    <span id="desc-content" class="view-teams-aligned-values">{{ description }}</span>
+	<textarea id="desc-textarea" class="view-teams-aligned-values">{{ description }}</textarea>
+	<span id="desc-confirm" class="glyphicon glyphicon-ok hidden"></span>
+	<span id="desc-remove" class="glyphicon glyphicon-remove hidden"></span>
 </div>
 <div class="update-div">
     <label>Roles</label>
