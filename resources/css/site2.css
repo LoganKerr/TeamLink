@@ -5,10 +5,6 @@
     background-size: cover;
 }*/
 
-.form-label
-{
-}
-
 .view-teams-aligned-fields label {
     display: inline-block;
     margin-left: 0%;
@@ -227,7 +223,7 @@
 {
 	padding-left: 0.5em;
 	padding-right: 0.25em;
-	color: #717b8c;
+	color: rgba(113, 123, 140, 0.3);
 }
 
 #team-title
@@ -249,6 +245,12 @@
 	background-color: white;
 	border: 3px solid #717b8c;
 	border-radius: 5px;
+}
+
+#title-content:focus
+{
+	outline: none;
+	background-color: #c9d6ea;
 }
 
 .glyphicon.glyphicon-ok
